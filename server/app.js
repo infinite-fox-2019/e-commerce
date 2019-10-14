@@ -1,5 +1,5 @@
 // DOTENV VARIABLE
-if (process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'development') {
     require('dotenv').config()
 }
 
@@ -9,9 +9,10 @@ const mongoose = require('mongoose')
 const errorHandler = require('./middlewares/errorHandler')
 const routes = require('./routes')
 const app = express()
+const PORT = process.env.PORT
 
 //CONNECTION
-mongoose.connect(process.env.MONGOOSE_URL+`/e-commerce-${process.env.NODE_ENV}`,
+mongoose.connect(process.env.MONGOOSE_URL,
         { useNewUrlParser: true,
         useUnifiedTopology: true },
         (err => {
@@ -28,5 +29,7 @@ app.use('/', routes)
 
 //ERROR HANDLER MIDDLEWARE
 app.use(errorHandler)
+
+app.listen(PORT, () => console.log(`listening at port ${PORT}`))
 
 module.exports = app
