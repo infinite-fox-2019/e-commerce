@@ -28,6 +28,7 @@ const userSchema = new Schema({
             message: "Email is already taken"
         }
     },
+    role: { type: String, default: "customer" },
     password: {
         type: String,
         required: [true, 'Password Required'],

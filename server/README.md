@@ -344,7 +344,6 @@ Message Error appears depending on the user's request body. This one denotes all
 {
     "code": 400,
     "message": [
-        "SECRET_KEY does not match",
         "Username required",
         "Email required",
         "Password required",
@@ -352,6 +351,17 @@ Message Error appears depending on the user's request body. This one denotes all
         "Invalid Email Format",
         "Email is already taken"
     ]
+}
+```
+
+#### SECRET_KEY Error
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "SECRET_KEY does not match"
 }
 ```
 
@@ -818,6 +828,14 @@ Message Error appears depending on the user's request body. This one denotes all
     "message": "Token not set for this request"
 }
 ```
+
+# PRODUCT ROUTE
+
+**Authentication and Authorization Required**: Only admins can handle product
+
+## `POST` Add New Product
+
+
 
 # TRANSACTION ROUTE
 
