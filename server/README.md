@@ -216,6 +216,147 @@ Cart in the response body depends whether logged on user previously has added it
 }
 ```
 
+## `GET` USERS
+
+**Authentication & Authorization Required**: Only admins can get users
+
+### URI
+
+```http
+/users
+```
+
+### Headers
+
+| Key           | Value  |
+| ------------- | ------ |
+| Authorization | String |
+
+### Example
+
+**Headers**
+
+```json
+{
+	"Authorization": "Bearer [Token]"
+}
+```
+
+### Success Response
+
+**Response Code**: `200 OK`
+
+```json
+[
+    {
+        "_id": "[userId]",
+        "username": "[user]",
+        "email": "[useremail]",
+        "cart": [
+            // User cart
+        ],
+        "transactions": [
+            // Transaction IDs
+        ]
+    },
+    {
+        "_id": "[userId]",
+        "username": "[user]",
+        "email": "[useremail]",
+        "cart": [
+            // User cart
+        ],
+        "transactions": [
+            // Transaction IDs
+        ]
+    }
+]
+```
+
+### Fail Response
+
+#### Token Malformed
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Token malformed or expired. Please relogin to get new Token"
+}
+```
+
+#### Token Not Set
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Token not set for this request"
+}
+```
+
+## `POST` Register as Admin
+
+### URI
+
+```http
+/users/admin
+```
+
+### Headers
+
+| Key          | Value            |
+| ------------ | ---------------- |
+| Content-Type | application/json |
+
+### Body
+
+| Key        | Value  | Required |
+| ---------- | ------ | -------- |
+| username   | String | Yes      |
+| email      | String | Yes      |
+| password   | String | Yes      |
+| SECRET_KEY | String | Yes      |
+
+### Success Response
+
+**Response Code**: `201 Created`
+
+```json
+{
+    "username": "Gabriel",
+    "email": "gabriel@email.com",
+    "token": "Bearer [token]"
+}
+```
+
+### Fail Response
+
+#### Error Validation
+
+Message Error appears depending on the user's request body. This one denotes all possibilities.
+
+**Response Code**: `400 Bad Request`
+
+```json
+{
+    "code": 400,
+    "message": [
+        "SECRET_KEY does not match",
+        "Username required",
+        "Email required",
+        "Password required",
+        "Username is already taken",
+        "Invalid Email Format",
+        "Email is already taken"
+    ]
+}
+```
+
+## 
+
 # CART ROUTE
 
 **Authentication Required**
@@ -584,6 +725,8 @@ Cart in the response body depends whether logged on user previously has added it
 
 #### Logic Error - Buy above stock amount
 
+**Response Code: `406 Not Acceptable`**
+
 ```json
 {
     "code": 406,
@@ -592,6 +735,8 @@ Cart in the response body depends whether logged on user previously has added it
 ```
 
 #### Logic Error - Adding a product with 0 stock
+
+**Response Code: `406 Not Acceptable`**
 
 ```json
 {
@@ -627,14 +772,8 @@ Cart in the response body depends whether logged on user previously has added it
 ### URI
 
 ```http
-/carts/:id
+/carts
 ```
-
-### PARAMS
-
-| Key  | Value  |
-| ---- | ------ |
-| id   | String |
 
 ### Headers
 
@@ -645,7 +784,7 @@ Cart in the response body depends whether logged on user previously has added it
 ### Example
 
 ```http
-/carts/[productId]
+/carts
 ```
 
 ### Success Response
@@ -682,5 +821,115 @@ Cart in the response body depends whether logged on user previously has added it
 
 # TRANSACTION ROUTE
 
+**Authentication Required**
 
+**Authorization Required**: Only Admin and owner of transaction has access for requests.
 
+## `GET` User Transaction
+
+### URI
+
+```http
+/transactions
+```
+
+### Headers
+
+| Key           | Value          |
+| ------------- | -------------- |
+| Authorization | Bearer [Token] |
+
+### Success Response
+
+```json
+{
+    "transactions": [
+        //items here
+    ]
+}
+```
+
+### Error Response
+
+#### Token Malformed
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Token malformed or expired. Please relogin to get new Token"
+}
+```
+
+#### Token Not Set
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Token not set for this request"
+}
+```
+
+## `GET` Add Transaction
+
+### URI
+
+```http
+/transactions/add
+```
+
+### Headers
+
+| Key           | Value          |
+| ------------- | -------------- |
+| Authorization | Bearer [Token] |
+
+### Success Response
+
+```json
+{
+    "transactions": [
+        [
+            {
+            "product": {
+                "_id": "[productId]",
+            	"productName": "[productName]",
+            	"image": "[imageURL]",
+            	"price": 10000, // Product Price
+                "stock": 100, // Product Stock
+            },
+            "quantity": 10
+       		}
+        ]
+    ]
+}
+```
+
+### Error Response
+
+#### Token Malformed
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Token malformed or expired. Please relogin to get new Token"
+}
+```
+
+#### Token Not Set
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Token not set for this request"
+}
+```
+
+## 
