@@ -1,12 +1,12 @@
 # e-commerce
-**BigFridge**
-----
+
+
 **Usage**
 
 Make sure you have Node.js and npm installed in your computer, and then run these commands:
 
 ```
-$ git clone https://github.com/group-project-w1-BigFridge/server.git
+$ git clone https://github.com/arnoldtherigan15/e-commerce.git
 $ cd server
 ```
 
@@ -22,166 +22,160 @@ $ npm install
 $ npm run dev
 ```
 
-**POST /recipes**
+|     Route      | HTTP Method |                  Description                   |
+| :------------: | :---------: | :--------------------------------------------: |
+| /user/register |    POST     |               Create new Account               |
+|  /user/login   |    POST     |                   Login User                   |
+|   /products    |     GET     | Get all Product `(Super_Admin,Admin,Customer)` |
+|   /products    |     PUT     |       Edit Product `(Super_Admin,Admin)`       |
+|   /products    |   DELETE    |      Delete Product `(Super_Admin,Admin)`      |
+|     /carts     |     GET     |           Get All Carts `(Customer)`           |
+|     /carts     |    POST     |           Create Carts `(Customer)`            |
+|     /carts     |    PATCH    |           Update Carts `(Customer)`            |
+|     /carts     |   DELETE    |           Delete Carts `(Customer)`            |
+| /transactions  |     GET     |          Get Transaction `(Customer)`          |
+| /transactions  |    POST     |        Create Transaction `(Customer)`         |
+
+**POST /user/register**
+
 * **URL**
 
-  `/recipes`
+  `http://localhost:3000/user/register`
 
 * **Method:**
 
   `POST` 
   
 * **Data Params**
- 
-   **body:** `'ingredients' (string)`
+
+   **body:** 
+   * **`'username' (string)`**
+   * **`'email' (string)`**
+   * **`'password' (string)`**
+   * **`'role' (string)`**
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 201 
     **Content Example:** 
-    ```
+    
+    ```json
     [ 
-	    { 
-		    id: 1009580,
-		    title: 'How to Make Shredded Chicken in the Instant Pot',
-		    image: 'https://spoonacular.com/recipeImages/1009580-312x231.png',
-		    imageType: 'png',
-		    usedIngredientCount: 1,
-		    missedIngredientCount: 0,
-		    missedIngredients: [],
-		    usedIngredients: [ [Object] ],
-		    unusedIngredients: [],
-		    likes: 1 
-	    },
-	    { 
-		    id: 944490,
-		    title: 'Slow Cooker Rotisserie Chicken',
-		    image: 'https://spoonacular.com/recipeImages/944490-312x231.jpg',
-		    imageType: 'jpg',
-		    usedIngredientCount: 1,
-		    missedIngredientCount: 1,
-		    missedIngredients: [ [Object] ],
-		    usedIngredients: [ [Object] ],
-		    unusedIngredients: [],
-		    likes: 246 
-	    }
+  	  { 
+        "_id" : ObjectId("5da1b606c199d325887f11e8"),
+            "username" : "arnold15",
+            "email" : "arnoldtherigan15@gmail.com",
+            "password" : "$2a$10$kywHFLMJw/uUeFW0uNlHFeQKsLRjhySYZB08e.cQF4bWQUfKqXO32",
+            "role" : "admin",
+            "createdAt" : ISODate("2019-10-12T11:16:22.119Z"),
+            "updatedAt" : ISODate("2019-10-12T11:16:22.119Z")
+      }
     ]
     ```
- 
+
 * **Error Response:**
 
-  * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ message: 'Please fill the form' }`
+  * **Code:** 400 BAD REQUEST 
+    **Content:** 
+    * **`{ message: 'username required' }`**
+    * **`{ message: 'password required' }`**
+    * **`{ message: 'email required' }`**
+    * **`{ message: 'username is already taken' }`**
+    * **`{ message: 'email is already taken' }`**
 
   OR
 
-  * **Code:** 500 INTERNAL SERVER ERROR <br />
+  * **Code:** 500 INTERNAL SERVER ERROR
     **Content:** `{ message: "Internal Server Error" }`
 
-**POST /recipes/images**
+
+**POST /user/login**
 * **URL**
 
-  `/recipes/images`
+  `http://localhost:3000/user/login`
 
 * **Method:**
 
   `POST` 
   
 * **Data Params**
- 
-   **body:** `'recipe' (string)`
+
+   **body:** 
+   * **`'email' (string)`**
+   * **`'password' (string)`**
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 201 
     **Content Example:** 
+    
+    ```json
+    [ 
+  	  { 
+        "token" : "
+                       eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRldml0YTE1IiwiX2lkIjoiNWRhMjBhOTA4OGEwNTQ0YjJlNTUwNDEzIiwiZW1haWwiOiJkZXZpdGFAbWFpbC5jb20iLCJpYXQiOjE1NzA5ODM2MTl9.yOaGL6PZk0TtPPOoJwp_pBzcTge4DRyzhMfCTKjZ34A",
+            "username" : "arnold15"
+      }
+    ]
     ```
-    {
-	    "images_src":  [
-		    "https://picky-palate.com/wp-content/uploads/2015/10/Oatmeal-Walnut-Banana-Caramel-Pancakes-22.jpg",
-		    "https://www.averiecooks.com/wp-content/uploads/2018/09/sheetpanpancakes-7.jpg"
-	    ]
-	}
-    ```
- 
+
 * **Error Response:**
 
-  * **Code:** 500 INTERNAL SERVER ERROR <br />
+  * **Code:** 400 BAD REQUEST 
+    **Content:** 
+    * **`{ message: 'invalid email or password' }`**
+
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR 
     **Content:** `{ message: "Internal Server Error" }`
 
-**GET /recipes/youtube/:search**
+**POST /product**
 * **URL**
 
-  `/recipes/youtube/:search`
+  `http://localhost:3000/product`
 
 * **Method:**
 
-  `GET` 
+  `POST` 
   
 * **Data Params**
- 
-   **params:** `'search' (string)`
+
+   **body:** 
+   * **`'name' (string)`**
+   * **`'description' (string)`**
+   * **`'stock' (number)`**
+   * **`'price' (number)`**
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 201 
     **Content Example:** 
+    
     ```
-    {
-	    "kind": "youtube#searchListResponse",
-	    "etag": "\"p4VTdlkQv3HQeTEaXgvLePAydmU/SOwv_DiXwGezM2E-G2YQKYUPlOQ\"",
-	    "nextPageToken": "CAUQAA",
-	    "regionCode": "ID",
-	    "pageInfo": {
-		    "totalResults": 1000000,
-		    "resultsPerPage": 5
-		},
-		"items": 
-		[
-			{
-				"kind": "youtube#searchResult",
-				"etag": "\"p4VTdlkQv3HQeTEaXgvLePAydmU/01Ah91NcMzNGqeBzEe5a6trLyUc\"",
-				"id": {
-				"kind": "youtube#channel",
-				"channelId": "UC3yFi2eTanFWEE3_ln3XoaQ"
-	............................................and more
+    [ 
+  	    { 
+        "_id" : ObjectId("5da1b606c199d325887f11e8"),
+            "name" : "iphone x",
+            "description" : "iphone x kw super tampilan ori, no kaleng kaleng",
+            "stock" : 20,
+            "price" : 5000000
+            "createdAt" : ISODate("2019-10-12T11:16:22.119Z"),
+            "updatedAt" : ISODate("2019-10-12T11:16:22.119Z")
+      }
+    ]
     ```
- 
+
 * **Error Response:**
 
-  * **Code:** 500 INTERNAL SERVER ERROR <br />
-    **Content:** `{ message: "Internal Server Error" }`
+  * **Code:** 400 BAD REQUEST 
+    **Content:** 
+    * **`{ message: 'name is required' }`**
+    * **`{ message: 'description is required' }`**
+    * **`{ message: 'stock is required' }`**
+    * **`{ message: 'price is required' }`**
 
-**GET /recipes/:id**
-* **URL**
+  OR
 
-  `/recipes/:id`
-
-* **Method:**
-
-  `GET` 
-  
-* **Data Params**
- 
-   **params:** `'id' (string)`
-
-* **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content Example:** 
-    ```
-    {
-    "id": 716429,
-    "title": "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs",
-    "image": "https://spoonacular.com/recipeImages/716429-556x370.jpg",
-    "imageType": "jpg",
-    "servings": 2,
-    "readyInMinutes": 45,
-    "license": "CC BY-SA 3.0",
-	............................................and more
-    ```
- 
-* **Error Response:**
-
-  * **Code:** 500 INTERNAL SERVER ERROR <br />
+  * **Code:** 500 INTERNAL SERVER ERROR 
     **Content:** `{ message: "Internal Server Error" }`
