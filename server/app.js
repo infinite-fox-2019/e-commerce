@@ -9,7 +9,8 @@ const express = require('express'),
     mongoose = require('mongoose'),
     db = NODE_ENV ? 'mongodb://localhost:27017/SmartHome-' + NODE_ENV : process.env.MONGO_DB,
     port = process.env.PORT,
-    routes = require('./routes')
+    routes = require('./routes'),
+    errorHandler = require('./middlewares/errorHandler')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -17,8 +18,10 @@ app.use(cors())
 
 mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => {
-        console.log(`Connected to MongoDB ${NODE_ENV ? "Local" : "Atlas"}`)
-        console.log(db)
+        if (NODE_ENV !== "test") {
+            console.log(`Connected to MongoDB ${NODE_ENV ? "Local" : "Atlas"}`)
+            console.log(db)
+        }
     }).catch((err) => {
         console.log(err)
         console.log('============ FAILED TO CONNECT TO MONGODB ============');
@@ -26,6 +29,8 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true, useFindA
 
 
 app.use('/', routes)
+
+app.use(errorHandler)
 
 app.connect(port, () => console.log("Connected on port " + port))
 
