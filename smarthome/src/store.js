@@ -4,13 +4,21 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {
+    state: {
+        token: null,
+        username: null,
+        email: null,
+    },
+    mutations: {
+        setToken(state) {
+            state.token = localStorage.getItem('token')
+        },
+        setUserMeta(state, payload) {
+            state.username = payload.username
+            state.email = payload.email
+        }
+    },
+    actions: {
 
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  }
+    }
 })
