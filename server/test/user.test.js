@@ -46,7 +46,7 @@ describe('User Route', function () {
 
         it('Fail Register User - Validation Error', function (done) {
             const data = {
-                username: "tigor",
+                username: "Tigor",
                 email: "tigor@email.com",
                 password: "12345"
             }
@@ -66,4 +66,44 @@ describe('User Route', function () {
         })
     })
 
+    describe('Login User', function () {
+        it('Success login user', function (done) {
+            const data = {
+                identity: 'tigor@email.com',
+                password: '12345'
+            }
+            chai.request(app)
+                .post('/users/login')
+                .send(data)
+                .end(function (err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('username', 'email', 'token')
+                    const { token } = res.body
+                    expect(token).to.include('Bearer ')
+                    done()
+                })
+        })
+
+        it('Fail login user', function (done) {
+            const data = {
+                identity: 'tigor',
+                password: '12'
+            }
+            chai.request(app)
+                .post('/users/login')
+                .send(data)
+                .end(function (err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(401)
+                    expect(message).to.equal('Wrong Username / Email / Password')
+                    done()
+                })
+        })
+    })
 })

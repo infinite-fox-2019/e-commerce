@@ -2,16 +2,16 @@
     {
         "username": "Andreas",
         "email": "andreas@email.com",
-        "password": "12345"
+        "password": "$2a$10$PVzELqacEmQMom04tAIpauODkw/j6DETpbI2gsr8dIavWrb.FLTqi"
     },
     {
         "username": "Ayu",
         "email": "ayu@email.com",
-        "password": "12345"
+        "password": "$2a$10$PVzELqacEmQMom04tAIpauODkw/j6DETpbI2gsr8dIavWrb.FLTqi"
     },
     {
         "username": "Tigor",
         "email": "tigor@email.com",
-        "password": "12345"
+        "password": "$2a$10$PVzELqacEmQMom04tAIpauODkw/j6DETpbI2gsr8dIavWrb.FLTqi"
     }
 ]
