@@ -6,7 +6,7 @@ class SuperuserController {
         const role = "admin"
         User.create({ username, email, password, role })
         .then(() => {
-            res.status(201).json({ response: "Admin Created Successfully" })
+            res.status(201).json({ response: "Admin Registered Successfully" })
         })
         .catch(next)
     }
@@ -14,7 +14,7 @@ class SuperuserController {
         const { id } = req.params
         User.deleteOne({ _id: id }).exec()
         .then(() => {
-            res.status(200).json({ response: "Admin Deleted Successfully" })
+            res.status(200).json({ response: "Admin Removed Successfully" })
         })
         .catch(next)
     }

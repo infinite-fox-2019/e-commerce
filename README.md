@@ -20,8 +20,8 @@
 | Params           | `none`                                                       |
 | Headers          | `none`                                                       |
 | Data             | `none`                                                       |
-| Success Response | `status:200`, Data:<br />[<br />    {<br />        "_id": 1,<br />        "name": "Black Mug",<br />        "description": "A Black Mug For All Your Needs",<br />        "stock": 200,<br />        "price": 20 000,<br />    }<br />] |
-| Error Response   | `status:401`, Data :<br />{<br />    "msg": "You Are Unauthorized"<br />} |
+| Success Response | `status: 200`, Data:<br />[<br />    {<br />        "_id": 1,<br />        "name": "Black Mug",<br />        "description": "A Black Mug For All Your Needs",<br />        "stock": 200,<br />        "price": 20 000,<br />    }<br />] |
+| Error Response   | `status: 401`, Data :<br />{<br />    "msg": "You Are Unauthorized"<br />} |
 
 ### Get One Product
 
@@ -31,9 +31,9 @@
 | Params           | `id: String`                                                 |
 | Headers          | `none`                                                       |
 | Data             | `none`                                                       |
-| Success Response | `status:200`, Data:<br />{<br />    "_id": 1,<br />    "name": "Black Mug",<br />    "description": "A Black Mug For All Your Needs",<br />    "stock": 200,<br />    "price": 20 000,<br />} |
-| Error Response   | `status:401`, Data :<br />{<br />     "msg": "You Are Unauthorized"<br /> } |
-| Error Response 2 | `status404`, Data:<br />{<br />    "msg": "Product Not Found"<br />} |
+| Success Response | `status: 200`, Data:<br />{<br />    "_id": 1,<br />    "name": "Black Mug",<br />    "description": "A Black Mug For All Your Needs",<br />    "stock": 200,<br />    "price": 20 000,<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />     "msg": "You Are Unauthorized"<br /> } |
+| Error Response 2 | `status: 404`, Data:<br />{<br />    "msg": "Product Not Found"<br />} |
 
 ### Create New Product
 
@@ -43,8 +43,8 @@
 | Params           | `none`                                                       |
 | Headers          | `token: String`                                              |
 | Data             | name: String,<br />description: String<br />stock: Number,<br />price: Number |
-| Success Response | `status:201`, Data:<br />{<br />    "response": "Product Created Successfully"<br />} |
-| Error Response   | `status:401`, Data :<br />{<br />     "msg": "You Are Unauthorized" <br />} |
+| Success Response | `status: 201`, Data:<br />{<br />    "response": "Product Created Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />     "msg": "You Are Unauthorized" <br />} |
 
 ### Update Product
 
@@ -54,8 +54,8 @@
 | Params           | `id: String`                                                 |
 | Headers          | `token: String`                                              |
 | Data             | name: String<br />description: String<br />stock: Number<br />price: Number |
-| Success Response | `status:200`, Data:<br />{<br />    "response": "Product Updated Successfully" <br />} |
-| Error Response   | `status:401`, Data :<br />{<br />    "msg": "You Are Unauthorized"<br /> } |
+| Success Response | `status: 200`, Data:<br />{<br />    "response": "Product Updated Successfully" <br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />    "msg": "You Are Unauthorized"<br /> } |
 
 ### Delete Product
 
@@ -65,19 +65,85 @@
 | Params           | `id: String`                                                 |
 | Headers          | `token: String`                                              |
 | Data             | `none`                                                       |
-| Success Response | `status:200`, Data:<br />{<br />     "response": "Product Removed Successfully"<br />} |
-| Error Response   | `status:401`, Data :<br />{<br />     "msg": "You Are Unauthorized"<br />} |
+| Success Response | `status: 200`, Data:<br />{<br />     "response": "Product Removed Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />     "msg": "You Are Unauthorized"<br />} |
+
+### List Of Cart Routes:
+
+| Route             | HTTP   | Header(s)       | Body               | Description      |
+| ----------------- | ------ | --------------- | ------------------ | ---------------- |
+| /cart/:product_id | POST   | `token: String` | `quantity: String` | Add To Cart      |
+| /cart/:product_id | PATCH  | `token: String` | `quantity: String` | Update Quantity  |
+| /cart/:product_id | DELETE | `token: String` | `none`             | Remove From Cart |
+
+### Add To Cart
+
+| URL              | http://localhost:3000/cart/:product_id                       |
+| ---------------- | ------------------------------------------------------------ |
+| HTTP (Method)    | POST                                                         |
+| Params           | `product_id: String`                                         |
+| Headers          | `token: String`                                              |
+| Data             | `quantity: String`                                           |
+| Success Response | `status: 201`, Data:<br />{<br />      "response": "Item Added To Cart Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />      "msg": "You Are Unauthorized"<br />} |
+
+### Update Quantity
+
+| URL              | http://localhost:3000/cart/:product_id                       |
+| ---------------- | ------------------------------------------------------------ |
+| HTTP (Method)    | PATCH                                                        |
+| Params           | `product_id: String`                                         |
+| Headers          | `token: String`                                              |
+| Data             | `quantity: String`                                           |
+| Success Response | `status: 200`, Data:<br />{<br />       "response": "Item Updated Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />       "msg": "You Are Unauthorized"<br />} |
+
+### Remove From Cart
+
+| URL              | http://localhost:3000/cart/:product_id                       |
+| ---------------- | ------------------------------------------------------------ |
+| HTTP (Method)    | DELETE                                                       |
+| Params           | `product_id: String`                                         |
+| Headers          | `token: String`                                              |
+| Data             | `none`                                                       |
+| Success Response | `status: 200`, Data:<br />{<br />       "response": "Item Removed Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />       "msg": "You Are Unauthorized" <br />} |
+
+### List Of Transaction Routes:
+
+| Route                    | HTTP   | Header(s)       | Body               | Description        |
+| ------------------------ | ------ | --------------- | ------------------ | ------------------ |
+| /transaction/:product_id | POST   | `token: String` | `quantity: String` | Create Transaction |
+| /transaction/:product_id | DELETE | `token: String` | `none`             | Delete Transaction |
+
+### Create Transaction
+
+| URL              | http://localhost:3000/transaction/:product_id                |
+| ---------------- | ------------------------------------------------------------ |
+| HTTP (Method)    | POST                                                         |
+| Params           | `product_id: String`                                         |
+| Headers          | `token: String`                                              |
+| Data             | `quantity: String`                                           |
+| Success Response | `status: 201`, Data:<br />{<br />       "response": "Item Added To Transaction Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />       "msg": "You Are Unauthorized"<br />} |
+
+### Delete Transaction
+
+| URL              | http://localhost:3000/transaction/:product_id                |
+| ---------------- | ------------------------------------------------------------ |
+| HTTP (Method)    | DELETE                                                       |
+| Params           | `product_id: String`                                         |
+| Headers          | `token: String`                                              |
+| Data             | `none`                                                       |
+| Success Response | `status: 201`, Data:<br />{<br />       "response": "Item Removed From Transaction Successfully"<br />} |
+| Error Response   | `status: 401`, Data :<br />{<br />       "msg": "You Are Unauthorized"<br />} |
 
 ### List Of User Routes:
 
-| Route               | HTTP   | Header(s)       | Body                                                         | Description                                   |
-| ------------------- | ------ | --------------- | ------------------------------------------------------------ | --------------------------------------------- |
-| /user/register      | POST   | `none`          | `username: String`,<br />`email: String`,<br />`password: String`,<br />`role: String` | Register New User                             |
-| /user/login         | POST   | `none`          | `email: String`, `password: String`                          | Log In Old User                               |
-| /user/addItem       | POST   | `token:String`  | `product_id:String`,<br />`quantity: Number`,<br />`price: Number` | Add Item Based On User Preference             |
-| /user/updateItem    | PATCH  | `token:String`  | `product_id:String`<br />`quantity: String`                  | Update Item Based On User Preference          |
-| /user/removeItem    | DELETE | `token:String`  | `product_id: String`                                         | Remove Item Based On User Preference          |
-| /superuser/register | POST   | `token: String` | `username: String`,<br />`email: String`,<br />`password: String` | Register New Admin When User Is Owner / Admin |
+| Route          | HTTP | Header(s) | Body                                                         | Description       |
+| -------------- | ---- | --------- | ------------------------------------------------------------ | ----------------- |
+| /user/register | POST | `none`    | `username: String`,<br />`email: String`,<br />`password: String` | Register New User |
+| /user/login    | POST | `none`    | `email: String`, `password: String`                          | Log In Old User   |
 
 ### Register New User
 
@@ -86,11 +152,11 @@
 | Method           | POST                                                         |
 | Params           | `none`                                                       |
 | Headers          | `none`                                                       |
-| Data             | `username: String`,<br />`email: String`,<br />`password: String`,<br />`role: String` |
-| Success Response | `status: 201` , Data: <br />{<br />   "username": "Admin",<br />   "email": "admin@gmail.com"<br />   "password":"$2a$10$vT.0e3mTW3xqIJsdrR0QmedgHfCSsTOkFVDCmk392M6pl9B0l.QmO"<br />   "role": "admin"<br />} |
-| Error Response   | `status:400` , Data:<br />{<br />    "msg": "Incorrect Email / Password"<br />} |
+| Data             | `username: String`,<br />`email: String`,<br />`password: String` |
+| Success Response | `status: 201` , Data: <br />{<br />   "username": "Jeff",<br />   "email": "jeff@gmail.com"<br />   "token":"$2a$10$vT.0e3mTW3xqIJsdrR0QmedgHfCSsTOkFVDCmk392M6pl9B0l.QmO"<br />   "role": "customer"<br />} |
+| Error Response   | `status: 400`, Data:<br />{<br />    "msg": "Username Is Already Taken"<br />} |
 
-### Login Old User
+### Login User
 
 | URL              | http://localhost:3000/user/login                             |
 | ---------------- | ------------------------------------------------------------ |
@@ -98,55 +164,37 @@
 | Params           | `none`                                                       |
 | Headers          | `none`                                                       |
 | Data             | `email: String`,<br />`password:string`                      |
-| Success Response | `status: 200` , Data:<br />{<br />    "username": "Admin",<br />    "email": "[admin@gmail.com](mailto:admin@gmail.com)"<br />    "password":"$2a$10$vT.0e3mTW3xqIJsdrR0QmedgHfCSsTOkFVDCmk392M6pl9B0l.QmO"<br />   "role": "admin"<br />} |
-| Error Response   | `status:400` , Data: {<br />     "msg": "Incorrect Email / Password" <br />} |
+| Success Response | `status: 200` , Data:<br />{<br />    "username": "Admin",<br />    "email": "[admin@gmail.com](mailto:admin@gmail.com)"<br />    "token":"$2a$10$vT.0e3mTW3xqIJsdrR0QmedgHfCSsTOkFVDCmk392M6pl9B0l.QmO"<br />   "role": "admin"<br />} |
+| Error Response   | `status:400` , Data:<br />{<br />     "msg": "Incorrect Email / Password" <br />} |
 
-### Add Item
+### List Of Superuser Routes:
 
-| URL              | http://localhost:3000/user/addItem                           |
-| ---------------- | ------------------------------------------------------------ |
-| Method           | POST                                                         |
-| Params           | `none`                                                       |
-| Headers          | `token: String`                                              |
-| Data             | `product_id: String`,<br />`quantity: Number`,<br />`price: Number` |
-| Success Response | `status: 201` , Data:<br />{<br />     "response": "Item Added Successfully"<br />} |
-| Error Response   | `status: 400` , Data:<br />{<br />      "msg": "You Are Unauthorized"<br />} |
-| Error Response 2 | `status: 404`, Data:<br />{<br />    "msg": "Product Not Found"<br />} |
+| Route          | HTTP   | Header(s)       | Body                                                         | Description        |
+| -------------- | ------ | --------------- | ------------------------------------------------------------ | ------------------ |
+| /superuser     | POST   | `token: String` | `username: String`<br />`email: String`<br />`password: String` | Register New Admin |
+| /superuser/:id | DELETE | `token: String` | `none`                                                       | Remove Admin       |
 
-### Update Item
+###  Register Admin
 
-| URL              | http://localhost:3000/user/updateItem                        |
-| ---------------- | ------------------------------------------------------------ |
-| Method           | PATCH                                                        |
-| Params           | `none`                                                       |
-| Headers          | `token: String`                                              |
-| Data             | `product_id: String`,<br />`quantity: Number`                |
-| Success Response | `status: 200` , Data:<br />{<br />      "response": "Item Updated Successfully"<br />} |
-| Error Response   | `status: 400` , Data:<br />{<br />       "msg": "You Are Unauthorized"<br />} |
-| Error Response 2 | `status: 404`, Data:<br />{<br />     "msg": "Product Not Found"<br />} |
-
-### Remove Item
-
-| URL              | http://localhost:3000/user/removeItem                        |
-| ---------------- | ------------------------------------------------------------ |
-| Method           | DELETE                                                       |
-| Params           | `none`                                                       |
-| Headers          | `token: String`                                              |
-| Data             | `product_id: String`                                         |
-| Success Response | `status: 200` , Data:<br />{<br />      "response": "Item Removed Successfully"<br />} |
-| Error Response   | `status: 400` , Data:<br />{<br />       "msg": "You Are Unauthorized"<br />} |
-| Error Response 2 | `status: 404`, Data:<br />{<br />     "msg": "Product Not Found"<br />} |
-
-### Register New Admin
-
-| URL              | http://localhost:3000/superuser/register                     |
+| URL              | http://localhost:3000/superuser                              |
 | ---------------- | ------------------------------------------------------------ |
 | Method           | POST                                                         |
 | Params           | `none`                                                       |
 | Headers          | `token: String`                                              |
 | Data             | `username: String`<br />`email: String`<br />`password: String` |
-| Success Response | `status: 201` , Data:<br />{<br />       "response": "Admin Added Successfully"<br />} |
-| Error Response   | `status: 400` , Data:<br />{<br />        "msg": "You Are Unauthorized"<br />} |
+| Success Response | `status: 201` , Data:<br />{<br />     "response": "Admin Registered Successfully"<br />} |
+| Error Response   | `status:400` , Data:<br />{<br />      "msg": "You Are Unauthorized"<br />} |
+
+### Remove Admin
+
+| URL              | http://localhost:3000/superuser/:id                          |
+| ---------------- | ------------------------------------------------------------ |
+| Method           | DELETE                                                       |
+| Params           | `id: String`                                                 |
+| Headers          | `token: String`                                              |
+| Data             | `none`                                                       |
+| Success Response | `status: 200` , Data:<br />{<br />     "response": "Admin Removed Successfully"<br />} |
+| Error Response   | `status:400` , Data:<br />{<br />      "msg": "You Are Unauthorized"<br />} |
 
 ## Usage
 
