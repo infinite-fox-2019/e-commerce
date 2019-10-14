@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { hash } = require('../helpers/bcryptjs')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
@@ -35,6 +36,11 @@ const userSchema = new Schema({
         product: { type: Schema.Types.ObjectId, ref: 'Products' },
         quantity: Number
     }]
+})
+
+userSchema.pre('save', function (next) {
+    this.password = hash(this.password)
+    next()
 })
 
 const User = mongoose.model('Users', userSchema)

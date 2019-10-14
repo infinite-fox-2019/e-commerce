@@ -1,6 +1,7 @@
 
 module.exports = (err, req, res, next) => {
-    console.log(err)
+    // console.log(err)
+
     let status
     let message
 
