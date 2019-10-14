@@ -9,7 +9,7 @@ const transactionSchema = new Schema({
         required: [true, "CustomerId Is Required"]
     },
     product_id: {
-        tpye: ObjectId,
+        type: ObjectId,
         ref: "Product",
         required: [true, "ProductId Is Required"]
     },
