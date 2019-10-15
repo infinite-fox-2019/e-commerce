@@ -6,6 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test mocha --exit",
     "dev": "NODE_ENV=development nodemon app.js",
+    "sync": "NODE_ENV=development nodemon app.js 172.16.11.14 3000",
     "start": "node app.js"
   },
   "keywords": [],

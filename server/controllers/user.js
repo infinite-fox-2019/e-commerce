@@ -67,6 +67,33 @@ class UserController {
             })
             .catch(next);
     };
+
+    static verifyUser(req, res, next) {
+        res.status(200).json({ message: 'User Verified' })
+    }
+
+    static checkUser(req, res, next) {
+        const { username } = req.body
+        User.findOne({ username })
+            .then((result) => {
+                if (result) {
+                    next({ status: 406, message: "Username is already taken" })
+                } else {
+                    res.status(200).json({ message: "Username available" })
+                }
+            }).catch(next);
+    }
+    static checkEmail(req, res, next) {
+        const { email } = req.body
+        User.findOne({ email })
+            .then((result) => {
+                if (result) {
+                    next({ status: 406, message: "Email is already taken" })
+                } else {
+                    res.status(200).json({ message: "Email available" })
+                }
+            }).catch(next);
+    }
 }
 
 module.exports = UserController
