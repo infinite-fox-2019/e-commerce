@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Amazon Echo",
+        "price": 6000000,
+        "image": "https://static.bhphoto.com/images/images2500x2500/1539618736_1437070.jpg",
+        "stock": 100
+    },
+    {
+        "name": "Wink Hub",
+        "price": 5500000,
+        "image": "https://assets.pcmag.com/media/images/527737-wink-hub-2.jpg?thumb=y&width=980&height=494",
+        "stock": 200
+    },
+    {
+        "name": "Brilliant Control",
+        "price": 3500000,
+        "image": "https://assets.pcmag.com/media/images/609939-brilliant-control.jpg?thumb=y&width=980&height=456",
+        "stock": 150
+    }
+]

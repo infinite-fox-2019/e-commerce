@@ -10,29 +10,51 @@ const User = require('../models/user')
 
 let image = fs.readFileSync('./test/seed/assets/mi-kit.png')
 let adminToken = null
+let nonAdminToken = null
 
 
 chai.use(chaiHTTP)
 
 before(function (done) {
-    const data = {
+    const adminData = {
         username: "adminTigor",
         email: "adminTigor@email.com",
         password: "12345",
         SECRET_KEY: process.env.SECRET_KEY
     }
+    const nonAdminData = {
+        username: "nonAdmin",
+        email: "nonAdmin@email.com",
+        password: "12345"
+    }
 
-    chai.request(app)
-        .post('/users/register/admin')
-        .send(data)
-        .end(function (err, res) {
-            adminToken = res.body.token
-            done()
+    const tokens = () => {
+        return new Promise((resolve, reject) => {
+            chai.request(app)
+                .post('/users/register/admin')
+                .send(adminData)
+                .end(function (err, res) {
+                    if (err) return reject(err)
+                    adminToken = res.body.token
+                    chai.request(app)
+                        .post('/users/register')
+                        .send(nonAdminData)
+                        .end(function (err, res) {
+                            if (err) return reject(err)
+                            nonAdminToken = res.body.token
+                            resolve()
+                        })
+                })
         })
+    }
+
+    const productSeed = JSON.parse(fs.readFileSync('./test/seed/products.json'))
+
+    Promise.all([tokens(), Product.insertMany(productSeed)])
+        .then(() => done())
 })
 
 after(function (done) {
-    // return Product.deleteMany({})
     Promise.all([Product.deleteMany({}), User.deleteMany({})])
         .then(() => done())
 })
@@ -47,8 +69,8 @@ describe('Product Route', function () {
         return
     })
     describe('Create Product', function () {
-        it('Success Create Product', function (done) {
-            this.timeout(30000)
+        /* it('Success Create Product', function (done) {
+            this.timeout(10000)
             const data = {
                 name: "Mi Home Kit",
                 price: 4500000,
@@ -75,9 +97,30 @@ describe('Product Route', function () {
                     expect(image).to.include('https://storage.googleapis.com/')
                     done()
                 })
-        })
+        }) */
 
         it('Fail create Product - Not Admin', function (done) {
+            this.timeout(10000)
+            chai.request(app)
+                .post('/products')
+                .field('name', 'Mi Home Kit')
+                .field('price', 4500000)
+                .field('stock', 30)
+                .attach('image', image, 'mi-kit.png')
+                .set({ authorization: nonAdminToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(403)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Only administrator may access this resource')
+                    done()
+                })
+        })
+        it('Fail create Product - Token Not Set', function (done) {
             this.timeout(10000)
             chai.request(app)
                 .post('/products')
@@ -93,8 +136,23 @@ describe('Product Route', function () {
                     const { code, message } = res.body
                     expect(code).to.equal(res.status)
                     expect(message).to.be.a('string')
+                    expect(message).to.equal('Token is not set for this request')
                     done()
                 })
+        })
+    })
+
+    describe('GET Product', function () {
+        it('Success Get Product', function (done) {
+            chai.request(app)
+                .get('/products')
+                .end(function (err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.be.an('array')
+                    res.body.forEach(el => expect(el).to.be.an('object'))
+                })
+            done()
         })
     })
 })

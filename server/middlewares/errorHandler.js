@@ -1,7 +1,5 @@
 
 module.exports = (err, req, res, next) => {
-    console.log(err.status, "\x1b[31m", err.message)
-
     let status
     let message
 
@@ -24,5 +22,6 @@ module.exports = (err, req, res, next) => {
             message = err.message || err.msg || 'Internal Server Error'
             break;
     }
+    console.log(status, "\x1b[31m\x1b[1m", err.message)
     res.status(status).json({ code: status, message })
 }

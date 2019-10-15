@@ -5,10 +5,10 @@ const Router = require('express').Router(),
     multer = require('../middlewares/multer'),
     gcs = require('../middlewares/googleCloudStorage')
 
+Router.get('/', ProductController.read)
 Router.use(authentication)
 Router.use(admin)
 Router.post('/', multer.single('image'), gcs, ProductController.create)
-Router.get('/', ProductController.read)
 Router.put('/:id', multer.single('image'), gcs, ProductController.update)
 Router.delete('/:id', ProductController.delete)
 
