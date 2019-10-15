@@ -18,6 +18,8 @@ userSchema = new Schema ({
     required: [true, 'Password cannot be empty'],
     unique: true
   },
+}, {
+  versionKey: false
 })
 
 userSchema.pre('save', function(next) {

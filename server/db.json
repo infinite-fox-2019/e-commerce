@@ -1,0 +1,95 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Spider",
+      "description": "Far From Home",
+      "price": 1300000,
+      "stock": 8,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 2,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 3,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 4,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 5,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 6,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 7,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 8,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    },
+    {
+      "id": 9,
+      "name": "Spider",
+      "description": "Homecoming",
+      "price": 900000,
+      "stock": 5,
+      "brand": "S.H.Figuarts",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
