@@ -5,7 +5,7 @@ const Transaction = require('../../models/transaction')
 module.exports = function (done) {
     if (process.env.NODE_ENV === 'test') {
 
-        let jobs = [User.deleteMany({})]
+        let jobs = [User.deleteMany({}), Product.deleteMany({})]
 
         Promise.all(jobs)
             .then(function () {

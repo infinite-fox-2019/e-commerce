@@ -1,6 +1,6 @@
 const { varify } = require('../helpers/jwt')
-const Event = require('../models/event')
-const Todo = require('../models/todo')
+const Product = require('../models/product')
+const User = require('../models/user')
 
 function Authentication(req, res, next) {
     try {
@@ -13,19 +13,10 @@ function Authentication(req, res, next) {
 }
 
 function Authorization(req, res, next) {
-    let eventId = null
-    if (req.query.eventId) {
-        eventId = req.query.eventId
-    } else {
-        eventId = req.body.eventId
-    }
 
-    Event.findOne({
-        _id: eventId,
-        member: req.decode.id
-    })
-        .then(event => {
-            if (event) {
+    User.findById(req.decode.id)
+        .then(user => {
+            if (user.role == 'admin') {
                 next()
             } else {
                 next({

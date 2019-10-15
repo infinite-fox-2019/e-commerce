@@ -17,8 +17,8 @@ describe("User tests", function () {
     describe("POST /user/register", function () {
         it("success register user with status 201", function (done) {
             let user = {
-                name: "Maulana Ghozi",
-                email: "ghozi@gmail.com",
+                name: "Nucky Ridwansyah",
+                email: "nucky@gmail.com",
                 password: "12345",
                 role: 'buyer'
             };
@@ -71,7 +71,6 @@ describe("User tests", function () {
                 .post("/user/register")
                 .send({})
                 .end(function (err, res) {
-                    console.log(res.body.message)
                     expect(err).to.be.null;
                     expect(res).to.have.status(400)
                     expect(res.body).to.have.all.keys('message');
