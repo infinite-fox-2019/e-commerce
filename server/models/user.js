@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { hashPassword } = require('../test/helpers/bcryptjs')
+const { hashPassword } = require('../helpers/bcryptjs')
 
 const userSchema = mongoose.Schema({
   name: {

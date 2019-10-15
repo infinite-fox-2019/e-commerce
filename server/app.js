@@ -30,7 +30,7 @@ app.use('/', index)
 app.use(errHandler)
 
 app.listen(PORT, function(){
-  console.log(`Helloo livecode from port PORT`);
+  console.log(`Helloo ${PORT}`);
 })
 
 module.exports = app

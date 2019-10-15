@@ -89,13 +89,15 @@ Data :
 ```
 Response : 
 {
-    _id: **unique id**
-    name : 'Van Gogh',
-    description: 'for best quality paint',
-    featured_image : 'https://images-na.ssl-images-amazon.com/images/I/61mRJKocYNL.jpg',
-    tags : ['high quality', 'best seller', 'expert'],
-    stock : 6,
-    price : '160000'
+  tags: [ 'high quality', 'best seller', 'expert' ],
+  _id: '5da54b6c2658c628e19a0cb8',
+  name: 'Van Gogh',
+  featured_image: 'https://images-na.ssl-images-amazon.com/images/I/61mRJKocYNL.jpg',
+  description: 'for best quality paint',
+  stock: 6,
+  price: 160000,
+  createdAt: '2019-10-15T04:30:36.701Z',
+  updatedAt: '2019-10-15T04:30:36.701Z'
 }
 ```
 

@@ -1,7 +1,7 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
-var expect = chai.expect;
 const Item = require('../models/item')
+var expect = chai.expect;
 const app = require('../app');
 
 chai.use(chaiHttp)
@@ -25,6 +25,7 @@ describe('Items Routes', function () {
                 chai.request(app).post('/users/login')
                     .send(userLogin)
                     .end(function (err, res) {
+                        console.log(res.body);
                         token = res.body.token
                         expect(err).to.be.null
                         expect(res).to.have.status(200);
@@ -52,6 +53,7 @@ describe('Items Routes', function () {
                     .set('token', token)
                     .send(newItem)
                     .end(function (err, res) {
+                        console.log(res.body);
                         id = res.body._id
                         expect(err).to.be.null
                         expect(res).to.have.status(201)

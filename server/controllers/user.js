@@ -1,6 +1,6 @@
 const User = require('../models/user')
-const { comparePassword } = require('../test/helpers/bcryptjs')
-const { getToken } = require('../test/helpers/jwt')
+const { comparePassword } = require('../helpers/bcryptjs')
+const { getToken } = require('../helpers/jwt')
 
 class UserController {
      static create(req, res, next) {
