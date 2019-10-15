@@ -10,7 +10,11 @@ const images = require('../helpers/images')
 
 //==================FINDALL======================//
 
-Route.get('/',productCont.findAll);
+Route.get('/',authentication,authorizationAdmin,productCont.findAll);
+
+//==================FINDName======================//
+
+Route.get('/:name',productCont.findByName);
 
 //==================CREATE======================//
 

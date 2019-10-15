@@ -11,6 +11,16 @@ class ProductController {
                 next(err);
             })
     }
+    static findByName(req,res,next){
+        Product.find({
+            brand: req.params.name
+        })
+            .then(products=>{
+                console.log(products)
+                res.status(200).json(products);
+            })
+            .catch(next)
+    }
     static create(req,res,next){
         const {name,category,price,description,brand} = req.body;
         const image = req.file.cloudStoragePublicUrl;
