@@ -16,11 +16,11 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: () => import('./views/Login.vue')
+      component: () => import(/* webpackChunkName: "login" */'./views/Login.vue')
     }, {
       path: '/history',
       name: 'history',
-      component: () => import('./views/Transactions.vue')
+      component: () => import(/* webpackChunkName: "transaction" */'./views/Transactions.vue')
     }
   ]
 })

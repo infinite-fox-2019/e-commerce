@@ -10,16 +10,38 @@
             </v-btn>
         </v-app-bar>
 
-        <v-content></v-content>
+        <v-content>
+            <router-view />
+        </v-content>
     </v-app>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import axios from "@/config/axios";
 export default {
     name: "App",
     computed: {
         ...mapState(["token"])
+    },
+    created() {
+        if (localStorage.getItem("token")) {
+            let vm = this;
+            vm.$awn.asyncBlock(
+                axios.get("/users/verify"),
+                function({ data }) {
+                    this.$store.commit("setToken");
+                },
+                function(err) {
+                    this.next(err);
+                    localStorage.removeItem("token");
+                    this.$router.push("login");
+                },
+                "User Verified"
+            );
+        } else {
+            this.$router.push("login");
+        }
     }
 };
 </script>
