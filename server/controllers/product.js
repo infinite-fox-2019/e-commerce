@@ -6,7 +6,8 @@ class ProductController {
     static create(req, res, next) {
         const { name, price, stock } = req.body
         let create = { name, price, stock }
-        if (req.file) create.image = req.file.cloudStoragePublicUrl
+        if (!req.file) return next({ status: 400, message: "Image must be uploaded" })
+        create.image = req.file.cloudStoragePublicUrl
         Product.create(create)
             .then((product) => {
                 res.status(201).json(product)
