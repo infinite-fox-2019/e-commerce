@@ -1,5 +1,5 @@
 const route = require('express').Router()
-const productController = require('../controllers/productController');
+const productController = require('../controllers/productControlller');
 
 
 route.patch('/:id', productController.update)

@@ -51,7 +51,7 @@ describe('Product test', function() {
                 .end(function(err, res) {
                     expect(err).to.be.null
                     expect(res).to.have.status(400)
-                    expect(res.body[0]).to.equal('Name cannot be empty')
+                    expect(res.body[0]).to.equal('Product name cannot be empty')
                     done()
                 })
 
@@ -76,7 +76,7 @@ describe('Product test', function() {
         })
         it('should return validation error when stock is null/empty', function(done) {
             let body = {
-                name: '',
+                name: 'Kaos kaki supreme',
                 description: 'kaos kaki mahal doang, ga bagus',
                 price: 15000,
                 stock: null

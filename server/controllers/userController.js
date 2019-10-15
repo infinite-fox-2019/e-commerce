@@ -43,6 +43,47 @@ class UserController {
             next(err)
         }
     }
+
+    static addCart(req, res, next) {
+        const { items } = req.body
+
+        User.findById(req.loggedUser.id)
+            .then(user => {
+                items.forEach(item => {
+                    if (!user.cart.includes(item)) {
+                        user.cart.push(item)
+                    }
+                });
+                return user.save()
+
+            })
+            .then(response => {
+                res.status(200).json({ message: 'Successfully updated items in your cart' })
+
+            })
+            .catch(next)
+    }
+
+    static deleteCart(req, res, next) {
+        const { items } = req.body
+        User.findById(req.loggedUser.id)
+            .then(user => {
+                let updatedCart = items.map(item => {
+                    if (!user.cart.includes(item)) { return cart }
+                })
+                user.cart = updatedCart
+
+                return user.save()
+
+            })
+
+        .then(response => {
+
+                res.status(200).json({ message: 'Successfully updated your cart' })
+
+            })
+            .catch(next)
+    }
 }
 
 

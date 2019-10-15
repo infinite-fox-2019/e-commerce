@@ -2,21 +2,44 @@ const chai = require('chai');
 const chaihttp = require('chai-http');
 const app = require('../app');
 const User = require('../models/user');
+const Product = require('../models/product');
 
 const expect = chai.expect
 chai.use(chaihttp)
 
 
 describe('User Test', function() {
+    let itemId
+    before(function(done) {
+        let product = {
+            name: 'Kaos kaki supreme',
+            description: 'kaos kaki mahal doang, ga bagus',
+            price: 15000,
+            stock: 10
+        }
+        Product.create(product)
+            .then(product => {
+                itemId = product._id
+                done()
+            })
+            .catch(console.log)
+    })
+
+    after(function(done) {
+        Product.deleteMany({})
+        User.deleteMany({}, done)
+    })
+
     describe('POST  /users/register', function() {
         beforeEach(function(done) {
             User.deleteMany({}, done)
         })
+
         it('should create a new user when call the POST method', function(done) {
             let body = {
                 email: 'john@doe.com',
                 name: 'john doe',
-                password: 'test'
+                password: '12345'
             }
 
             chai.request(app)
@@ -137,9 +160,23 @@ describe('User Test', function() {
         })
 
 
-    })
-    describe.only('POST /users/login', function() {
 
+    })
+    describe('POST /users/login', function() {
+        before(function(done) {
+            User.create({
+                    email: 'john@doe.com',
+                    name: 'john doe',
+                    password: '12345'
+                })
+                .then()
+                .catch(console.log)
+            done()
+
+            after(function(done) {
+                User.deleteMany({}, done)
+            })
+        })
         it('should return a token if success', function(done) {
             chai.request(app)
                 .post('/users/login')
@@ -182,6 +219,68 @@ describe('User Test', function() {
                     expect(err).to.be.null
                     expect(res).to.have.status(400)
                     expect(res.body.message).to.equal('Wrong email/password')
+                    done()
+                })
+        })
+    })
+
+    describe('POST /users/cart', function() {
+        let token
+        before(function(done) {
+            let user = {
+                name: 'John Doe',
+                email: 'john@doe.com',
+                password: '12345'
+            }
+
+            User.create(user)
+                .then()
+                .catch(console.log)
+            done()
+        })
+
+        before(function(done) {
+            chai.request(app)
+                .post('/users/login')
+                .send({ email: 'john@doe.com', password: '12345' })
+                .end(function(err, res) {
+                    token = res.body.token
+                    done()
+                })
+        })
+
+        it('should return success message when add to Cart', function(done) {
+            chai.request(app)
+                .post(`/users/cart`)
+                .send({ items: [itemId] })
+                .set({ token: token })
+                .end(function(err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.have.own.property('message')
+                    expect(res.body.message).to.equal('Successfully updated items in your cart')
+                    done()
+                })
+        })
+
+        it('should return success message when delete from cart', function(done) {
+            chai.request(app)
+                .post(`/users/cart`)
+                .send({ items: [itemId] })
+                .set({ token: token })
+                .end(function(err, res) {
+
+                })
+
+            chai.request(app)
+                .patch('/users/cart')
+                .send({ items: [itemId] })
+                .set({ token: token })
+                .end(function(err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.have.own.property('message')
+                    expect(res.body.message).to.equal('Successfully updated your cart')
                     done()
                 })
         })
