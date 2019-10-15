@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const {generateToken} = require('../helpers/jwt')
+const {comparePassword} = require('../helpers/bcryptjs')
 
 module.exports = {
   register: (req, res, next) => {
@@ -9,14 +10,28 @@ module.exports = {
       const {_id, username, email, password} = created
       let jsonSend = {
         id: _id,
-        username,
-        email,
-        hashed_password: password
+        username
       }
       let access_token = generateToken(jsonSend)
       jsonSend.access_token = access_token
-      console.log(jsonSend)
       res.status(201).json(jsonSend)
+    })
+    .catch(next)
+  },
+  login: (req, res, next) => {
+    const {username, password} = req.body
+    console.log(username, password)
+    User.findOne({username})
+    .then(user => {
+      if(!user || !comparePassword(password, user.password)){
+        throw {status: 400, msg: ['Wrong username/password']}
+      }
+      let jsonSend = {
+        id: user._id,
+        username: user.username
+      }
+      jsonSend.access_token = generateToken(jsonSend)
+      res.status(200).json(jsonSend)
     })
     .catch(next)
   }

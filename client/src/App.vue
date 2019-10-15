@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar/>
     <router-view/>
+    <notifications group="alert-error" class="alert"/>
   </div>
 </template>
 
@@ -34,4 +35,12 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.alert {
+  margin-top: 70px;
+  margin-right: 20px;
+  background: #2c3e50;
+  color: black;
+}
+
 </style>

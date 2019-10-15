@@ -14,7 +14,7 @@
                         <strong>Sign up</strong>
                     </a>
                   </router-link>
-                  <router-link to="/about">
+                  <router-link to="/login">
                     <a class="button is-light">
                         Log in
                     </a>
