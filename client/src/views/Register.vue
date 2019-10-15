@@ -1,12 +1,16 @@
 <template>
   <div>
-    ini dia
+    <RegisterForm/>
   </div>
 </template>
 
 <script>
-export default {
+import RegisterForm from '@/components/RegisterForm'
 
+export default {
+  components: {
+    RegisterForm
+  }
 }
 </script>
 
