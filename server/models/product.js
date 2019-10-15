@@ -16,10 +16,7 @@ const productSchema = new Schema({
     required: [true, 'Product must have a price'],
     min: [0, 'Cannot set negative value']
   },
-  "image": {
-    "type": "String",
-    required: [true, 'Product must have an image']
-  }
+  "image": { "type": "String" }
 })
 
 const Product = mongoose.model('Products', productSchema)

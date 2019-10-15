@@ -1,15 +1,20 @@
 
 const Product = require('../models/product');
+const gcsdelete = require('../helpers/gcsdelete')
 
 class ProductController {
     static create(req, res, next) {
         const { name, price, stock } = req.body
-        const image = req.file.cloudStoragePublicUrl
-        Product.create({ name, price, stock, image })
+        let create = { name, price, stock }
+        if (req.file) create.image = req.file.cloudStoragePublicUrl
+        Product.create(create)
             .then((product) => {
                 res.status(201).json(product)
             })
-            .catch(next);
+            .catch(err => {
+                if (req.file) gcsdelete(create.image)
+                next(err)
+            });
     };
     static read(req, res, next) {
         Product.find({})
@@ -21,11 +26,16 @@ class ProductController {
 
     static update(req, res, next) {
         const id = req.params.id
-        const { name, price, stock, image } = req.body
-        Product.findByIdAndUpdate(id, { $set: { name, price, stock, image } }, { runValidators: true, new: true })
+        const { name, price, stock } = req.body
+        let set = { name, price, stock }
+        if (req.file) set.image = req.file.cloudStoragePublicUrl
+        Product.findByIdAndUpdate(id, { $set: set }, { runValidators: true, new: true })
             .then((product) => {
                 res.status(200).json(product)
-            }).catch(next);
+            }).catch(err => {
+                if (req.file) gcsdelete(set.image)
+                next(err)
+            });
     }
 
     static delete(req, res, next) {
