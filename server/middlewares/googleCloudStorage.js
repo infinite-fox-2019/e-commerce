@@ -14,7 +14,7 @@ const getPublicUrl = (filename) => {
 
 module.exports = (req, res, next) => {
     if (!req.file) {
-        return next()
+        return next({ statu: 400, message: "Image upload required" })
     }
     else if (!req.file.mimetype.includes('image')) {
         return next({
