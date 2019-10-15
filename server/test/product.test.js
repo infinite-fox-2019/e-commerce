@@ -11,6 +11,7 @@ const User = require('../models/user')
 let image = fs.readFileSync('./test/seed/assets/mi-kit.png')
 let adminToken = null
 let nonAdminToken = null
+let productId
 
 
 chai.use(chaiHTTP)
@@ -85,6 +86,7 @@ describe('Product Route', function () {
                 .field('stock', '30')
                 .attach('image', image, 'mi-kit.png')
                 .end(function (err, res) {
+                    productId = res.body._id
                     imageurl = res.body.image
                     expect(err).to.be.null;
                     expect(res).to.have.status(201)
@@ -150,9 +152,95 @@ describe('Product Route', function () {
                     expect(err).to.be.null
                     expect(res).to.have.status(200)
                     expect(res.body).to.be.an('array')
-                    res.body.forEach(el => expect(el).to.be.an('object'))
+                    res.body.forEach(el => {
+                        expect(el).to.be.an('object')
+                        expect(el).to.have.property('name')
+                        expect(el).to.have.property('stock')
+                        expect(el).to.have.property('image')
+                        expect(el).to.have.property('price')
+                        const { image } = el
+                        expect(image).to.match(/https?:\/\//)
+                    })
+                    done()
                 })
-            done()
         })
+    })
+
+    describe('Update product', function () {
+        /* it('Success update product', function (done) {
+            this.timeout(10000)
+            const data = {
+                name: "Mi Home Kit",
+                price: 4500000,
+                stock: 30,
+            }
+            chai.request(app)
+                .put('/products' + productId)
+                .set({ authorization: adminToken })
+                .field('name', 'Mi Home Kit - Edit')
+                .field('price', '45000000')
+                .field('stock', '303')
+                .attach('image', image, 'mi-kit.png')
+                .end(function (err, res) {
+                    imageurl = res.body.image
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('name', 'price', 'stock', 'image', 'createdAt', 'updatedAt', '_id')
+                    const { name, price, stock, image } = res.body
+                    expect(name).to.equal(data.name)
+                    expect(price).to.equal(data.price)
+                    expect(stock).to.equal(data.stock)
+                    expect(image).to.include('https://storage.googleapis.com/')
+                    done()
+                })
+        }) 
+        
+        it('Fail create Product - Not Admin', function (done) {
+            this.timeout(10000)
+            chai.request(app)
+                .put('/products' + productId)
+                .field('name', 'Mi Home Kit')
+                .field('price', 4500000)
+                .field('stock', 30)
+                .attach('image', image, 'mi-kit.png')
+                .set({ authorization: nonAdminToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(403)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Only administrator may access this resource')
+                    done()
+                })
+        })
+
+        it('Fail create Product - Token Not Set', function (done) {
+            this.timeout(10000)
+            chai.request(app)
+                .put('/products' + productId)
+                .field('name', 'Mi Home Kit')
+                .field('price', 4500000)
+                .field('stock', 30)
+                .attach('image', image, 'mi-kit.png')
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Token is not set for this request')
+                    done()
+                })
+        }) */
+    })
+
+    describe('Delete product', function () {
+
     })
 })
