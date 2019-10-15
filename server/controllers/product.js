@@ -4,9 +4,9 @@ const gcsdelete = require('../helpers/gcsdelete')
 
 class ProductController {
     static create(req, res, next) {
+        if (!req.file) return next({ status: 400, message: "Image must be uploaded" })
         const { name, price, stock } = req.body
         let create = { name, price, stock }
-        if (!req.file) return next({ status: 400, message: "Image must be uploaded" })
         create.image = req.file.cloudStoragePublicUrl
         Product.create(create)
             .then((product) => {

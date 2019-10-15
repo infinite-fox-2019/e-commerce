@@ -37,7 +37,7 @@ const userSchema = new Schema({
         product: { type: Schema.Types.ObjectId, ref: 'Products' },
         quantity: Number
     }]
-})
+}, { timestamps: true })
 
 userSchema.pre('save', function (next) {
     this.password = hash(this.password)

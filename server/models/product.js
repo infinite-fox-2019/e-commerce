@@ -17,7 +17,7 @@ const productSchema = new Schema({
     min: [0, 'Cannot set negative value']
   },
   "image": { "type": "String" }
-})
+}, { timestamps: true })
 
 const Product = mongoose.model('Products', productSchema)
 
