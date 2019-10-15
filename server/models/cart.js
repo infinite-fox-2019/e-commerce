@@ -3,10 +3,7 @@ const Schema = mongoose.Schema
 
 const cartSchema = new Schema({
   cart: [{
-    product: {
-      type:Schema.Types.ObjectId,
-      ref: 'Product'
-    }, 
+    product: {type:Schema.Types.ObjectId,ref: 'Product'}, 
     qty:Number
   }],
   user: {

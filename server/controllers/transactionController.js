@@ -2,32 +2,32 @@ const Transaction = require('../models/transaction')
 
 class TransactionController {
 
-  static productList(req,res,next){
-    Product.find()
+  static transactionList(req,res,next){
+    Transaction.find()
       .then(data => {
         res.status(200).json(data)
       })
       .catch(next)
   }
 
-  static addProduct(req,res,next){
-    const {name, qty, price} = req.body
-    Product.create({name, qty, price})
+  static addTransaction(req,res,next){
+    const {cart,total} = req.body
+    const {_id} = req.loggedUser
+    Transaction.create({cart, total, user: _id})
       .then(data => {
         res.status(201).json(data)
       })
       .catch(next)
   }
 
-  static removeProduct(req,res,next){
+  static removeTransaction(req,res,next){
     const {id} = req.params
-    Product.deleteOne({_id:id})
+    Transaction.deleteOne({_id:id})
       .then(data => {
         res.status(200).json(data)
       })
       .catch(next)
   }
-
 }
 
-module.exports = ProductController
+module.exports = TransactionController

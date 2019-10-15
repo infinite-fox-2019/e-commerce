@@ -3,13 +3,17 @@ const Shema = mongoose.Schema
 
 const productShema  = new Shema({
   name: {
-    type: String
+    type: String,
+    required: true,
+    unique: true
   },
   qty: {
-    type: Number
+    type: Number,
+    required: true
   },
   price: {
-    type: Number
+    type: Number,
+    required: true
   }
 })
 

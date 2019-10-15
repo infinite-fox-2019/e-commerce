@@ -29,6 +29,16 @@ class ProductController {
       .catch(next)
   }
 
+  static editProductQty(req,res,next){
+    const {qty} = req.body
+    const {id} = req.params
+    Product.replaceOne({_id:id},{qty})
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(next)
+  }
+
   static removeProduct(req,res,next){
     const {id} = req.params
     Product.deleteOne({_id:id})

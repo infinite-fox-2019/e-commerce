@@ -22,8 +22,10 @@ const userSchema = new Schema({
   }
 })
 
-userSchema.pre("save", (next) => {
-  this.password = generateHash(this.password)
+userSchema.pre("save", function(next){
+  console.log(this.password, "passhere")
+  let hash = generateHash(this.password)
+  this.password = hash
   next()
 })
 
