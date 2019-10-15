@@ -7,7 +7,7 @@ class UserController {
         const { username, email, password } = req.body
         User.create({ username, email, password })
             .then((result) => {
-                const token = createToken({ id: result._id })
+                const token = createToken({ id: result._id, role: result.role })
                 res.status(201).json({ username: result.username, email: result.email, token: `Bearer ${token}` })
             }).catch(next);
     }
@@ -17,7 +17,7 @@ class UserController {
         User.findOne({ $or: [{ username: identity }, { email: identity }] })
             .then((result) => {
                 if (result && compare(password, result.password)) {
-                    const token = createToken({ id: result._id })
+                    const token = createToken({ id: result._id, role: result.role })
                     res.status(200).json({ username: result.username, email: result.email, token: `Bearer ${token}` })
                 } else {
                     next({ status: 401, message: "Wrong Username / Email / Password" })
@@ -30,7 +30,7 @@ class UserController {
         if (SECRET_KEY !== process.env.SECRET_KEY) return next({ status: 401, message: "SECRET_KEY does not match" })
         User.create({ username, email, password, role: "admin" })
             .then((result) => {
-                const token = createToken({ id: result._id })
+                const token = createToken({ id: result._id, role: result.role })
                 res.status(201).json({ username: result.username, email: result.email, token: `Bearer ${token}`, role: result.role })
             }).catch(next);
     }
