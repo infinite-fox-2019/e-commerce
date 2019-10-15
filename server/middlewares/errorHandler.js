@@ -1,6 +1,6 @@
 
 module.exports = (err, req, res, next) => {
-    // console.log(err)
+    console.log(err.status, "\x1b[31m", err.message)
 
     let status
     let message

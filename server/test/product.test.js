@@ -1,3 +1,4 @@
+"use strict"
 const chai = require('chai')
 const chaiHTTP = require('chai-http')
 const fs = require('fs')
@@ -5,6 +6,7 @@ const expect = chai.expect
 const app = require('../app')
 const gcsdelete = require('../helpers/gcsdelete')
 const Product = require('../models/product')
+const User = require('../models/user')
 
 let image = fs.readFileSync('./test/seed/assets/mi-kit.png')
 let adminToken = null
@@ -29,8 +31,10 @@ before(function (done) {
         })
 })
 
-after(function () {
-    return Product.deleteMany({})
+after(function (done) {
+    // return Product.deleteMany({})
+    Promise.all([Product.deleteMany({}), User.deleteMany({})])
+        .then(() => done())
 })
 
 describe('Product Route', function () {
@@ -44,7 +48,7 @@ describe('Product Route', function () {
     })
     describe('Create Product', function () {
         it('Success Create Product', function (done) {
-            this.timeout(10000)
+            this.timeout(30000)
             const data = {
                 name: "Mi Home Kit",
                 price: 4500000,
@@ -75,14 +79,8 @@ describe('Product Route', function () {
 
         it('Fail create Product - Not Admin', function (done) {
             this.timeout(10000)
-            /* const data = {
-                name: "Mi Home Kit",
-                price: 4500000,
-                stock: 30,
-            } */
             chai.request(app)
                 .post('/products')
-                // .type('form')
                 .field('name', 'Mi Home Kit')
                 .field('price', 4500000)
                 .field('stock', 30)
