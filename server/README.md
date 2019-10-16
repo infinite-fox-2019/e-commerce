@@ -436,10 +436,10 @@ Message Error appears depending on the user's request body. This one denotes all
 
 ### Body
 
-| Key      | Value  | Required |
-| -------- | ------ | -------- |
-| id       | String | Yes      |
-| quantity | Number | Yes      |
+| Key      | Value  | Required | Remarks    |
+| -------- | ------ | -------- | ---------- |
+| id       | String | Yes      | Product ID |
+| quantity | Number | Yes      |            |
 
 ### Example
 
@@ -505,7 +505,7 @@ Message Error appears depending on the user's request body. This one denotes all
 ```json
 {
     "code": 406,
-    "message": "You cannot buy a product with 0 or lower amount"
+    "message": "You cannot buy a product with 0 stock"
 }
 ```
 

@@ -11,6 +11,9 @@ chai.use(chaiHTTP)
 
 let userToken = null
 
+let productId1 = "5da6965e8e68ae10fa3c6125"
+let productId2 = "5da6969e1be6ec129d832c6e"
+
 before(function (done) {
     const user = {
         username: "tigor",
@@ -39,4 +42,177 @@ before(function (done) {
 after(function (done) {
     Promise.all([Product.deleteMany({}), User.deleteMany({})])
         .then(() => done())
+})
+
+describe('Cart Route', function () {
+    describe('Get User Cart', function () {
+        it('Success Get User Cart', function (done) {
+            chai.request('app')
+                .get('/carts')
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.have.property('cart')
+                    expect(res.body.cart).to.be.an('array')
+                    res.body.cart.forEach(el => {
+                        expect(el).to.be.an('object')
+                        expect(el).to.have.all.keys('proudct', 'quantity')
+                        expect(el.product).to.have.all.keys('_id', 'productName', 'image', 'price', 'stock', 'createdAt', 'updatedAt')
+                        expect(el.quantity).to.be.a('number')
+                    })
+                    done()
+                })
+        })
+
+        it('Fail Get User Cart - Token Not Set', function () {
+            chai.request('app')
+                .get('/carts')
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Token is not set for this request')
+                    done()
+                })
+        })
+    })
+
+    describe('Success Add Product to Cart', function () {
+        it('Success Add Product to Cart', function (done) {
+            const data = {
+                id: productId1,
+                quantity: 10
+            }
+
+            chai.request(app)
+                .post('/carts')
+                .send(data)
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.have.property('cart')
+                    expect(res.body.cart).to.be.an('array')
+                    expect(res.body.cart).to.have.lengthOf(1)
+                    res.body.cart.forEach(el => {
+                        expect(el).to.be.an('object')
+                        expect(el).to.have.all.keys('proudct', 'quantity')
+                        expect(el.product).to.have.all.keys('_id', 'productName', 'image', 'price', 'stock', 'createdAt', 'updatedAt')
+                        expect(el.quantity).to.be.a('number')
+                    })
+                    done()
+                })
+        })
+        it('Fail Add Product to Cart - Product Not Found', function (done) {
+            const data = {
+                id: "5da6965e8e68ae10fa3c6124",
+                quantity: 10
+            }
+            chai.request(app)
+                .post('/carts')
+                .send(data)
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(404)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("There's no product with such id")
+                    done()
+                })
+        })
+        it('Fail Add Product to Cart - Buy 0 Amount or less', function (done) {
+            const data = {
+                id: productId1,
+                quantity: 0
+            }
+            chai.request(app)
+                .post('/carts')
+                .send(data)
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(406)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("You cannot buy a product with 0 or lower amount")
+                    done()
+                })
+        })
+        it('Fail Add Product to Cart - Buy above stock amount', function (done) {
+            const data = {
+                id: productId1,
+                quantity: 99999999
+            }
+            chai.request(app)
+                .post('/carts')
+                .send(data)
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(406)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("You cannot buy a product higher than the stock have")
+                    done()
+                })
+        })
+        it('Fail Add Product to Cart - Adding a product with 0 stock', function (done) {
+            const data = {
+                id: productId1,
+                quantity: 1
+            }
+            chai.request(app)
+                .post('/carts')
+                .send(data)
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(406)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("You cannot add a product with empty stock")
+                    done()
+                })
+        })
+        it('Fail Add Product to Cart - Token Not Set', function (done) {
+            const data = {
+                id: productId1,
+                quantity: 1
+            }
+            chai.request(app)
+                .post('/carts')
+                .send(data)
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("Token not set for this request")
+                    done()
+                })
+        })
+    })
 })
