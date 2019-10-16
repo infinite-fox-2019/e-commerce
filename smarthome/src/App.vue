@@ -1,67 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer v-model="drawer" app>
-            <v-list-item v-if="username">
-                <v-list-item-avatar>
-                    <v-img :src="gravatar" alt></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                    <v-list-item-title class="text-uppercase">
-                        {{username}}
-                        <v-icon>mdi-chevron-down</v-icon>
-                    </v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-divider v-if="username"></v-divider>
-
-            <v-list dense>
-                <v-list-item @click="$router.push('/')">
-                    <v-list-item-action>
-                        <v-icon>mdi-home</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Shop</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click="$router.push('cart')">
-                    <v-list-item-action>
-                        <v-icon>mdi-cart</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Cart</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click="$router.push('transaction')">
-                    <v-list-item-action>
-                        <v-icon>mdi-book-open</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>History Transaction</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item v-if="role === 'admin'" @click="$router.push('admin')">
-                    <v-list-item-action>
-                        <v-icon>mdi-account-supervisor</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Administrative Tools</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list>
-        </v-navigation-drawer>
-        <v-app-bar app>
-            <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-            <v-toolbar-title class="headline text-uppercase">
-                <span>Smart Home</span>
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-title>
-                <v-icon>mdi-magnify</v-icon>
-            </v-toolbar-title>
-        </v-app-bar>
-
+        <MainNavBar />
         <v-content>
             <router-view />
         </v-content>
@@ -69,42 +8,19 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import axios from "@/config/axios";
-import md5 from "md5";
+import MainNavBar from "@/components/NavBar/MainNavBar";
 export default {
     name: "App",
-    data() {
-        return {
-            drawer: null,
-            gravatar: ""
-        };
-    },
-    methods: {
-        hash(email) {
-            return md5(email);
-        }
-    },
-    computed: {
-        ...mapState(["token", "username", "role"])
+    components: {
+        MainNavBar
     },
     created() {
         if (localStorage.getItem("token")) {
             let vm = this;
             vm.$awn.asyncBlock(
-                axios.get("/users/verify"),
-                function({ data }) {
-                    vm.$store.commit("setToken");
-                    vm.$store.commit("setUserMeta", data);
-                    vm.gravatar = `https://www.gravatar.com/avatar/${md5(
-                        vm.$store.state.email
-                    )}?s=100`;
-                },
-                function(err) {
-                    vm.next(err);
-                    localStorage.removeItem("token");
-                    vm.$router.push("login");
-                },
+                vm.$store.dispatch("verifyUser"),
+                null,
+                vm.next,
                 "Verifying User..."
             );
         }

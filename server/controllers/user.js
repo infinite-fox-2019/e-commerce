@@ -18,7 +18,7 @@ class UserController {
             .then((result) => {
                 if (result && compare(password, result.password)) {
                     const token = createToken({ id: result._id, role: result.role })
-                    res.status(200).json({ username: result.username, email: result.email, token: `Bearer ${token}` })
+                    res.status(200).json({ username: result.username, email: result.email, token: `Bearer ${token}`, role: result.role })
                 } else {
                     next({ status: 401, message: "Wrong Username / Email / Password" })
                 }

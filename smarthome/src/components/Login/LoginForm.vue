@@ -21,17 +21,18 @@ export default {
     },
     methods: {
         submit() {
+            const vm = this;
             const payload = {
                 identity: this.identity,
                 password: this.password
             };
-            this.$awn.asyncBlock(
-                this.$store.dispatch("login", payload),
+            vm.$awn.asyncBlock(
+                vm.$store.dispatch("login", payload),
                 () => {
-                    this.$router.push("home");
-                    this.$awn.success("Login");
+                    vm.$router.push("/");
+                    vm.$awn.success("Login");
                 },
-                this.next,
+                vm.next,
                 "Login"
             );
         }
