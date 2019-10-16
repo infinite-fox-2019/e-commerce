@@ -1,17 +1,20 @@
 <template>
     <v-app>
         <v-navigation-drawer v-model="drawer" app>
-            <v-list-item>
+            <v-list-item v-if="username">
                 <v-list-item-avatar>
                     <v-img :src="gravatar" alt></v-img>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                    <v-list-item-title class="text-uppercase">{{$store.state.username}}</v-list-item-title>
+                    <v-list-item-title class="text-uppercase">
+                        {{username}}
+                        <v-icon>mdi-chevron-down</v-icon>
+                    </v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
 
-            <v-divider></v-divider>
+            <v-divider v-if="username"></v-divider>
 
             <v-list dense>
                 <v-list-item @click="$router.push('/')">
@@ -38,6 +41,14 @@
                         <v-list-item-title>History Transaction</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
+                <v-list-item v-if="role === 'admin'" @click="$router.push('admin')">
+                    <v-list-item-action>
+                        <v-icon>mdi-account-supervisor</v-icon>
+                    </v-list-item-action>
+                    <v-list-item-content>
+                        <v-list-item-title>Administrative Tools</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         </v-navigation-drawer>
         <v-app-bar app>
@@ -46,6 +57,9 @@
                 <span>Smart Home</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-toolbar-title>
+                <v-icon>mdi-magnify</v-icon>
+            </v-toolbar-title>
         </v-app-bar>
 
         <v-content>
@@ -72,7 +86,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["token"])
+        ...mapState(["token", "username", "role"])
     },
     created() {
         if (localStorage.getItem("token")) {
@@ -91,10 +105,8 @@ export default {
                     localStorage.removeItem("token");
                     vm.$router.push("login");
                 },
-                "Loading..."
+                "Verifying User..."
             );
-        } else {
-            this.$router.push("login");
         }
     }
 };

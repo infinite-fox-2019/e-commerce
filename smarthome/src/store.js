@@ -10,6 +10,7 @@ export default new Vuex.Store({
         username: null,
         email: null,
         role: null,
+        products: []
     },
     mutations: {
         setToken(state) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
             state.username = payload.username
             state.email = payload.email
             state.role = payload.role
+        },
+        setProducts(state, payload) {
+            state.products = payload
         }
     },
     actions: {
@@ -43,6 +47,16 @@ export default new Vuex.Store({
                         commit('setUserMeta', data)
                         resolve()
                     }).catch(reject);
+            })
+        },
+        getProducts({ commit }) {
+            return new Promise((resolve, reject) => {
+                axios.get('/products')
+                    .then(({ data }) => {
+                        commit('setProducts', data)
+                        resolve()
+                    })
+                    .catch(reject)
             })
         }
     }
