@@ -17,6 +17,7 @@ let productId
 chai.use(chaiHTTP)
 
 before(function (done) {
+    this.timeout(30000)
     const adminData = {
         username: "adminTigor",
         email: "adminTigor@email.com",

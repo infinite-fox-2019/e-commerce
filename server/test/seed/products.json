@@ -1,20 +1,20 @@
 [
     {
-        "name": "Amazon Echo",
-        "price": 6000000,
-        "image": "https://static.bhphoto.com/images/images2500x2500/1539618736_1437070.jpg",
-        "stock": 100
+        "_id": "5da6965e8e68ae10fa3c6125",
+        "name": "Mi Smart Home",
+        "price": 4500000,
+        "stock": 30,
+        "image": "https://storage.googleapis.com/smart-home-files/1571198557257_mi-kit.png",
+        "createdAt": "2019-10-16T04:02:38.483Z",
+        "updatedAt": "2019-10-16T04:02:38.483Z"
     },
     {
-        "name": "Wink Hub",
-        "price": 5500000,
-        "image": "https://assets.pcmag.com/media/images/527737-wink-hub-2.jpg?thumb=y&width=980&height=494",
-        "stock": 200
-    },
-    {
-        "name": "Brilliant Control",
-        "price": 3500000,
-        "image": "https://assets.pcmag.com/media/images/609939-brilliant-control.jpg?thumb=y&width=980&height=456",
-        "stock": 150
+        "_id": "5da6969e1be6ec129d832c6e",
+        "name": "Mi Smart Home - 2",
+        "price": 4500000,
+        "stock": 30,
+        "image": "https://storage.googleapis.com/smart-home-files/1571198621823_mi-kit.png",
+        "createdAt": "2019-10-16T04:03:42.810Z",
+        "updatedAt": "2019-10-16T04:03:42.810Z"
     }
 ]
