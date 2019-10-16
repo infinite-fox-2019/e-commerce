@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer v-model="drawer" @close="drawer = null" app>
+        <v-navigation-drawer v-model="drawer" @close="closeDrawer" app>
             <NavigationDrawer />
         </v-navigation-drawer>
         <v-app-bar app>
@@ -27,6 +27,11 @@ export default {
         return {
             drawer: null
         };
+    },
+    methods: {
+        closeDrawer() {
+            this.drawer = false;
+        }
     }
 };
 </script>
