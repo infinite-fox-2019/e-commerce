@@ -26,7 +26,6 @@ export default {
             url : `http://localhost:3000/products/${name}`
         })
             .then(({data})=>{
-                console.log(data)
                 this.products = data;
             })
             .catch(err=>{
@@ -37,4 +36,7 @@ export default {
 </script>
 
 <style scoped>
+*{
+    background-color: grey;
+}
 </style>

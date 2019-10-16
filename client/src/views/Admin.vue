@@ -63,8 +63,8 @@ export default {
         axios({
             method: 'get',
             url: 'http://localhost:3000/',
-            headers: {
-                token: localStorage.getItem('token')
+            headers: {token: localStorage.getItem('token')
+                
             }
         })
             .then(({data})=>{
@@ -104,7 +104,4 @@ export default {
 </script>
 
 <style scoped>
-.row{
-    background-color: grey
-}
 </style>

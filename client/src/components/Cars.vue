@@ -33,7 +33,7 @@ export default {
 
 <style>
 .card{
-    background-color: grey;
+    background-color: transparent;
     padding :10px;
 }
 h2{

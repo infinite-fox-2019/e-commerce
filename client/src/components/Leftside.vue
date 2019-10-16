@@ -1,34 +1,42 @@
 <template>
-<b-list-group>
-    <b-list-group-item 
-        button
-        @click='goVideo()'
-        >Preliminary
-    </b-list-group-item>
-    <b-list-group-item 
-        button
-        @click='goUsers()'
-        >Users
-    </b-list-group-item>
-    <b-list-group-item 
-        button
-        @click='goProduct()'
-        >Products
-    </b-list-group-item>
-    <b-list-group-item 
-        button
-        @click='goCreateProduct()'
-        >Create New Product
-    </b-list-group-item>
-    <b-list-group-item 
-        button
-        disabled
-        >ericsudhartio2509@gmail.com
-    </b-list-group-item>
-    <div class="spinner-grow text-secondary" v-if='isloading' role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</b-list-group>
+<div class='leftside'>
+    <b-list-group>
+        <b-list-group-item 
+            button
+            @click='goVideo()'
+             class='group'
+            >Preliminary
+        </b-list-group-item>
+        <b-list-group-item 
+            button
+            @click='goUsers()'
+             class='group'
+            >Users
+        </b-list-group-item>
+        <b-list-group-item 
+            button
+            @click='goProduct()'
+             class='group'
+            >Products
+        </b-list-group-item>
+        <b-list-group-item 
+            button
+            @click='goCreateProduct()'
+             class='group'
+            >Create New Product
+        </b-list-group-item>
+        <b-list-group-item 
+            button
+            disabled
+             class='group'
+            >ericsudhartio2509@gmail.com
+        </b-list-group-item>
+        <div class="spinner-grow text-secondary" v-if='isloading' role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </b-list-group>
+
+</div>
 </template>
 
 <script>
@@ -80,7 +88,11 @@ export default {
 </script>
 
 <style scoped>
-*{
-    padding: 10px
+.leftside{
+    padding:10px;
+    margin: 100px 70px;
+}
+.group{
+    margin:10px 0px;;
 }
 </style>

@@ -1,53 +1,38 @@
 <template>
-  <div class='allthis'>
-      <div class="inside">
-          <form @submit.prevent='login()'>
-          <table>
-              <tr>
-                  <td>
-                    <label>Username</label>
-                  </td>
-                  <td>
-                    <input 
-                        v-model='form.username' 
-                        type='text' 
-                        placeholder="username"
-                        ><br>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                    <label>Password</label>
-                  </td>
-                  <td>
-                    <input 
-                        type='password' 
-                        v-model='form.password' 
-                        placeholder='password'
-                        ><br>
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                        <input 
-                            class='btn-primary' 
-                            type='submit'
-                            >
-                  </td>
-                  <td>
-                        <router-link
-                            to='/register'
-                            >Register
-                        </router-link>
-                  </td>
-                    <div class="spinner-grow text-secondary" v-if='isloading' role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-              </tr>
-          </table>
-          </form>
+    <form 
+        class="box" 
+        action="index.html" 
+        method="post"
+        @submit.prevent='login()'
+        style="width:500px"
+        >
+    <h1>Login</h1>
+    <input 
+      type="text" 
+      name="" 
+      placeholder="Username"
+      v-model='form.username'
+      >
+    <input 
+      type="password" 
+      name="" 
+      placeholder="Password"
+      v-model='form.password'
+      >
+      <div class='bbtn'>
+        <input 
+          type="submit" 
+          name="" 
+          value="Login"
+          >
+        <input 
+          type='button'
+          name="register" 
+          @click='register()'
+          value="Register"
+          >
       </div>
-  </div>
+  </form>
 </template>
 
 <script>
@@ -65,46 +50,118 @@ export default {
         }
     },
     methods: {
-        login(){
-            const username = this.form.username;
-            const password = this.form.password;
-            this.isloading= true;
-            axios({
-                method : 'post',
-                url: 'http://localhost:3000/login',
-                data: {
-                    username,
-                    password
-                }
-            })
-                .then(({data})=>{
-                    swal.fire({
-                        type: 'success',
-                        title: 'You\'re Online now',
-                        text: data.msg
-                    })
-                    localStorage.setItem('token',data.token)
-                    this.$router.push('/');
-                    this.$emit('islogin',true);
-                    this.$emit('isrole',data.role)
-                    this.isloading= false;
-                })
-                .catch(err=>{
-                    swal.fire({
-                        type: 'error',
-                        title: 'Ooooops!',
-                        text: err.response.data.msg
-                    })
-                    this.isloading= false;
-                })
-        }
+      register(){
+        console.log('hallo')
+      },
+      login(){
+          const username = this.form.username;
+          const password = this.form.password;
+          this.isloading= true;
+          axios({
+              method : 'post',
+              url: 'http://localhost:3000/login',
+              data: {
+                  username,
+                  password
+              }
+          })
+              .then(({data})=>{
+                  swal.fire({
+                      type: 'success',
+                      title: 'You\'re Online now',
+                      text: data.msg
+                  })
+                  localStorage.setItem('token',data.token)
+                  this.$router.push('/');
+                  this.$emit('islogin',true);
+                  this.$emit('isrole',data.role)
+                  this.isloading= false;
+              })
+              .catch(err=>{
+                  swal.fire({
+                      type: 'error',
+                      title: 'Ooooops!',
+                      text: err.response.data.msg
+                  })
+                  this.isloading= false;
+              })
+      }
     }
 }
 </script>
 
-<style scoped>
-.inside{
-    margin: 100px 700px;
-    justify-content: center;
+<style>
+.bbtn{
+  display: flex;
 }
+body{
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  letter-spacing:4px;
+  font-family: sans-serif; }
+.box{
+  width: 315px;
+  padding: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background-color:rgba(10,10,10,0.9);
+  border-radius: 60px;
+  box-shadow: 10px 11px 10px 5px rgba(10,10,50,0.9) ;
+  text-align: center; }
+.box h1{
+  color: white;
+  text-transform: uppercase;
+  font-family: fantasy;
+  font-weight: 500;
+  color: gold; }
+.box input[type = "text"],.box input[type = "password"]{
+  border:2;
+  background: none;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 4px double #4433dd;
+  padding: 12px 14px;
+  width: 200px;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  transition: 0.2s; }
+.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+  width: 280px;
+  border-color: #1bbb55; }
+.box input[type = "submit"]{
+  border:4px double ;
+  background: none;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+  border: 4px double #1bbb55;
+  padding: 12px 36px;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  transition: 0.2s;
+  cursor: pointer; }
+.box input[name = "register"]{
+  border:4px double ;
+  background: none;
+  display: block;
+  margin: 15px auto;
+  text-align: center;
+  border: 4px double #1bbb55;
+  padding: 12px 36px;
+  outline: none;
+  color: white;
+  border-radius: 25px;
+  transition: 0.2s;
+  cursor: pointer; }
+.box input[type = "submit"]:hover{
+  background: blue; }
+.box input[name = "register"]:hover{
+  background: greenyellow;
+  color: black }
 </style>

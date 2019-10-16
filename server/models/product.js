@@ -26,7 +26,7 @@ const ProductSchema = new Schema ({
 
 ProductSchema.pre('save',function(next){
     this.createdAt = new Date()
-    this.stock = 15
+    this.stock = 15 || this.stock
     next()
 })
 

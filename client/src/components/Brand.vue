@@ -2,14 +2,14 @@
     <b-carousel-slide
       :img-src="getBrand.image"
       >
-      <h1>Dreamcar Official</h1>
-    <b-button 
+    <span 
       pill variant="outline-success" 
       @click='getBrandName(getBrand.name)'
-      id='styleButton'
+       class="btn btn-two"
       >
       {{getBrand.name}}
-      </b-button>
+      </span>
+
     </b-carousel-slide>
 </template>
 
@@ -40,9 +40,54 @@ export default {
 #styleButton{
   margin:100px 100px; width:500px; height: 50px; font-family: Arial, Helvetica, sans-serif
 }
-h1{
-  background-color: transparent;
-  margin: 570px auto;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+
+.btn-two::before, .btn-two::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+	height: 100%;
+  bottom: 0;
+	left: 0;
+	z-index: 1;
+  transition: all 0.3s;
+  border: 2px solid red;
+  border-radius: 10px;
 }
+
+.btn-two:hover::after {
+  animation-name: rotatecw;
+  animation-duration: 2s;
+}
+.btn-two:hover::before {
+  animation-name: rotateccw; 
+  animation-duration: 2s;
+}
+.btn-two:hover::after, .btn-two:hover::before {
+  left: 100px;
+  width: 60px;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rotatecw {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+@keyframes rotateccw {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(-360deg);}
+}
+.btn {
+  margin: 500px 0;
+  position: relative;
+  font-size: 30px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  color: gold;
+  width: 256px;
+  height: 64px;
+  line-height: 64px;
+  transition: all 0.3s;
+}
+
 </style>

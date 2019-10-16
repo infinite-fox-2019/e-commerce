@@ -16,6 +16,10 @@
       @isrole='gotRole'
       :login-role='loginRole'
     />
+
+
+
+    
   </div>
 </template>
 
@@ -56,6 +60,9 @@ export default {
 </script>
 
 <style>
+body{
+  background-image: url("https://images.unsplash.com/photo-1570280407069-9017ba84a3a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80");
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

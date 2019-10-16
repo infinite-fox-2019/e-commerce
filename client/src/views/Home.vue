@@ -6,8 +6,6 @@
         style="text-shadow: 0px 0px 2px #000"
         fade
         indicators
-        img-width="1024"
-        img-height="400"
       >
     <div v-for="(brand, _id) in fetchData" :key='_id'>
       <Brand 
@@ -50,4 +48,7 @@ export default {
 </script>
 
 <style scoped>
+.home{
+  height:250px !important;
+}
 </style>

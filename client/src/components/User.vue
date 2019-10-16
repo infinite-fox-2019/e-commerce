@@ -11,7 +11,8 @@
             >
             <h6 
                 class="mb-0"
-                >{{user.username}}
+                style='font-size: 25px; color: gold;'
+                >{{user.username.toUpperCase()}}
             </h6>
         </template>
         <b-card-text>{{user.address}}</b-card-text>

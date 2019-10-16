@@ -59,6 +59,9 @@ export default {
 </script>
 
 <style>
+.row{
+    display: flex;
+}
 td{
     width:250px;
 }
