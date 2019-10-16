@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secret = 'HACKTIV8';
+const secret = process.env.JWT_SECRET;
 
 function generateToken(payload) {
   return jwt.sign(payload, secret);

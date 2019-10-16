@@ -2,11 +2,14 @@ const Product = require('../models/product')
 
 class ProductController {
   static add(req, res, next) {
-    const { name, price } = req.body
+    const { name, price, desc, stock } = req.body
     Product
       .create({
         name,
-        price
+        price,
+        desc,
+        stock,
+        img_url: req.file.cloudStoragePublicUrl
       })
       .then(newProduct => {
         res.status(201).json(newProduct)

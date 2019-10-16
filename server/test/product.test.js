@@ -8,23 +8,26 @@ chai.use(chaiHttp)
 
 describe('Product Testing', function () {
   let productId = ''
+  const newProduct = {
+    name: 'Dota 2',
+    desc: 'Every day, millions of players worldwide enter battle as one of over a hundred Dota heroes. And no matter if it\'s their 10th hour of play or 1,000th, there\'s always something new to discover. With regular updates that ensure a constant evolution of gameplay, features, and heroes, Dota 2 has taken on',
+    stock: 50,
+    price: 2000000,
+    img_url: 'https://static-cdn.jtvnw.net/ttv-boxart/Dota%202.jpg'
+  }
   after(function() {
     // runs after all tests in this block
     return Product.deleteMany({})
   });
-  describe('POST /products/add', function () {
-    it('should return name, price', function (done) {
-      const newProduct = {
-        name: 'TV',
-        price: 2000000
-      }
+  describe('POST /products', function () {
+    it('should return _id, name, desc, stock, price, img_url', function (done) {   
       chai
         .request(app)
-        .post('/products/add')
+        .post('/products')
         .send(newProduct)
         .end(function (err, res) {
           expect(err).to.be.null
-          expect(res.body).to.have.all.keys('_id', 'name', 'price')
+          expect(res.body).to.have.all.keys('_id', 'name', 'desc', 'stock', 'price', 'img_url')
           expect(res).to.have.status(201)
           done()
         })
@@ -32,10 +35,6 @@ describe('Product Testing', function () {
   })
   describe('check new product on products collection', function () {
     it('should return new product', function (done) {
-      const newProduct = {
-        name: 'TV',
-        price: 2000000
-      }
       chai
         .request(app)
         .get('/products')

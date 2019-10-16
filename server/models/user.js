@@ -6,8 +6,7 @@ const userSchema = new Schema({
   name: String,
   role: {
     type: String,
-    default: 'costumer',
-    required: [true, 'please choose your account type']
+    default: 'costumer'
   },
   email: {
     type: String,

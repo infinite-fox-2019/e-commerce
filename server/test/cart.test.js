@@ -17,11 +17,11 @@ describe('Cart Testing', function () {
       .post('/register')
       .send({
         name: 'Ahmad Fadilah',
-        role: 'costumer',
         email: 'fadil@mail.com',
         password: 'fadil'
       })
       .end(function (err, res) {
+        console.log(res.body)
       })
     chai
       .request(app)
@@ -36,13 +36,16 @@ describe('Cart Testing', function () {
       })
     chai
       .request(app)
-      .post('/products/add')
+      .post('/products')
       .send({
         name: 'TV',
         price: 2000000
       })
       .end(function (err, res) {
+        console.log(res.body)
         product = res.body
+        // console.log(loggedUser)
+        // console.log(product)
         done()
       })
   })

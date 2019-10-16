@@ -50,7 +50,6 @@ describe('User Testing', function () {
     it('should return ObjectId, name, role, email, hashPass', function (done) {
       let newUser = {
         name: 'Ahmad Fadilah',
-        role: 'costumer',
         email: 'fadil@mail.com',
         password: 'fadil'
       }
@@ -67,27 +66,6 @@ describe('User Testing', function () {
           expect(res.body.email).to.be.a('string')
           expect(res.body.password).to.be.a('string')
           expect(res.body.password).to.not.equal(newUser.password)
-          done()
-        })
-    })
-    it("should throw error 'please choose your account type'", function (done) {
-      let newUser = {
-        name: 'Ahmad Fadilah',
-        role: '',
-        email: 'fadil@mail.com',
-        password: 'fadil'
-      }
-      chai
-        .request(app)
-        .post('/register')
-        .send(newUser)
-        .end(function (err, res) {
-          // console.log(JSON.parse(res.error.text).message[0])
-          expect(err).to.be.null
-          expect(res).to.have.status(400)
-          expect(function () {
-            throw new TypeError(JSON.parse(res.error.text).message[0])
-          }).to.throw('please choose your account type')
           done()
         })
     })
