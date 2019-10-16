@@ -69,7 +69,16 @@ class UserController {
     };
 
     static verifyUser(req, res, next) {
-        res.status(200).json({ message: 'User Verified' })
+        const id = req.decode.id
+        User.findById(id)
+            .then((result) => {
+                res.status(200).json({
+                    username: result.username,
+                    message: 'User Verified',
+                    email: result.email,
+                    role: result.role
+                })
+            }).catch(next);
     }
 
     static checkUser(req, res, next) {

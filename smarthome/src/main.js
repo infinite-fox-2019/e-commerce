@@ -6,6 +6,7 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import VueAWN from "vue-awesome-notifications"
 import "vue-awesome-notifications/dist/styles/style.css"
+import next from './config/errorHandler'
 
 
 Vue.use(VueAWN, {
@@ -18,13 +19,11 @@ Vue.config.productionTip = false
 
 Vue.mixin({
     methods: {
-        next: function ({ response: { data: { code, message } } }) {
-            // next: function (obj) {
+        next,
+        $go: function ({ data }) {
             const vm = this
-
-            if (Array.isArray(message)) message = message.join('\n')
-            vm.$awn.alert(message, { labels: { alert: `Error ${code}` } })
-        },
+            vm.$awn.success(data)
+        }
     }
 })
 

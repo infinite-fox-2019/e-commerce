@@ -25,7 +25,15 @@ export default {
                 identity: this.identity,
                 password: this.password
             };
-            this.$store.dispatch("login", payload);
+            this.$awn.asyncBlock(
+                this.$store.dispatch("login", payload),
+                () => {
+                    this.$router.push("home");
+                    this.$awn.success("Login");
+                },
+                this.next,
+                "Login"
+            );
         }
     }
 };

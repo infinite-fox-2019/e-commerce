@@ -58,7 +58,15 @@ export default {
                 email: this.email,
                 password: this.password
             };
-            this.$store.dispatch("register", payload);
+            this.$awn.asyncBlock(
+                this.$store.dispatch("register", payload),
+                () => {
+                    this.$router.push("home");
+                    this.$awn.success("User Registered");
+                },
+                this.next,
+                "Registering User..."
+            );
         },
         checkUsername() {
             if (!this.username) {
@@ -70,7 +78,7 @@ export default {
                         this.usernameTriggers.error = false;
                         this.usernameTriggers.success = true;
                     })
-                    .catch(response => {
+                    .catch(({ response: { data: { message } } }) => {
                         this.usernameTriggers.error = true;
                         this.usernameTriggers.success = false;
                         this.usernameTriggers.errorMessage = message;
@@ -93,9 +101,10 @@ export default {
                         this.emailTriggers.error = false;
                         this.emailTriggers.success = true;
                     })
-                    .catch(() => {
+                    .catch(({ response: { data: { message } } }) => {
                         this.emailTriggers.error = true;
                         this.emailTriggers.success = false;
+                        this.emailTriggers.errorMessage = message;
                     })
                     .finally(() => (this.emailTriggers.loading = false));
             }
@@ -124,8 +133,8 @@ export default {
         }
     },
     created() {
-        this.debouncedCheckUsername = debounce(this.checkUsername, 500);
-        this.debouncedCheckEmail = debounce(this.checkEmail, 500);
+        this.debouncedCheckUsername = debounce(this.checkUsername, 1500);
+        this.debouncedCheckEmail = debounce(this.checkEmail, 1500);
     }
 };
 </script>
