@@ -70,8 +70,8 @@ describe('Product Route', function () {
         return
     })
     describe('Create Product', function () {
-        /* it('Success Create Product', function (done) {
-            this.timeout(10000)
+        it('Success Create Product', function (done) {
+            this.timeout(30000)
             const data = {
                 name: "Mi Home Kit",
                 price: 4500000,
@@ -99,10 +99,10 @@ describe('Product Route', function () {
                     expect(image).to.include('https://storage.googleapis.com/')
                     done()
                 })
-        }) */
+        })
 
         it('Fail create Product - Not Admin', function (done) {
-            this.timeout(10000)
+            this.timeout(30000)
             chai.request(app)
                 .post('/products')
                 .field('name', 'Mi Home Kit')
@@ -123,7 +123,7 @@ describe('Product Route', function () {
                 })
         })
         it('Fail create Product - Token Not Set', function (done) {
-            this.timeout(10000)
+            this.timeout(30000)
             chai.request(app)
                 .post('/products')
                 .field('name', 'Mi Home Kit')
@@ -167,19 +167,19 @@ describe('Product Route', function () {
     })
 
     describe('Update product', function () {
-        /* it('Success update product', function (done) {
-            this.timeout(10000)
+        it('Success update product', function (done) {
+            this.timeout(30000)
             const data = {
                 name: "Mi Home Kit",
                 price: 4500000,
                 stock: 30,
             }
             chai.request(app)
-                .put('/products' + productId)
+                .put('/products/' + productId)
                 .set({ authorization: adminToken })
                 .field('name', 'Mi Home Kit - Edit')
-                .field('price', '45000000')
-                .field('stock', '303')
+                .field('price', 5000000)
+                .field('stock', 25)
                 .attach('image', image, 'mi-kit.png')
                 .end(function (err, res) {
                     imageurl = res.body.image
@@ -188,18 +188,17 @@ describe('Product Route', function () {
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('name', 'price', 'stock', 'image', 'createdAt', 'updatedAt', '_id')
                     const { name, price, stock, image } = res.body
-                    expect(name).to.equal(data.name)
-                    expect(price).to.equal(data.price)
-                    expect(stock).to.equal(data.stock)
+                    expect(name).to.equal('Mi Home Kit - Edit')
+                    expect(price).to.equal(5000000)
+                    expect(stock).to.equal(25)
                     expect(image).to.include('https://storage.googleapis.com/')
                     done()
                 })
-        }) 
-        
-        it('Fail create Product - Not Admin', function (done) {
-            this.timeout(10000)
+        })
+
+        it('Fail Update Product - Not Admin', function (done) {
             chai.request(app)
-                .put('/products' + productId)
+                .put('/products/' + productId)
                 .field('name', 'Mi Home Kit')
                 .field('price', 4500000)
                 .field('stock', 30)
@@ -218,10 +217,9 @@ describe('Product Route', function () {
                 })
         })
 
-        it('Fail create Product - Token Not Set', function (done) {
-            this.timeout(10000)
+        it('Fail Update Product - Token Not Set', function (done) {
             chai.request(app)
-                .put('/products' + productId)
+                .put('/products/' + productId)
                 .field('name', 'Mi Home Kit')
                 .field('price', 4500000)
                 .field('stock', 30)
@@ -237,10 +235,58 @@ describe('Product Route', function () {
                     expect(message).to.equal('Token is not set for this request')
                     done()
                 })
-        }) */
+        })
     })
 
     describe('Delete product', function () {
-
+        it('Success Delete Product', function (done) {
+            this.timeout(30000)
+            chai.request(app)
+                .delete('/products/' + productId)
+                .set({ authorization: adminToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.property('message')
+                    const { message } = res.body
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Product deleted')
+                    done()
+                })
+        })
+        it('Fail Delete Product - Not Admin', function (done) {
+            chai.request(app)
+                .delete('/products/' + productId)
+                .set({ authorization: nonAdminToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(403)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.be.a('number')
+                    expect(code).to.equal(403)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Only administrator may access this resource')
+                    done()
+                })
+        })
+        it('Fail Delete Product - Token Not Set', function (done) {
+            chai.request(app)
+                .delete('/products/' + productId)
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.be.a('number')
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal('Token is not set for this request')
+                    done()
+                })
+        })
     })
 })

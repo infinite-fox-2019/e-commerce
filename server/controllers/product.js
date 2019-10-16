@@ -43,7 +43,7 @@ class ProductController {
         const id = req.params.id
         Product.findByIdAndDelete(id)
             .then((product) => {
-                res.status(200).json("Product deleted.")
+                res.status(200).json({ message: "Product deleted" })
             })
             .catch(next);
     };
