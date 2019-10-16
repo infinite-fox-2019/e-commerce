@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "idyllic-folio-255401",
+  "private_key_id": "521ed87bbb4d82c9e2d12fb9aa65412936ea84b1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDoat0SPFAeQ9CL\nmyuKf4ueGRVsN5qlnC/VAB0joghpdZhB3qd8y8Rf91y5LJTbU7v4YIM8jrfRySY5\nJuhubkjZwX+bl6FF+htO60YZ29Ldo8v8z+DK9nUPED7Peigg3qOI6vlY8HCppcRd\nQ5+O/BetqqE2p1VNSQeS9Wn+HAFf29zdnKndA9Jk8zfar1lAIaRLCldWlBGf1z/k\n91YaDve2DhD2zJTGG/7pjkxvWhT2py9O+tlAGa9G6AmoRoslyDSD7X4EeXZfPhZA\npZ8cvRBsgUKDJhLLx9Wr7vYqYenmxTbe4R9XbDD6CNdiCtR7PBa0g3rdGv7lbXrx\nEPxrvHE7AgMBAAECggEATJem+hL5PjgP+mntC+vjeXr/tdWPN8OEedfbQnpr9kEk\nJ5T2Mii+sveETZv1BGCQYhaAOU05I7/7wjrhvz7F8EkVwhNSuQpmxHfBdtUcJSGN\nIGfrR0e4JPowENTLc6WbVAxHlvlJz4aK80dNRmQqc3d3QFkdweXuwo3w26akB0//\nMGL0FttF0O6QrIVC780wU8hBEXlo22/hEY9eH+bAAHxfjTamyB4oPQSClxM4tCq5\npjzBqEWMg4qVg/MONlVk9LQUMTZW7dCPPEoxSCZ0nT1y1fAElHOnZlFbVcefWCTd\n2TbJlaozBIT8rb9Bs/ZCAXUl6sRXvEbItE16w3UgwQKBgQD0fC/X/ljvLPibppZ9\n4fvUGe4rPs2a2EnFH41AhuWbOyCGBT1mDQSLUqg6spQzQS5XPIHx+fStnLWeno6+\nT5+hfgrSay2dkYFwt8K0OU4BA6tuhxGdcBXDu9OVwt4ZnWOzqLweW3vTwhHhcSp1\n9Yquq8scbova3QxdAbTl+Q+TQQKBgQDzXSyLxacm2cno8jk8B7HaBLyN1nhddnxT\n8NJX0b+B1riCz64twnxrQq89rSEDCp1WG6FIXQlfjZsWW66ivDdpPsG8w8chbrWx\nsSWPuiVvyqvIpf9jnUDEUUJD48pf2AOhEZ4Cho8bNJYiovvW9E7IMlvWkjv4+vwo\nRqIAzgFxewKBgQCcGEonutInauwT3OnK16UEh8XDwKZfTebTv9BcuYQRd0/NobzQ\n0lDrb0vPpkLu8pfWxOAmkbOBwUNIUe3LXmUKI8JfFGUcbFFbmUfr74Z5KVGkEQLT\nJUQQI3T08mUBr7Z/d6UcMMa/rfHioXE9vRbdbPwSXBZZF7cUDsnj5v/lwQKBgQCb\nvUDIodB6WF2SKZDfDb2PXACedGXKygx+W1sAwEXh/VtOu0EoH5InwiELQ0QhAiX1\n+PCZspBRCfn5sOptUi3TuEmbV16T0pmMAWWcOO/EPtr4KOLrCLNt7uKNN7VG6KJJ\n7VBFJX9nVZvOxqaLxQS1sSR8iFDA4T2FOM5r3WmnCQKBgQCLWKpFlvOPVJtxXXIo\n+LRDs4FU0f2wR5+BAD5W6TWBDB2gkLxP1bd9rHqsVnxWgFf9dp4Wocwe1LTUnoLT\n4Mwlipk8WTov9StV+cU+LEe7HOm3M4WsVmqvWxo9ku4UKAutpebTZgMTvBjzycCZ\n3M1Z2Pe9swDTmYPqRdUYPIHt+A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "e-commerce@idyllic-folio-255401.iam.gserviceaccount.com",
+  "client_id": "116659219673108280490",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/e-commerce%40idyllic-folio-255401.iam.gserviceaccount.com"
+}

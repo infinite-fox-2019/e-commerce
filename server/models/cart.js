@@ -2,23 +2,23 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 
-const cartSchema = new Schema({
+const CartSchema = new Schema({
     customer_id: {
         type: ObjectId,
-        ref: "User",
-        required: [true, "CustomerId Is Required"]
+        required: [true, "CustomerId Is Required"],
+        ref: "User"
     },
     product_id: {
         type: ObjectId,
-        ref: "Product",
-        required: [true, "ProductId Is Required"]
+        required: [true, "ProductId Is Required"],
+        ref: "Product"
     },
     quantity: {
         type: Number,
-        required: [true, 'Quantity Must Be Greater Than 0']
+        required: [true, "Quantity Must Be Greater Than 0"]
     }
 })
 
-const Cart = mongoose.model('Cart', cartSchema)
+const Cart = mongoose.model('Cart', CartSchema)
 
 module.exports = Cart

@@ -8,6 +8,7 @@ class UserController {
         .then(user => {
             const
             {
+                _id,
                 username,
                 email,
                 password,
@@ -15,6 +16,7 @@ class UserController {
             } = user
             const payload =
             {
+                _id,
                 username,
                 email,
                 password,
@@ -30,8 +32,8 @@ class UserController {
         User.findOne({ email }).exec()
         .then(user => {
             if (user && comparePassword(password, user.password)) {
-                const { username, email, password, role } = user
-                const payload = { username, email, password, role }
+                const { _id, username, email, password, role } = user
+                const payload = { _id, username, email, password, role }
                 const token = encodeToken(payload)
                 res.status(200).json({ username, email, role, token })
             } else {
