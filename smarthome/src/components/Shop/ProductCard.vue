@@ -38,13 +38,11 @@ export default {
     },
     computed: {
         stockSeparator() {
-            // return this.product.stock;
             return this.product.stock
                 .toString()
                 .replace(/\d(?=(\d{3})+\.)/g, "$&.");
         },
         convertToRp() {
-            // return this.product.price;
             return `Rp.${this.product.price
                 .toFixed(2)
                 .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;

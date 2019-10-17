@@ -34,7 +34,7 @@
                     <v-list-item-title>History Transaction</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-            <v-list-item v-if="role === 'admin'" @click="$router.push('admin')">
+            <v-list-item v-if="role === 'admin'" @click="goAdmin">
                 <v-list-item-action>
                     <v-icon>mdi-account-supervisor</v-icon>
                 </v-list-item-action>
@@ -85,6 +85,13 @@ export default {
                 return;
             } else {
                 this.$router.push("/transaction");
+            }
+        },
+        goAdmin() {
+            if (!this.$route.path === "/admin") {
+                return;
+            } else {
+                this.$router.push("admin");
             }
         }
     }

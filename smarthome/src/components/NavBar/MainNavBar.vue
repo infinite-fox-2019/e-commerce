@@ -6,7 +6,7 @@
         <v-app-bar app>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title class="headline text-uppercase">
-                <span>Smart Home</span>
+                <span>{{currentPath}}</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-title>
@@ -31,6 +31,27 @@ export default {
     methods: {
         closeDrawer() {
             this.drawer = false;
+        }
+    },
+    computed: {
+        currentPath: {
+            get() {
+                switch (this.$route.path) {
+                    case "/cart":
+                        return "Cart";
+                    case "/admin":
+                        return "Admin";
+                    case "/transaction":
+                        return "History";
+                    case "/login":
+                        return "Login";
+                    default:
+                        return "Smart Home";
+                }
+            },
+            set() {
+                return;
+            }
         }
     }
 };
