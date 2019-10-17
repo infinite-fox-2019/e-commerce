@@ -1,4 +1,5 @@
 import axios from '../config/axios'
+import axiosF from '../config/axiosFormData'
 import md5 from 'md5'
 
 export default {
@@ -14,6 +15,7 @@ export default {
         setUserMeta(state, payload) {
             state.token = localStorage.getItem('token')
             axios.defaults.headers.Authorization = state.token
+            axiosF.defaults.headers.Authorization = state.token
             state.username = payload.username
             state.email = payload.email
             state.role = payload.role
