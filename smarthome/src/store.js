@@ -62,7 +62,7 @@ export default new Vuex.Store({
                 axios.get("/users/verify")
                     .then(({ data }) => {
                         commit("setUserMeta", data);
-                        resolve()
+                        resolve(data)
                     }).catch(reject)
             })
         },
