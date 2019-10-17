@@ -29,7 +29,7 @@ const router = new Router({
             name: 'admin',
             component: () => import(/* webpackChunkName: "admin" */ './views/Admin.vue'),
             beforeEnter(to, from, next) {
-                store.dispatch('verifyUser')
+                store.dispatch('user/verifyUser')
                     .then(data => {
                         if (data.role === 'admin') next()
                         else next('/')
