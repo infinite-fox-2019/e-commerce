@@ -18,7 +18,7 @@ export default {
         if (localStorage.getItem("token")) {
             let vm = this;
             vm.$awn.asyncBlock(
-                vm.$store.dispatch("verifyUser"),
+                vm.$store.dispatch("user/verifyUser"),
                 null,
                 vm.next,
                 "Verifying User..."

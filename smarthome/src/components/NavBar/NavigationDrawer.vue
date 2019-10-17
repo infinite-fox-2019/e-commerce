@@ -53,7 +53,7 @@ import Profile from "./Profile";
 export default {
     name: "navigation-drawer-items",
     computed: {
-        ...mapState(["token", "username", "role"])
+        ...mapState("user", ["token", "username", "role"])
     },
     components: {
         Profile

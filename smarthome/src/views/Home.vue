@@ -26,10 +26,10 @@ export default {
         );
     },
     methods: {
-        ...mapActions(["getProducts"])
+        ...mapActions("product", ["getProducts"])
     },
     computed: {
-        ...mapState(["products"])
+        ...mapState("product", ["products"])
     }
 };
 </script>
