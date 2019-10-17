@@ -37,7 +37,7 @@ export default {
         editProduct({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 axios.put('/products/' + payload.id, payload.data)
-                    .then(() => this.dispatch('getProducts'))
+                    .then(() => this.dispatch('product/getProducts'))
                     .then(() => resolve())
                     .catch(reject)
             })

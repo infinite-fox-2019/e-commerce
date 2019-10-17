@@ -1,6 +1,6 @@
 <template>
     <v-card :loading="loading" class="text-truncate mx-auto my-12" max-width="374">
-        <v-img height="250" :src="product.image"></v-img>
+        <v-img height="250" contain :src="product.image"></v-img>
 
         <v-card-title class="subtitle-1">{{product.name}}</v-card-title>
 

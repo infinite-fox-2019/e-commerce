@@ -5,7 +5,7 @@
                 <v-btn icon dark @click="$emit('close')">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
-                <v-toolbar-title>Edit Product</v-toolbar-title>
+                <v-toolbar-title>Add Product</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-toolbar-items>
                     <v-btn dark text type="submit">Save</v-btn>
@@ -35,7 +35,7 @@
                             @change="setImage"
                             messages="Only select a new image if you want to set a new one."
                         ></v-file-input>
-                        <v-row justify="center" class="mt-6" v-if="imagePreview">
+                        <v-row justify="center" v-if="imagePreview">
                             <v-img
                                 contain
                                 :src="imagePreview"
@@ -54,19 +54,19 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-    name: "product-form",
+    name: "create-product-form",
     data() {
         return {
             name: "",
             price: null,
             stock: null,
             image: "",
-            imagePreview: ""
+            imagePreview: "",
+            rules: [v => !!v || "Image is required"]
         };
     },
-    props: ["product"],
     methods: {
-        ...mapActions("product", ["editProduct"]),
+        ...mapActions("product", ["addProduct"]),
         save() {
             const vm = this;
             let formData = new FormData();
@@ -74,18 +74,14 @@ export default {
             formData.set("name", vm.name);
             formData.set("price", vm.price);
             formData.set("stock", vm.stock);
-            const payload = {
-                id: vm.product._id,
-                data: formData
-            };
             vm.$awn.asyncBlock(
-                vm.editProduct(payload),
+                vm.addProduct(formData),
                 () => {
                     vm.$awn.success("Product Updated");
                     vm.$emit("close");
                 },
                 vm.next,
-                "Editing Product..."
+                "Adding product..."
             );
         },
         setImage(val) {
@@ -111,12 +107,6 @@ export default {
                 vm.imagePreview = "";
             }
         }
-    },
-    created() {
-        this.name = this.product.name;
-        this.price = this.product.price;
-        this.stock = this.product.stock;
-        this.imagePreview = this.product.image;
     }
 };
 </script>

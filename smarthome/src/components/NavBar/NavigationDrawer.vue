@@ -74,24 +74,24 @@ export default {
             }
         },
         goCart() {
-            if (!this.$route.path === "/cart") {
+            if (this.$route.path === "/cart") {
                 return;
             } else {
                 this.$router.push("/cart");
             }
         },
         goTransaction() {
-            if (!this.$route.path === "/transaction") {
+            if (this.$route.path === "/transaction") {
                 return;
             } else {
                 this.$router.push("/transaction");
             }
         },
         goAdmin() {
-            if (!this.$route.path === "/admin") {
+            if (this.$route.path === "/admin") {
                 return;
             } else {
-                this.$router.push("admin");
+                this.$router.push("/admin");
             }
         }
     }
