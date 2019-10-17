@@ -51,7 +51,7 @@ export default {
     },
     methods: {
       register(){
-        console.log('hallo')
+        this.$router.push('/register')
       },
       login(){
           const username = this.form.username;
@@ -72,8 +72,9 @@ export default {
                       text: data.msg
                   })
                   localStorage.setItem('token',data.token)
+                  localStorage.setItem('pos',data.role);
                   this.$router.push('/');
-                  this.$emit('islogin',true);
+                  this.$emit('islogin',true, data.role);
                   this.$emit('isrole',data.role)
                   this.isloading= false;
               })
@@ -90,7 +91,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .bbtn{
   display: flex;
 }

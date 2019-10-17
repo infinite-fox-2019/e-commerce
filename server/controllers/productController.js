@@ -16,7 +16,7 @@ class ProductController {
             brand: req.params.name
         })
             .then(products=>{
-                console.log(products)
+                // console.log(products)
                 res.status(200).json(products);
             })
             .catch(next)

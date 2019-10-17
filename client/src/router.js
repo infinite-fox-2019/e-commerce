@@ -9,6 +9,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/profile',
+      name: 'profile',
+      component: () => import(/* webpackChunkName: 'profile' */ './views/Profile.vue')
+    },
+    {
       path: '/',
       name: 'home',
       component: Home
@@ -30,12 +35,12 @@ export default new Router({
       component: () => import(/**/ './views/Admin.vue')
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/contact',
+      name: 'contact',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue') //memanggil component ketika di click
+      component: () => import(/* webpackChunkName: "about" */ './views/Contact.vue') //memanggil component ketika di click
     }
   ]
 })

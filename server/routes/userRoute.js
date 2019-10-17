@@ -18,6 +18,9 @@ Route.post('/register',UserCont.register);
 
 Route.post('/login',UserCont.login);
 
+//==================LOGIN======================//
+
+Route.get('/findprofile',authentication,UserCont.findOne);
 
 //==================EXPORTS======================//
 

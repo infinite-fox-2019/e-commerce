@@ -4,7 +4,7 @@
             <li>DreamCar Official</li>
               <li>
                 <router-link 
-                  to="/" 
+                  to="/"
                   >
                   <div class="btn btn-one">
                       <span>Home</span>
@@ -42,24 +42,32 @@
                   >Search
                 </b-button>
               </li>
+              <li>
                 <router-link 
                   to="/profile" 
                   >
-                  <span  class="btn btn-one">Profile</span>
+                  <div class="btn btn-one">
+                    <span>Profile</span>
+                  </div>
                 </router-link>
+              </li>
               <li>
                 <a v-if='loginRole=="Admin"'>
                 <router-link 
                   to="/admin" 
                   >
-                    <span class="btn btn-one">Admin</span>
+                  <div class="btn btn-one">
+                    <span>Admin</span>
+                  </div>
                 </router-link>
                 </a>
                 <a v-if='!loginStatus'>
                 <router-link 
                   to="/login" 
                   >
-                      <span class="btn btn-one">Login</span>
+                  <div class="btn btn-one">
+                      <span>Login</span>
+                  </div>
                 </router-link>
                 </a>  
                 <a v-else @click='logout()' class="btn btn-one" style='color:gold'>
@@ -75,7 +83,6 @@
 
 <script>
 import swal from 'sweetalert2';
-
 export default {
     data(){
         return {
@@ -86,12 +93,13 @@ export default {
     methods :{
         logout(){
             localStorage.removeItem('token');
+            localStorage.removeItem('pos')
             swal.fire({
                 type: 'info',
                 title: 'See you again!'
             })
             this.$emit('changeloginstatus',false);
-            this.$emit('changeloginrole', '')
+            this.$emit('changeloginrole', null)
             this.$router.push('/');
         }
     },

@@ -33,8 +33,27 @@ function authorizationAdmin (req,res,next){
     }
 }
 
+function authroizationUser (req,res,next){
+    try{
+        let id = req.loggedUser._id
+        User.findById({_id: req.body.id})
+            .then(user=>{
+                if(user._id === id){
+                    next()
+                }
+            })
+            .catch(err=>{
+                next({status:403,msg:'Author'});
+            })
+    }
+    catch(err){
+
+    }
+}
+
 
 module.exports = {
     authentication,
-    authorizationAdmin
+    authorizationAdmin,
+    authroizationUser
 }

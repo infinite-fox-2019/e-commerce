@@ -13,7 +13,6 @@
     </div> -->
     <router-view
       @islogin='gotStatus'
-      @isrole='gotRole'
       :login-role='loginRole'
     />
 
@@ -37,10 +36,8 @@ export default {
     Nav
   },
   methods:{
-    gotStatus(status){
+    gotStatus(status,role){
       this.loginStatus = status
-    },
-    gotRole(role){
       this.loginRole = role
     },
     changeStatus(status){
@@ -54,7 +51,17 @@ export default {
     if(localStorage.getItem('token')){
       this.loginStatus=true;
     }
-    this.gotRole()
+    const role = localStorage.getItem('pos');
+    if(role === 'Admin'){
+      this.loginRole = role;
+    }else {
+      this.loginRole = 'Customer'
+    }
+  },
+  watch:{
+    loginRole(val){
+      this.loginRole = val
+    }
   }
 }
 </script>

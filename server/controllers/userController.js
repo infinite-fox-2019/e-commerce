@@ -1,6 +1,7 @@
 const User = require('../models/user.js');
 const {signToken} = require('../helpers/jwt');
 const {comparePassword} = require('../helpers/password');
+const {sendMail} = require('../helpers/sendMail');
 
 class UserController {
     static findAll(req,res,next){
@@ -39,7 +40,17 @@ class UserController {
         const {username,email,password,address} = req.body
         User.create({username,email,password,address})
             .then((data)=>{
-                res.status(201).json({data,msg:"Now we're Family :)"})
+                sendMail(email,{
+                    msg : 
+`Welcome, now your email has been automatically registered in our database ..
+your current data:
+username: ${username}
+address: ${address}
+please remember your username and password :)
+for more information you can reply to this email thank you
+NB: This message is automatically answered`
+                })
+                res.status(201).json({data,msg:"Now we're Family!"})
             })
             .catch(next)
     }
@@ -67,6 +78,17 @@ class UserController {
             })
             .catch(err=>{
                 next({status: 404,msg: 'Wrong'})
+            })
+    }
+    static findOne(req,res,next){
+        const id = req.loggedUser._id;
+        console.log(id)
+        User.findById({_id: id})
+            .then(user=>{
+                res.status(200).json(user);
+            })
+            .catch(err=>{
+                next({status:404,msg:'Not Found'});
             })
     }
 }

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert2'
 
 export default {
     data(){
@@ -38,7 +39,7 @@ export default {
   background-color: grey
 }
 #styleButton{
-  margin:100px 100px; width:500px; height: 50px; font-family: Arial, Helvetica, sans-serif
+  margin:100px 100px; width:600px; height: 50px; font-family: Arial, Helvetica, sans-serif
 }
 
 .btn-two::before, .btn-two::after {

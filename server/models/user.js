@@ -20,10 +20,12 @@ const UserSchema = new Schema({
     address: {
         type: String,
         required: true
-    }
+    },
+    image: String
 })
 
 UserSchema.pre('save',function(next){
+    this.image = 'https://nianow.com/sites/nianow.com/files/support-graphics/icons/profile-default-photo.png'
     this.password = hashPassword(this.password);
     this.role = 'Customer';
     next()
