@@ -4,13 +4,18 @@
   <h1>{{ product.name }}</h1>
   <p class="title">{{ product.description }}</p>
 
-  <p><button>Detail</button></p>
+  <p><button @click.prevent="goToDetail">Detail</button></p>
 </div>
 </template>
 
 <script>
 export default {
-  props: ['product']
+  props: ['product'],
+  methods: {
+    goToDetail () {
+      this.$router.push(`/products/${this.product._id}`)
+    }
+  },
 }
 </script>
 
