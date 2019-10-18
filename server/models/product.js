@@ -12,7 +12,8 @@ const productSchema = new Schema({
         type: Number,
         required: [true, 'Stock cannot be empty']
     },
-    image: String
+    image: String,
+    category: String
 }, {
     versionKey: false
 })

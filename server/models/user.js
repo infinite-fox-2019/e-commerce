@@ -15,7 +15,10 @@ const userSchema = new Schema({
         required: [true, 'Password cannot be empty']
     },
     role: { type: String, default: 'user' },
-    cart: [{ type: Schema.Types.ObjectId, ref: 'Product' }]
+    cart: [{
+        productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+        qty: { type: Number, min: 1 }
+    }]
 }, {
     versionKey: false
 })

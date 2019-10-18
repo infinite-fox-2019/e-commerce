@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const { compare } = require('../helpers/bcrypt');
 const { generateToken, verifyToken } = require('../helpers/jwt');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 
 class UserController {
@@ -45,44 +46,48 @@ class UserController {
     }
 
     static addCart(req, res, next) {
-        const { items } = req.body
+        const { item } = req.body
 
         User.findById(req.loggedUser.id)
             .then(user => {
-                items.forEach(item => {
-                    if (!user.cart.includes(item)) {
-                        user.cart.push(item)
-                    }
-                });
-                return user.save()
-
-            })
-            .then(response => {
-                res.status(200).json({ message: 'Successfully updated items in your cart' })
+                user.cart.push(item)
 
             })
             .catch(next)
     }
 
-    static deleteCart(req, res, next) {
-        const { items } = req.body
+    static updateCart(req, res, next) {
+        const { item } = req.body
+            // req.body = { productId: id product, qty: number , price: number}
         User.findById(req.loggedUser.id)
             .then(user => {
-                let updatedCart = items.map(item => {
-                    if (!user.cart.includes(item)) { return cart }
+                user.cart.forEach(oldItem => {
+                    if (oldItem.productId == ObjectId(item.productId)) {
+                        oldItem.qty = item.qty
+                        oldItem.price = item.price
+                    }
                 })
-                user.cart = updatedCart
+                return user.save()
+            })
+            .then(response => {
+                res.status(200).json({ message: 'Successfully updated items in your cart' })
+            })
+            .catch(next)
+    }
 
+
+    static checkout(req, res, next) {
+        User.findById(req.loggedUser.id)
+            .then(user => {
+                user.cart = []
                 return user.save()
 
             })
-
-        .then(response => {
-
-                res.status(200).json({ message: 'Successfully updated your cart' })
-
+            .then(response => {
+                res.status(200).json({ message: 'Successfully checkout from cart' })
             })
             .catch(next)
+
     }
 }
 
