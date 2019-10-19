@@ -24,6 +24,9 @@ export default {
     }
   },
   methods: {
+    getProducts () {
+      this.$store.dispatch('getProducts')
+    },
     showAlert (messages) {
       this.$notify({
         group: 'alert-error',
@@ -39,6 +42,7 @@ export default {
       this.$store.commit('SET_USERNAME', localStorage.username)
       this.$store.commit('SET_USER_ROLE', localStorage.userRole)
       this.$store.commit('SET_IS_LOGIN', true)
+      this.getProducts()
     }
   },
   watch: {

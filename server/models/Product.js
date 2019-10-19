@@ -25,7 +25,8 @@ productSchema = new Schema({
     required: [true, 'You have to choose a series']
   },
   image: {
-    type: String
+    type: String,
+    required: true
   }
 })
 

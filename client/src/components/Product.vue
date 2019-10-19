@@ -1,5 +1,5 @@
 <template>
-  <div class="product-container">
+  <div class="product-container" @click="seeDetail">
     <div>
       <img :src="product.image"/>
     </div>
@@ -20,6 +20,11 @@ export default {
   props: {
     product: Object
   },
+  methods: {
+    seeDetail () {
+      this.$router.push(`/products/${this.product._id}`)
+    }
+  },
   computed: {
     formattedPrice () {
       return `IDR ${this.product.price.toLocaleString()}`
@@ -33,6 +38,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  cursor: pointer;
 }
 
 .is-text-reddish {

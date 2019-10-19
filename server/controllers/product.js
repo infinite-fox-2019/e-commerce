@@ -25,5 +25,17 @@ module.exports = {
       res.status(201).json(sendJson)
     })
     .catch(next)
+  },
+  update: (req, res, next) => {
+    const { name, description, price, stock, series, image } = req.body
+
+  console.log(image)
+    Product.findByIdAndUpdate(req.params.id, {
+      name, description, price, stock, series, image
+    }, {useFindAndModify: false, omitUndefined: true, runValidators: true})
+    .then(product => {
+      res.status(200).json(product)
+    })
+    .catch(next)
   }
 }

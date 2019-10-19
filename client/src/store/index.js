@@ -115,6 +115,40 @@ export default new Vuex.Store({
           console.log(err)
           commit('SET_ERR_MESSAGES', err)
         })
+    },
+    updateProductWithImage ({ commit }, payload) {
+      let bodyFormData = new FormData()
+      bodyFormData.append('file', payload.file)
+      axios.post('/upload-single', bodyFormData)
+        .then(({ data }) => {
+          payload.image = data.file
+          return axios.post(`/products/${payload.id}`, payload, {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          })
+        })
+        .then(({ data }) => {
+          router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERR_MESSAGES', err)
+        })
+    },
+    updateProduct ({ commit }, payload) {
+      axios.post(`/products/${payload.id}`, payload, {
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
+          commit('SET_ERR_MESSAGES', err)
+        })
     }
   }
 })
