@@ -1,7 +1,10 @@
 import axios from 'axios'
 
+const host = 'http://192.168.0.100:3000'
+// const host = 'http://localhost:3000'
+
 export default axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: host,
     timeout: 30000,
     headers: { Authorization: localStorage.getItem('token') }
 })

@@ -11,11 +11,11 @@
                 transition="dialog-bottom-transition"
             >
                 <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" dark fixed fab bottom right color="pink">
+                    <v-btn v-on="on" dark fixed fab bottom right color="pink" @click="formKey++">
                         <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </template>
-                <CreateProductForm @close="dialog = false" />
+                <CreateProductForm @close="dialog = false" :key="formKey" />
             </v-dialog>
         </v-row>
     </v-container>
@@ -33,7 +33,8 @@ export default {
     },
     data() {
         return {
-            dialog: false
+            dialog: false,
+            formKey: 0
         };
     },
     created() {

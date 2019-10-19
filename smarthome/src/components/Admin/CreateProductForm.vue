@@ -1,6 +1,6 @@
 <template>
     <v-card>
-        <v-form @submit.prevent="save">
+        <v-form @submit.prevent="save" lazy-validation ref="form">
             <v-toolbar dark color="primary">
                 <v-btn icon dark @click="$emit('close')">
                     <v-icon>mdi-close</v-icon>
@@ -14,32 +14,43 @@
             <v-container>
                 <v-row justify="center">
                     <v-col>
-                        <v-text-field prepend-icon="mdi-rename-box" label="Name" v-model="name"></v-text-field>
+                        <v-text-field
+                            messages="Required."
+                            prepend-icon="mdi-rename-box"
+                            label="Name"
+                            :rules="rules"
+                            v-model="name"
+                        ></v-text-field>
                         <v-text-field
                             prepend-icon="mdi-cash-multiple"
                             label="Price"
                             type="number"
                             prefix="Rp."
                             v-model="price"
+                            :rules="rules"
+                            messages="Required."
                         ></v-text-field>
                         <v-text-field
                             prepend-icon="mdi-numeric"
                             label="Stock"
                             type="number"
                             v-model="stock"
+                            :rules="rules"
+                            messages="Required."
                         ></v-text-field>
                         <v-file-input
                             prepend-icon="mdi-image"
                             label="Product Image"
                             accept="image/*"
                             @change="setImage"
-                            messages="Only select a new image if you want to set a new one."
+                            messages="Required."
+                            :rules="rules"
                         ></v-file-input>
                         <v-row justify="center" v-if="imagePreview">
                             <v-img
                                 contain
                                 :src="imagePreview"
-                                alt="123"
+                                :alt="product._id"
                                 max-height="300"
                                 max-width="300"
                             ></v-img>
@@ -62,27 +73,29 @@ export default {
             stock: null,
             image: "",
             imagePreview: "",
-            rules: [v => !!v || "Image is required"]
+            rules: [v => !!v || "Required."]
         };
     },
     methods: {
         ...mapActions("product", ["addProduct"]),
         save() {
-            const vm = this;
-            let formData = new FormData();
-            formData.append("image", vm.image);
-            formData.set("name", vm.name);
-            formData.set("price", vm.price);
-            formData.set("stock", vm.stock);
-            vm.$awn.asyncBlock(
-                vm.addProduct(formData),
-                () => {
-                    vm.$awn.success("Product Updated");
-                    vm.$emit("close");
-                },
-                vm.next,
-                "Adding product..."
-            );
+            if (this.$refs.form.validate()) {
+                const vm = this;
+                let formData = new FormData();
+                formData.append("image", vm.image);
+                formData.set("name", vm.name);
+                formData.set("price", vm.price);
+                formData.set("stock", vm.stock);
+                vm.$awn.asyncBlock(
+                    vm.addProduct(formData),
+                    () => {
+                        vm.$awn.success("Product Updated");
+                        vm.$emit("close");
+                    },
+                    vm.next,
+                    "Adding product..."
+                );
+            }
         },
         setImage(val) {
             const vm = this;

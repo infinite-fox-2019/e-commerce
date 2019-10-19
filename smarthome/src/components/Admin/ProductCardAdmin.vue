@@ -18,7 +18,7 @@
 
                 <v-card-actions>
                     <v-btn color="deep-purple accent-4" v-on="on" text>Edit</v-btn>
-                    <v-btn color="red accent-4" text @click="deleteProduct(product.id)">Delete</v-btn>
+                    <v-btn color="red accent-4" text @click="deleteProduct(product._id)">Delete</v-btn>
                 </v-card-actions>
             </v-card>
         </template>
@@ -41,13 +41,13 @@ export default {
     }),
 
     methods: {
-        edit(id) {
-            this.loading = true;
-
-            setTimeout(() => (this.loading = false), 2000);
-        },
         deleteProduct(id) {
-            return;
+            this.$awn.async(
+                this.$store.dispatch("product/deleteProduct", id),
+                "Product deleted",
+                this.next,
+                "Deleting Product..."
+            );
         }
     },
     computed: {

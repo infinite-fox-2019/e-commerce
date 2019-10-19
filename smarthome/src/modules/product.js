@@ -43,8 +43,10 @@ export default {
             })
         },
         deleteProduct({ commit }, payload) {
+            console.log('============ Masuk ============');
             return new Promise((resolve, reject) => {
                 axios.delete('/products/' + payload)
+                    .then(() => this.dispatch('product/getProducts'))
                     .then(({ data }) => resolve(data))
                     .catch(reject)
             })

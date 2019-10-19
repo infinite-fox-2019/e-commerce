@@ -1,12 +1,15 @@
 <template>
     <v-card>
         <v-form @submit.prevent="save">
-            <v-toolbar dark color="primary">
+            <v-toolbar dark color="pink">
                 <v-btn icon dark @click="$emit('close')">
                     <v-icon>mdi-close</v-icon>
                 </v-btn>
                 <v-toolbar-title>Edit Product</v-toolbar-title>
                 <v-spacer></v-spacer>
+                <v-toolbar-items>
+                    <v-btn dark text @click="reset">Undo</v-btn>
+                </v-toolbar-items>
                 <v-toolbar-items>
                     <v-btn dark text type="submit">Save</v-btn>
                 </v-toolbar-items>
@@ -110,13 +113,16 @@ export default {
             } else {
                 vm.imagePreview = "";
             }
+        },
+        reset() {
+            this.name = this.product.name;
+            this.price = this.product.price;
+            this.stock = this.product.stock;
+            this.imagePreview = this.product.image;
         }
     },
     created() {
-        this.name = this.product.name;
-        this.price = this.product.price;
-        this.stock = this.product.stock;
-        this.imagePreview = this.product.image;
+        this.reset();
     }
 };
 </script>
