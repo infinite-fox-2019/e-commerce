@@ -1,5 +1,5 @@
 <template>
-    <v-card :loading="loading" class="text-truncate mx-auto my-12" max-width="374">
+    <v-card :loading="loading" class="text-truncate mx-auto my-12">
         <v-img height="250" contain :src="product.image"></v-img>
 
         <v-card-title class="subtitle-1">{{product.name}}</v-card-title>
@@ -15,29 +15,41 @@
         <v-divider class="mx-4"></v-divider>
 
         <v-card-actions>
-            <v-btn color="deep-purple accent-4" text @click="addToCart(product.id)">Add To Cart</v-btn>
+            <v-dialog v-model="dialog" max-width="374">
+                <template v-slot:activator="{ on }">
+                    <v-btn color="deep-purple accent-4" text v-on="on">Add To Cart</v-btn>
+                </template>
+                <AddToCart
+                    @close="dialog = false"
+                    @loading-start="loading = true"
+                    @loading-end="loading = false; dialogKey++"
+                    :product="product"
+                />
+            </v-dialog>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+import AddToCart from "./AddToCart";
+
 export default {
     name: "product-card",
     props: ["product"],
+    components: {
+        AddToCart
+    },
     data: () => ({
         loading: false,
-        selection: 1
+        selection: 1,
+        dialog: false,
+        dialogKey: 0
     }),
 
-    methods: {
-        addToCart(id) {
-            this.loading = true;
-
-            setTimeout(() => (this.loading = false), 2000);
-        }
-    },
+    methods: {},
     computed: {
         stockSeparator() {
+            if (this.product.stock === 0) return "Out of Stock";
             return this.product.stock
                 .toString()
                 .replace(/\d(?=(\d{3})+\.)/g, "$&.");

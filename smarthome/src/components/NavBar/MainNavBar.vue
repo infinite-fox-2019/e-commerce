@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer v-model="drawer" @close="closeDrawer" app>
+        <v-navigation-drawer v-model="drawer" @input="getInput" @close="closeDrawer" app>
             <NavigationDrawer />
         </v-navigation-drawer>
         <v-app-bar app>
@@ -46,6 +46,9 @@ export default {
                 .then(() => {})
                 .catch(this.next)
                 .finally(() => (this.loading = false));
+        },
+        getInput(val) {
+            this.drawer = val;
         }
     },
     computed: {

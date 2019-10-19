@@ -39,11 +39,10 @@ export default {
     methods: {
         ...mapMutations("user", ["destroyCredentials"]),
         signOut() {
-            this.destroyCredentials();
-            if (!this.$route.path === "/") {
-                this.$router.push("/");
-            }
             this.$emit("close");
+            this.destroyCredentials();
+            this.$router.push("/bouncetohome");
+            this.$router.push("/");
             this.$awn.info("User logged out");
         }
     },
