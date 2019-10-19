@@ -65,7 +65,7 @@ export default {
                     this.$awn.success("User Registered");
                 },
                 this.next,
-                "Registering User..."
+                "Registering User"
             );
         },
         checkUsername() {

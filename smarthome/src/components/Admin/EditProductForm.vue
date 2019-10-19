@@ -88,7 +88,7 @@ export default {
                     vm.$emit("close");
                 },
                 vm.next,
-                "Editing Product..."
+                "Editing Product"
             );
         },
         setImage(val) {

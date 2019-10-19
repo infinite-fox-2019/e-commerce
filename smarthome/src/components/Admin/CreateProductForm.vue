@@ -50,7 +50,7 @@
                             <v-img
                                 contain
                                 :src="imagePreview"
-                                :alt="product._id"
+                                alt="new image"
                                 max-height="300"
                                 max-width="300"
                             ></v-img>
@@ -93,7 +93,7 @@ export default {
                         vm.$emit("close");
                     },
                     vm.next,
-                    "Adding product..."
+                    "Adding product"
                 );
             }
         },

@@ -18,7 +18,7 @@ class ProductController {
             });
     };
     static read(req, res, next) {
-        Product.find({})
+        Product.find({}).sort({ createdAt: -1 })
             .then((products) => {
                 res.status(200).json(products)
             })
