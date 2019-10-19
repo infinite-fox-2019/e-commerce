@@ -47,7 +47,10 @@ export default {
                         this.$awn.success("Product added to cart");
                         this.$emit("loading-end");
                     },
-                    this.next,
+                    err => {
+                        this.$emit("loading-end");
+                        this.next(err);
+                    },
                     "Adding product to cart"
                 );
             }
