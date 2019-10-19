@@ -147,7 +147,7 @@ describe('Cart Route', function () {
                 .set({ Authorization: userToken })
                 .end(function (err, res) {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
@@ -168,7 +168,7 @@ describe('Cart Route', function () {
                 .set({ Authorization: userToken })
                 .end(function (err, res) {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
@@ -189,7 +189,7 @@ describe('Cart Route', function () {
                 .set({ Authorization: userToken })
                 .end(function (err, res) {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
@@ -313,6 +313,22 @@ describe('Cart Route', function () {
                 })
         })
 
+        it('Fail update cart - No data property', function (done) {
+            chai.request(app)
+                .set({ Authorization: userToken })
+                .end((err, res) => {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.all.keys('code', 'message')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("Request body must have a property named 'data'")
+                    done()
+                })
+        })
+
         it('Fail update cart - wrong data type', function (done) {
             const data = {}
             chai.request(app)
@@ -320,7 +336,7 @@ describe('Cart Route', function () {
                 .send({ data })
                 .end((err, res) => {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
@@ -331,21 +347,7 @@ describe('Cart Route', function () {
                 })
         })
 
-        it('Fail update cart - No data property', function (done) {
-            chai.request(app)
-                .set({ Authorization: userToken })
-                .end((err, res) => {
-                    expect(err).to.be.null;
-                    expect(res).to.have.status(406)
-                    expect(res.body).to.be.an('object')
-                    expect(res.body).to.have.all.keys('code', 'message')
-                    const { code, message } = res.body
-                    expect(code).to.equal(res.status)
-                    expect(message).to.be.a('string')
-                    expect(message).to.equal("Request body must have a property named 'data'")
-                    done()
-                })
-        })
+
 
         it('Fail Update Cart - Token Not Set', function (done) {
             const data = [
@@ -426,7 +428,7 @@ describe('Cart Route', function () {
                 .set({ Authorization: userToken })
                 .end(function (err, res) {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
@@ -447,7 +449,7 @@ describe('Cart Route', function () {
                 .set({ Authorization: userToken })
                 .end(function (err, res) {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
@@ -463,18 +465,53 @@ describe('Cart Route', function () {
                 quantity: 1
             }
             chai.request(app)
-                .post('/cart')
+                .put('/cart')
                 .send(data)
                 .set({ Authorization: userToken })
                 .end(function (err, res) {
                     expect(err).to.be.null;
-                    expect(res).to.have.status(406)
+                    expect(res).to.have.status(400)
                     expect(res.body).to.be.an('object')
                     expect(res.body).to.have.all.keys('code', 'message')
                     const { code, message } = res.body
                     expect(code).to.equal(res.status)
                     expect(message).to.be.a('string')
                     expect(message).to.equal("You cannot add a product with empty stock")
+                    done()
+                })
+        })
+    })
+
+    describe('Delete Cart', function () {
+        it('Success delete cart', function (done) {
+            chai.request(app)
+                .delete('/cart')
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(200)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.property('message')
+                    const { message } = res.body
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("Cart deleted")
+                    done()
+                })
+        })
+        it('Fail delete cart - No Token Set', function (done) {
+            chai.request(app)
+                .delete('/cart')
+                .set({ Authorization: userToken })
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.be.an('object')
+                    expect(res.body).to.have.property('message')
+                    expect(res.body).to.have.property('code')
+                    const { code, message } = res.body
+                    expect(code).to.equal(res.status)
+                    expect(message).to.be.a('string')
+                    expect(message).to.equal("Cart deleted")
                     done()
                 })
         })

@@ -500,33 +500,33 @@ Message Error appears depending on the user's request body. This one denotes all
 
 #### Logic Error - Set 0 or negative Buy Amount
 
-**Response Code: `406 Not Acceptable`**
+**Response Code: `400 Bad Request`**
 
 ```json
 {
-    "code": 406,
+    "code": 400,
     "message": "You cannot buy a product with 0 stock"
 }
 ```
 
 #### Logic Error - Buy above stock amount
 
-**Response Code: `406 Not Acceptable`**
+**Response Code: `400 Bad Request`**
 
 ```json
 {
-    "code": 406,
+    "code": 400,
     "message": "You cannot buy a product higher than the stock have"
 }
 ```
 
 #### Logic Error - Adding a product with 0 stock
 
-**Response Code: `406 Not Acceptable`**
+**Response Code: `400 Bad Request`**
 
 ```json
 {
-    "code": 406,
+    "code": 400,
     "message": "You cannot add a product with empty stock"
 }
 ```
@@ -636,6 +636,8 @@ Message Error appears depending on the user's request body. This one denotes all
 /carts
 ```
 
+**Method: `PUT`**
+
 ### Headers
 
 | Key           | Value            |
@@ -728,33 +730,33 @@ Message Error appears depending on the user's request body. This one denotes all
 
 #### Logic Error - Set 0 or negative Buy Amount
 
-**Response Code: `406 Not Acceptable`**
+**Response Code: `400 Bad Request`**
 
 ```json
 {
-    "code": 406,
+    "code": 400,
     "message": "You cannot buy a product with 0 or lower amount"
 }
 ```
 
 #### Logic Error - Buy above stock amount
 
-**Response Code: `406 Not Acceptable`**
+**Response Code: `400 Bad Request`**
 
 ```json
 {
-    "code": 406,
+    "code": 400,
     "message": "You cannot buy a product higher than the stock have"
 }
 ```
 
 #### Logic Error - Adding a product with 0 stock
 
-**Response Code: `406 Not Acceptable`**
+**Response Code: `400 Bad Request`**
 
 ```json
 {
-    "code": 406,
+    "code": 400,
     "message": "You cannot add a product with empty stock"
 }
 ```
