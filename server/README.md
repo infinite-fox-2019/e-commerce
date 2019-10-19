@@ -463,7 +463,7 @@ Message Error appears depending on the user's request body. This one denotes all
             	"productName": "[productName]",
             	"image": "[imageURL]",
             	"price": 10000, // Product Price
-                "stock": 100, // Product Stock
+                "stock": 100 // Product Stock
             },
             "quantity": 10
         }
@@ -511,6 +511,8 @@ Message Error appears depending on the user's request body. This one denotes all
 
 #### Logic Error - Buy above stock amount
 
+**Response Code: `406 Not Acceptable`**
+
 ```json
 {
     "code": 406,
@@ -519,6 +521,8 @@ Message Error appears depending on the user's request body. This one denotes all
 ```
 
 #### Logic Error - Adding a product with 0 stock
+
+**Response Code: `406 Not Acceptable`**
 
 ```json
 {
