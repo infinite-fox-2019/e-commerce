@@ -2,6 +2,8 @@
  <div class="card">
   <img :src="product.image" :alt="product.image" style="width:100%">
   <h1>{{ product.name }}</h1>
+  <h2>{{ priceUSD }}</h2>
+  <h5>In Stock: {{ product.stock}}</h5>
   <p class="title">{{ product.description }}</p>
 
   <p><button @click.prevent="goToDetail">Detail</button></p>
@@ -16,6 +18,14 @@ export default {
       this.$router.push(`/products/${this.product._id}`)
     }
   },
+  computed: {
+    productSummary () {
+      return this.product.description.slice(0, 140) + '...'
+    },
+    priceUSD () {
+      return this.product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
+    }
+  }
 }
 </script>
 
