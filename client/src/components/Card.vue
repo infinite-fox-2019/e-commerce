@@ -1,17 +1,19 @@
 <template>
   <div>
+    <b-card-img height="255px" width="255px" :src="imgsrc" alt="Image" top></b-card-img>
     <b-card
-      :title="title"
-      :img-src="imgsrc"
+      :title="title | truncate(25, '...')"
+
       img-alt="Image"
-      img-top
-      tag="article"
-      class="mb-2"
+
+      class="mb-3"
+      style="height: 13rem;"
     >
       <b-card-text>
-        {{descrip || "this is nice product"}}
+        ${{price || 1.00}}
       </b-card-text>
-      <b-button href="#" variant="primary">Detail</b-button>
+      
+      <b-button href="#" variant="outline-dark"> <span><img src="https://image.flaticon.com/icons/svg/265/265731.svg" class="mb-1 mr-2" width="15px" height="15px"></span> Add to Cart</b-button>
     </b-card>
   </div>
 </template>
@@ -28,7 +30,7 @@ export default {
     imgsrc: String,
     title: String,
     subtitle: String,
-    descrip: String
+    price: Number
   }
 }
 </script>

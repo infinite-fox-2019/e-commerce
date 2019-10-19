@@ -1,18 +1,59 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <b-container>
+      <ImageHeader/>
+      <b-row>
+        <b-col cols="12" md="3" v-for="(value,index) in productData" :key="index">
+          <Card 
+          :imgsrc="value.image"
+          :title="value.name"
+          :subtitle="value.manufacturer"
+          :price="value.price"
+          />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios'
+import Card from '@/components/Card.vue'
+import ImageHeader from '@/components/ImageHeader.vue'
 
 export default {
-  name: 'home',
+  name: 'Product',
+  data () {
+    return {
+      productData: []
+    }
+  },
   components: {
-    HelloWorld
+    Card,
+    ImageHeader
+  },
+  methods: {
+    fetchData () {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/product'
+      })
+        .then(({data}) => {
+          console.log(data)
+          this.productData = data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created(){
+    this.fetchData()
   }
+
 }
 </script>
+
+<style>
+
+</style>
