@@ -13,7 +13,7 @@ const cartSchema = new Schema({
         required: [() => this.product, "Buy amount must be set"],
         min: [0, "You cannot buy a product with 0 or lower amount"]
     }
-})
+}, { _id: false })
 
 
 const userSchema = new Schema({
