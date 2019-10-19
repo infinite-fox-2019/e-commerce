@@ -7,7 +7,7 @@
       <strong>{{ product.name }}</strong>
     </div>
     <div class="has-text-grey">
-      <small>{{ product.brand }}</small>
+      <small>{{ product.series }}</small>
     </div>
     <div class="has-text-danger">
       <strong >{{ formattedPrice }}</strong>

@@ -264,128 +264,110 @@ describe('User Testing', function() {
     })
   })
   describe('add product', function() {
-    it('should return id, description, price, stock, brand, and image', function(done) {
-      let body = {
-        name: 'SHF Spider-Man Stealth Suit',
-        description: 'The new Spider-Man action figure from S.H.Figuarts with the look of Stealth Suit from Spider-Man: Far From Home',
-        price: 1300000,
-        stock: 8,
-        brand: 'S.H.Figuarts',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB'
-      }
+    // it('should return id, description, price, stock, series, and image', function(done) {
+    //   let body = {
+    //     name: 'SHF Spider-Man Stealth Suit',
+    //     description: 'The new Spider-Man action figure from S.H.Figuarts with the look of Stealth Suit from Spider-Man: Far From Home',
+    //     price: 1300000,
+    //     stock: 8,
+    //     series: 'S.H.Figuarts',
+    //     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB'
+    //   }
 
-      chai.request(app)
-      .post('/products')
-      .send(body)
-      .end((err, res) => {
-        expect(err).to.be.null
-        expect(res).status(201)
-        expect(res.body).to.be.an('object')
-        expect(res.body).to.have.all.keys('id', 'name', 'description', 'price', 'stock', 'brand', 'image')
+    //   let adminUserBody = {
+    //     username: 'adminmulti',
+    //     email: 'admin@multi.com',
+    //     password: 'adminmulti8',
+    //     admin_password: 'infinitystone'
+    //   }
 
-        expect(res.body.id).to.be.a('string')
-        expect(res.body.name).to.be.a('string')
-        expect(res.body.description).to.be.a('string')
-        expect(res.body.price).to.be.a('number')
-        expect(res.body.stock).to.be.a('stock')
-        expect(res.body.brand).to.be.a('brand')
-        expect(res.body.image).to.be.a('image')
+    //   chai.request(app)
+    //   .post('/register')
+    //   .send(adminUserBody)
+    //   .end((err, res) => {
+    //     let access_token = res.body.access_token
+    //     console.log(access_token)
+    //     chai.request(app)
+    //     .post('/products')
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //       expect(err).to.be.null
+    //       expect(res).status(201)
+    //       expect(res.body).to.be.an('object')
+    //       expect(res.body).to.have.all.keys('id', 'name', 'description', 'price', 'stock', 'series', 'image')
 
-        expect(res.body.id).to.be.not.empty
-        expect(res.body.name).to.be.not.empty
-        expect(res.body.description).to.be.not.empty
-        expect(res.body.price).to.be.not.empty
-        expect(res.body.stock).to.be.not.empty
-        expect(res.body.brand).to.be.not.empty
-        expect(res.body.image).to.be.not.empty
+    //       expect(res.body.id).to.be.a('string')
+    //       expect(res.body.name).to.be.a('string')
+    //       expect(res.body.description).to.be.a('string')
+    //       expect(res.body.price).to.be.a('number')
+    //       expect(res.body.stock).to.be.a('stock')
+    //       expect(res.body.series).to.be.a('series')
+    //       expect(res.body.image).to.be.a('image')
 
-        expect(res.body.id).to.exist
-        expect(res.body.name).to.exist
-        expect(res.body.description).to.exist
-        expect(res.body.price).to.exist
-        expect(res.body.stock).to.exist
-        expect(res.body.brand).to.exist
-        expect(res.body.image).to.exist
-        done()
-      })
-    })
-    it('should return error message when input is empty string', function(done) {
-      let body = {
-        name: '',
-        description: '',
-        price: '',
-        stock: '',
-        brand: ''
-      }
-      chai.request(app)
-      .post('/users/register')
-      .set('access_token', )
-      .send(body)
-      .end((err, res) => {
-        expect(err).to.be.null
-        expect(res).status(400)
-        expect(res.body.messages).to.include('Name cannot be empty')
-        expect(res.body.messages).to.include('Description cannot be empty')
-        expect(res.body.messages).to.include('Price cannot be empty')
-        expect(res.body.messages).to.include('Stock cannot be empty')
-        expect(res.body.messages).to.include('Brand cannot be empty')
-        expect(res.body.messages).to.include('You have to upload an image')
-        done()
-      })
-    })
-    it('should return an error message when username already registered', function(done) {
-      let body = {
-        username: 'stephenstrange',
-        email: 'stephen@strange.com',
-        password: 'strange221',
-        admin_password: 'infinitystone'
-      }
+    //       expect(res.body.id).to.be.not.empty
+    //       expect(res.body.name).to.be.not.empty
+    //       expect(res.body.description).to.be.not.empty
+    //       expect(res.body.price).to.be.not.empty
+    //       expect(res.body.stock).to.be.not.empty
+    //       expect(res.body.series).to.be.not.empty
+    //       expect(res.body.image).to.be.not.empty
 
-      chai.request(app)
-      .post('/users/register')
-      .send(body)
-      .end((err, res) => {
-        expect(err).to.be.null
-        expect(res).status(400)
-        expect(res.body.messages).to.include('Username is already registered')
-        done()
-      })
-    })
-    it('should return an error message when email already registered', function(done) {
-      let body = {
-        username: 'doctorstrange',
-        email: 'stephen@strange.com',
-        password: 'strange221',
-        admin_password: 'infinitystone'
-      }
-
-      chai.request(app)
-      .post('/users/register')
-      .send(body)
-      .end((err, res) => {
-        expect(err).to.be.null
-        expect(res).status(400)
-        expect(res.body.messages).to.include('Email is already registered')
-        done()
-      })
-    })
-    it('should return an error message if admin password is wrong', function(done) {
-      let body = {
-        username: 'thanos',
-        email: 'thanos@infinity.com',
-        password: 'gauntlet6',
-        admin_password: 'madtitan'
-      }
-
-      chai.request(app)
-      .post('/users/register')
-      .send(body)
-      .end((err, res) => {
-        expect(err).to.be.null
-        expect(res).status(400)
-        expect(res.body.messages).to.include('Wrong admin password')
-        done()
-      })
-    })
+    //       expect(res.body.id).to.exist
+    //       expect(res.body.name).to.exist
+    //       expect(res.body.description).to.exist
+    //       expect(res.body.price).to.exist
+    //       expect(res.body.stock).to.exist
+    //       expect(res.body.series).to.exist
+    //       expect(res.body.image).to.exist
+    //       done()
+    //     })
+    //   })
+    // })
+    // it('should return error message when input is empty string', function(done) {
+    //   let body = {
+    //     name: '',
+    //     description: '',
+    //     price: '',
+    //     stock: '',
+    //     series: '',
+    //     image: 'dummylink'
+    //   }
+    //   chai.request(app)
+    //   .post('/users/register')
+    //   .set('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYWFiYmQ2NmRmMDQ5Y2UxYTY3NDdiYSIsInVzZXJuYW1lIjoiYWRtaW56Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTcxNDc2ODgwfQ.fpJ29KQWDJogNtqft96Fi7sZATDAnmL36MGhfw6MtjI')
+    //   .send(body)
+    //   .end((err, res) => {
+    //     expect(err).to.be.null
+    //     expect(res).status(400)
+    //     expect(res.body.messages).to.include('Name cannot be empty')
+    //     expect(res.body.messages).to.include('Description cannot be empty')
+    //     expect(res.body.messages).to.include('Price cannot be empty')
+    //     expect(res.body.messages).to.include('Stock cannot be empty')
+    //     expect(res.body.messages).to.include('You have to choose a series')
+    //     done()
+    //   })
+    // })
+    // it('should return an error message when input is invalid', function(done) {
+    //   let body = {
+    //     name: 'a',
+    //     description: 'a',
+    //     price: 0,
+    //     stock: -1,
+    //     series: 'S.H.Figuarts',
+    //     image: 'dummylink'
+    //   }
+    //   chai.request(app)
+    //   .post('/users/register')
+    //   .set('access_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYWFiYmQ2NmRmMDQ5Y2UxYTY3NDdiYSIsInVzZXJuYW1lIjoiYWRtaW56Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTcxNDc2ODgwfQ.fpJ29KQWDJogNtqft96Fi7sZATDAnmL36MGhfw6MtjI')
+    //   .send(body)
+    //   .end((err, res) => {
+    //     expect(err).to.be.null
+    //     expect(res).status(400)
+    //     expect(res.body.messages).to.include('Price cannot be zero or less')
+    //     expect(res.body.messages).to.include('Stock cannot be zero or less')
+    //     done()
+    //   })
+    // })
   })
 })

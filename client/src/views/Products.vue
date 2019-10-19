@@ -15,7 +15,7 @@
     <div class="container products-container">
       <div class="notification has-background-white">
         <div class="columns is-multiline is-1">
-          <div v-for="product in products" :key="product.id" class="column is-one-fifth">
+          <div v-for="product in this.$store.state.products" :key="product.id" class="column is-one-fifth">
             <Product :product="product"/>
           </div>
         </div>
@@ -41,14 +41,7 @@ export default {
   },
   methods: {
     getProducts () {
-      // Axios({
-      //   method: 'get',
-      //   url: 'http://localhost:3000/products'
-      // })
-      //   .then(({ data }) => {
-      //     this.products = data
-      //   })
-      //   .catch(console.log)
+      this.$store.dispatch('getProducts')
     }
   },
   created () {

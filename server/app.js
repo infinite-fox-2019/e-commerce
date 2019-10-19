@@ -8,6 +8,16 @@ const mongoose = require('mongoose')
 const PORT = process.env.PORT
 const routers = require('./routers')
 const cors = require('cors')
+const gcsUpload = require('gcs-upload')
+const upload = gcsUpload({
+  limits: {
+    fileSize: 1e6 // in bytes
+  },
+  gcsConfig: {
+    keyFilename: './keyfile.json',
+    bucketName: 'multiverse-images.satyowicaksana.online'
+  }
+})
 const errorHandler = require('./middlewares/errorHandler')
 
 app.use(express.json())
@@ -21,6 +31,14 @@ mongoose.connect(process.env.MONGOOSE_URI, {useNewUrlParser: true, useUnifiedTop
 })
 .catch(err => {
   console.log(err, `database connection failed`)
+})
+
+app.post('/upload-single', upload.single('file'), (req, res, next) => {
+  try {
+    res.status(200).json(req.body)
+  } catch(err) {
+    next(err)
+  }
 })
 
 app.use(routers)

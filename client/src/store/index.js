@@ -10,6 +10,7 @@ export default new Vuex.Store({
     userId: '',
     username: '',
     userRole: '',
+    products: [],
     errMessages: '',
     isLogin: false,
     seriesDict: ['S.H.Figuarts', 'MAFEX', 'Figma', 'Mezco', 'Revoltech']
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     SET_IS_LOGIN (state, payload) {
       state.isLogin = payload
+    },
+    SET_PRODUCTS (state, payload) {
+      state.products = payload
     },
     SET_ERR_MESSAGES (state, payload) {
       let messages = ''
@@ -82,6 +86,33 @@ export default new Vuex.Store({
           router.push('/')
         })
         .catch(err => {
+          commit('SET_ERR_MESSAGES', err)
+        })
+    },
+    getProducts ({ commit }, payload) {
+      axios.get('/products')
+        .then(({ data }) => {
+          commit('SET_PRODUCTS', data)
+        })
+        .catch(console.log)
+    },
+    addProduct ({ commit }, payload) {
+      let bodyFormData = new FormData()
+      bodyFormData.append('file', payload.file)
+      axios.post('/upload-single', bodyFormData)
+        .then(({ data }) => {
+          payload.image = data.file
+          return axios.post('/products', payload, {
+            headers: {
+              access_token: localStorage.access_token
+            }
+          })
+        })
+        .then(({ data }) => {
+          router.push('/')
+        })
+        .catch(err => {
+          console.log(err)
           commit('SET_ERR_MESSAGES', err)
         })
     }
