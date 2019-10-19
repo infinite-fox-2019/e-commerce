@@ -76,14 +76,14 @@ export default new Vuex.Store({
         })
         .catch(alert)
     },
-    getCart () {
+    getCart (context) {
       axios({
         method: 'GET',
         url: `${server}/users/cart`,
         headers: { token }
       })
         .then(({ data }) => {
-          this.commit('GET_CART', data)
+          context.commit('GET_CART', data)
         })
         .catch(alert)
     }
