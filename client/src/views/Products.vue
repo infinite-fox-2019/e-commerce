@@ -27,6 +27,7 @@
 <script>
 // @ is an alias to /src
 import Product from '@/components/Product.vue'
+// import Axios from 'axios'
 
 export default {
   components: {
@@ -40,11 +41,14 @@ export default {
   },
   methods: {
     getProducts () {
-      this.axios.get('http://localhost:3000/products')
-        .then(({ data }) => {
-          this.products = data
-        })
-        .catch(console.log)
+      // Axios({
+      //   method: 'get',
+      //   url: 'http://localhost:3000/products'
+      // })
+      //   .then(({ data }) => {
+      //     this.products = data
+      //   })
+      //   .catch(console.log)
     }
   },
   created () {

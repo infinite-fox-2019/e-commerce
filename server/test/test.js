@@ -28,18 +28,21 @@ describe('User Testing', function() {
         expect(err).to.be.null
         expect(res).status(201)
         expect(res.body).to.be.an('object')
-        expect(res.body).to.have.all.keys('id', 'username', 'access_token')
+        expect(res.body).to.have.all.keys('id', 'username', 'role', 'access_token')
 
         expect(res.body.id).to.be.a('string')
         expect(res.body.username).to.be.a('string')
+        expect(res.body.role).to.be.a('string')
         expect(res.body.access_token).to.be.a('string')
 
         expect(res.body.id).to.be.not.empty
         expect(res.body.username).to.be.not.empty
+        expect(res.body.role).to.be.not.empty
         expect(res.body.access_token).to.be.not.empty
 
         expect(res.body.id).to.exist
         expect(res.body.username).to.exist
+        expect(res.body.role).to.exist
         expect(res.body.access_token).to.exist
 
         expect(res.password).to.be.not.equal(body.password)
@@ -64,11 +67,11 @@ describe('User Testing', function() {
         done()
       })
     })
-    it('should return error messages when input format is invalid', function(done) {
+    it('should return error messages when input length is too short', function(done) {
       let body = {
         username: 'aaaaa',
-        email: 'aaa@.com',
-        password: 'a'
+        email: 'aaa@a.com',
+        password: 'aaaaa'
       }
       chai.request(app)
       .post('/users/register')
@@ -77,12 +80,29 @@ describe('User Testing', function() {
         expect(err).to.be.null
         expect(res).status(400)
         expect(res.body.messages).to.include('Username have to be at least 6 characters')
-        expect(res.body.messages).to.include('aaa@.com is not a valid email format')
-        expect(res.body.messages).to.include('Password has to be at least 6 characters and contains letter and number')
+        expect(res.body.messages).to.include('Password have to be at least 6 characters')
         done()
       })
     })
-    it('should return error messages when username already registered', function(done) {
+    it('should return error messages when input format is invalid', function(done) {
+      let body = {
+        username: 'aaa@aaa',
+        email: 'aaa@.com',
+        password: 'aaaaaa'
+      }
+      chai.request(app)
+      .post('/users/register')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(400)
+        expect(res.body.messages).to.include('Username can only contains alphanumeric')
+        expect(res.body.messages).to.include('aaa@.com is not a valid email format')
+        expect(res.body.messages).to.include('Password must contain at least 1 letter and 1 number')
+        done()
+      })
+    })
+    it('should return an error message when username already registered', function(done) {
       let body = {
         username: 'stephenstrange',
         email: 'stephen@strange.com',
@@ -100,7 +120,7 @@ describe('User Testing', function() {
         done()
       })
     })
-    it('should return error messages when email already registered', function(done) {
+    it('should return an error message when email already registered', function(done) {
       let body = {
         username: 'doctorstrange',
         email: 'stephen@strange.com',
@@ -115,6 +135,24 @@ describe('User Testing', function() {
         expect(err).to.be.null
         expect(res).status(400)
         expect(res.body.messages).to.include('Email is already registered')
+        done()
+      })
+    })
+    it('should return an error message if admin password is wrong', function(done) {
+      let body = {
+        username: 'thanos',
+        email: 'thanos@infinity.com',
+        password: 'gauntlet6',
+        admin_password: 'madtitan'
+      }
+
+      chai.request(app)
+      .post('/users/register')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(400)
+        expect(res.body.messages).to.include('Wrong admin password')
         done()
       })
     })
@@ -133,18 +171,55 @@ describe('User Testing', function() {
         expect(err).to.be.null
         expect(res).status(200)
         expect(res.body).to.be.an('object')
-        expect(res.body).to.have.all.keys('id', 'username', 'access_token')
+        expect(res.body).to.have.all.keys('id', 'username', 'role', 'access_token')
 
         expect(res.body.id).to.be.a('string')
         expect(res.body.username).to.be.a('string')
+        expect(res.body.role).to.be.a('string')
         expect(res.body.access_token).to.be.a('string')
 
         expect(res.body.id).to.be.not.empty
         expect(res.body.username).to.be.not.empty
+        expect(res.body.role).to.be.not.empty
         expect(res.body.access_token).to.be.not.empty
 
         expect(res.body.id).to.exist
         expect(res.body.username).to.exist
+        expect(res.body.role).to.exist
+        expect(res.body.access_token).to.exist
+
+        expect(res.password).to.be.not.equal(body.password)
+        done()
+      })
+    })
+    it('should return id, username, and access_token when login using email', function(done) {
+      let body = {
+        username: 'stephen@strange.com',
+        password: 'strange221'
+      }
+
+      chai.request(app)
+      .post('/users/login')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(200)
+        expect(res.body).to.be.an('object')
+        expect(res.body).to.have.all.keys('id', 'username', 'role', 'access_token')
+
+        expect(res.body.id).to.be.a('string')
+        expect(res.body.username).to.be.a('string')
+        expect(res.body.role).to.be.a('string')
+        expect(res.body.access_token).to.be.a('string')
+
+        expect(res.body.id).to.be.not.empty
+        expect(res.body.username).to.be.not.empty
+        expect(res.body.role).to.be.not.empty
+        expect(res.body.access_token).to.be.not.empty
+
+        expect(res.body.id).to.exist
+        expect(res.body.username).to.exist
+        expect(res.body.role).to.exist
         expect(res.body.access_token).to.exist
 
         expect(res.password).to.be.not.equal(body.password)
@@ -184,6 +259,131 @@ describe('User Testing', function() {
         expect(res.body).to.be.an('object')
 
         expect(res.body.messages).to.include('Wrong username/password')
+        done()
+      })
+    })
+  })
+  describe('add product', function() {
+    it('should return id, description, price, stock, brand, and image', function(done) {
+      let body = {
+        name: 'SHF Spider-Man Stealth Suit',
+        description: 'The new Spider-Man action figure from S.H.Figuarts with the look of Stealth Suit from Spider-Man: Far From Home',
+        price: 1300000,
+        stock: 8,
+        brand: 'S.H.Figuarts',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSP3hRANixXOeth29UrXuNgVfFRZsTHXCNhcyb4htsft5IS48tB'
+      }
+
+      chai.request(app)
+      .post('/products')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(201)
+        expect(res.body).to.be.an('object')
+        expect(res.body).to.have.all.keys('id', 'name', 'description', 'price', 'stock', 'brand', 'image')
+
+        expect(res.body.id).to.be.a('string')
+        expect(res.body.name).to.be.a('string')
+        expect(res.body.description).to.be.a('string')
+        expect(res.body.price).to.be.a('number')
+        expect(res.body.stock).to.be.a('stock')
+        expect(res.body.brand).to.be.a('brand')
+        expect(res.body.image).to.be.a('image')
+
+        expect(res.body.id).to.be.not.empty
+        expect(res.body.name).to.be.not.empty
+        expect(res.body.description).to.be.not.empty
+        expect(res.body.price).to.be.not.empty
+        expect(res.body.stock).to.be.not.empty
+        expect(res.body.brand).to.be.not.empty
+        expect(res.body.image).to.be.not.empty
+
+        expect(res.body.id).to.exist
+        expect(res.body.name).to.exist
+        expect(res.body.description).to.exist
+        expect(res.body.price).to.exist
+        expect(res.body.stock).to.exist
+        expect(res.body.brand).to.exist
+        expect(res.body.image).to.exist
+        done()
+      })
+    })
+    it('should return error message when input is empty string', function(done) {
+      let body = {
+        name: '',
+        description: '',
+        price: '',
+        stock: '',
+        brand: ''
+      }
+      chai.request(app)
+      .post('/users/register')
+      .set('access_token', )
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(400)
+        expect(res.body.messages).to.include('Name cannot be empty')
+        expect(res.body.messages).to.include('Description cannot be empty')
+        expect(res.body.messages).to.include('Price cannot be empty')
+        expect(res.body.messages).to.include('Stock cannot be empty')
+        expect(res.body.messages).to.include('Brand cannot be empty')
+        expect(res.body.messages).to.include('You have to upload an image')
+        done()
+      })
+    })
+    it('should return an error message when username already registered', function(done) {
+      let body = {
+        username: 'stephenstrange',
+        email: 'stephen@strange.com',
+        password: 'strange221',
+        admin_password: 'infinitystone'
+      }
+
+      chai.request(app)
+      .post('/users/register')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(400)
+        expect(res.body.messages).to.include('Username is already registered')
+        done()
+      })
+    })
+    it('should return an error message when email already registered', function(done) {
+      let body = {
+        username: 'doctorstrange',
+        email: 'stephen@strange.com',
+        password: 'strange221',
+        admin_password: 'infinitystone'
+      }
+
+      chai.request(app)
+      .post('/users/register')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(400)
+        expect(res.body.messages).to.include('Email is already registered')
+        done()
+      })
+    })
+    it('should return an error message if admin password is wrong', function(done) {
+      let body = {
+        username: 'thanos',
+        email: 'thanos@infinity.com',
+        password: 'gauntlet6',
+        admin_password: 'madtitan'
+      }
+
+      chai.request(app)
+      .post('/users/register')
+      .send(body)
+      .end((err, res) => {
+        expect(err).to.be.null
+        expect(res).status(400)
+        expect(res.body.messages).to.include('Wrong admin password')
         done()
       })
     })

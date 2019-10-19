@@ -1,6 +1,6 @@
 <template>
   <div>
-    <RegisterForm/>
+    <RegisterForm @showAlert="showAlert" @setLogin="setLogin"/>
   </div>
 </template>
 
@@ -10,6 +10,14 @@ import RegisterForm from '@/components/RegisterForm'
 export default {
   components: {
     RegisterForm
+  },
+  methods: {
+    showAlert (err) {
+      this.$emit('showAlert', err)
+    },
+    setLogin (status) {
+      this.$emit('setLogin', status)
+    }
   }
 }
 </script>

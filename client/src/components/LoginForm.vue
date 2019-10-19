@@ -3,9 +3,17 @@
     <div class="container form-container">
       <div class="notification has-background-white">
         <form @submit.prevent="login">
+          <div class="spidey-container">
+            <div>
+              <img src="https://i.imgur.com/oKxJwVk.png">
+            </div>
+            <div>
+              Dive into the multiverse!
+            </div>
+          </div>
           <div class="field">
-            <div class="control has-icons-left has-icons-right">
-              <input v-model="username" class="input" type="text" placeholder="Username">
+            <div class="control has-icons-left has-icons-right" type="is-danger">
+              <input v-model="username" class="input" type="text" placeholder="Username / Email">
               <span class="icon is-small is-left">
                 <i class="fas fa-user"></i>
               </span>
@@ -40,31 +48,12 @@ export default {
     }
   },
   methods: {
-    showAlert (err) {
-      console.log(err)
-      let messages = ''
-      console.log(err.response.data)
-      err.response.data.messages.forEach(message => {
-        messages += message + '<br>'
-      })
-      this.$notify({
-        group: 'alert-error',
-        title: messages,
-        type: 'error'
-      })
-    },
     login () {
-      this.axios.post('http://localhost:3000/users/login', {
+      let payload = {
         username: this.username,
         password: this.password
-      })
-        .then(({ data }) => {
-          localStorage.userId = data.id
-          localStorage.username = data.username
-          localStorage.access_token = data.access_token
-          this.$router.push('/')
-        })
-        .catch(this.showAlert)
+      }
+      this.$store.dispatch('login', payload)
     },
     showSignup () {
       this.$router.push('/register')
@@ -75,14 +64,26 @@ export default {
 
 <style>
 .form-container {
-  max-width: 30%;
+  max-width: 400px;
   margin-top: 20px;
   margin-bottom: 20px;
-  box-shadow: 1px 1px 10px 0px #cccccc;
+  box-shadow: 1px 1px 10px 0px #d1d1d1;
 }
 
 button {
   width: 100%;
   margin-top: 5px;
+}
+
+img {
+  height: 128px;
+  float: left;
+  margin-bottom: 5px;
+}
+
+.spidey-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

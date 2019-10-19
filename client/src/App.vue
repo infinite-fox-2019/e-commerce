@@ -11,6 +11,45 @@ import Navbar from './components/Navbar.vue'
 export default {
   components: {
     Navbar
+  },
+  data () {
+    return {
+      isLogin: false
+      // errMessages: this.$store.state.errMessages
+    }
+  },
+  computed: {
+    errMessages () {
+      return this.$store.state.errMessages
+    }
+  },
+  methods: {
+    showAlert (messages) {
+      this.$notify({
+        group: 'alert-error',
+        title: messages,
+        type: 'error'
+      })
+    }
+  },
+  created () {
+    if (localStorage.userId && localStorage.username && localStorage.userRole && localStorage.access_token) {
+      console.log('masuk access token')
+      this.$store.commit('SET_USER_ID', localStorage.userId)
+      this.$store.commit('SET_USERNAME', localStorage.username)
+      this.$store.commit('SET_USER_ROLE', localStorage.userRole)
+      this.$store.commit('SET_IS_LOGIN', true)
+    }
+  },
+  watch: {
+    isLogin () {
+      if (!this.isLogin) {
+        localStorage.clear()
+      }
+    },
+    errMessages () {
+      this.showAlert(this.errMessages)
+    }
   }
 }
 </script>
@@ -39,8 +78,10 @@ export default {
 .alert {
   margin-top: 70px;
   margin-right: 20px;
-  background: #2c3e50;
-  color: black;
+}
+
+.alert .error {
+  background: black
 }
 
 </style>

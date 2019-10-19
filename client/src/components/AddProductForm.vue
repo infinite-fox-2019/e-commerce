@@ -4,13 +4,21 @@
       <div class="notification has-background-white">
         <form @submit.prevent="register">
           <div class="field">
-            <div class="control has-icons-left has-icons-right">
-              <input v-model="username" class="input" type="text" placeholder="Username">
-              <span class="icon is-small is-left">
-                <i class="fas fa-user"></i>
-              </span>
+            <div class="control has-icons-right">
+              <input v-model="name" class="input" type="text" placeholder="Product Name">
             </div>
           </div>
+          <section>
+            <div class="block">
+              <b-radio v-for="(series, index) in this.$store.state.seriesDict" :key="`series-${index}`"
+                v-model="selectedSeries"
+                name="name"
+                type="is-danger"
+                :native-value="series">
+                {{ series }}
+              </b-radio>
+            </div>
+          </section>
           <div class="field">
             <div class="control has-icons-left has-icons-right">
               <input v-model="email" class="input" type="text" placeholder="Email">
@@ -27,22 +35,11 @@
               </span>
             </div>
           </div>
-          <div @click="showAdmin" class="admin-show-link is-text-reddish">
-            Register as admin?
-          </div>
-          <div v-if="isAdmin" class="field">
-            <div class="control has-icons-left has-icons-right">
-              <input v-model="admin_password" class="input" type="password" placeholder="Admin Password">
-              <span class="icon is-small is-left">
-                <i class="fas fa-key"></i>
-              </span>
-            </div>
-          </div>
           <div class="control">
             <button class="button is-danger">Sign Up</button>
           </div>
           <div class="control">
-            <button @click="showLogin" class="button is-text">Log in</button>
+            <button class="button is-text">Log in</button>
           </div>
         </form>
       </div>
@@ -54,36 +51,22 @@
 export default {
   data () {
     return {
-      username: '',
+      name: '',
       email: '',
       password: '',
       admin_password: '',
-      isAdmin: false
+      isAdmin: false,
+      selectedSeries: ''
     }
   },
   methods: {
-    register () {
-      let payload = {
-        username: this.username,
-        email: this.email,
-        password: this.password,
-        admin_password: this.admin_password
-      }
-      this.$store.dispatch('register', payload)
-    },
-    showAdmin () {
-      this.isAdmin = true
-    },
-    showLogin () {
-      this.$router.push('/login')
-    }
   }
 }
 </script>
 
 <style>
 .form-container {
-  max-width: 400px;
+  max-width: 900px;
   margin-top: 20px;
   margin-bottom: 20px;
   box-shadow: 1px 1px 10px 0px #d1d1d1;
