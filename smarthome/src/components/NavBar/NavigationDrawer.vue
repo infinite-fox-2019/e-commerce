@@ -34,7 +34,7 @@
                     <v-list-item-title>History Transaction</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
-            <v-list-item v-if="role === 'admin'" @click="$router.push('admin')">
+            <v-list-item v-if="role === 'admin'" @click="goAdmin">
                 <v-list-item-action>
                     <v-icon>mdi-account-supervisor</v-icon>
                 </v-list-item-action>
@@ -53,7 +53,7 @@ import Profile from "./Profile";
 export default {
     name: "navigation-drawer-items",
     computed: {
-        ...mapState(["token", "username", "role"])
+        ...mapState("user", ["token", "username", "role"])
     },
     components: {
         Profile
@@ -74,17 +74,24 @@ export default {
             }
         },
         goCart() {
-            if (!this.$route.path === "/cart") {
+            if (this.$route.path === "/cart") {
                 return;
             } else {
                 this.$router.push("/cart");
             }
         },
         goTransaction() {
-            if (!this.$route.path === "/transaction") {
+            if (this.$route.path === "/transaction") {
                 return;
             } else {
                 this.$router.push("/transaction");
+            }
+        },
+        goAdmin() {
+            if (this.$route.path === "/admin") {
+                return;
+            } else {
+                this.$router.push("/admin");
             }
         }
     }

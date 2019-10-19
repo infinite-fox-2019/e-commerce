@@ -34,10 +34,10 @@ import { mapState, mapMutations } from "vuex";
 export default {
     name: "nav-bar-profile",
     computed: {
-        ...mapState(["username", "gravatar"])
+        ...mapState("user", ["username", "gravatar"])
     },
     methods: {
-        ...mapMutations(["destroyCredentials"]),
+        ...mapMutations("user", ["destroyCredentials"]),
         signOut() {
             this.destroyCredentials();
             if (!this.$route.path === "/") {

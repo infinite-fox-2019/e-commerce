@@ -27,7 +27,7 @@ export default {
                 password: this.password
             };
             vm.$awn.asyncBlock(
-                vm.$store.dispatch("login", payload),
+                vm.$store.dispatch("user/login", payload),
                 () => {
                     vm.$router.push("/");
                     vm.$awn.success("Login");

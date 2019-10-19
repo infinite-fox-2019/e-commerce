@@ -1,6 +1,6 @@
 <template>
     <v-card :loading="loading" class="text-truncate mx-auto my-12" max-width="374">
-        <v-img height="250" :src="product.image"></v-img>
+        <v-img height="250" contain :src="product.image"></v-img>
 
         <v-card-title class="subtitle-1">{{product.name}}</v-card-title>
 
@@ -38,13 +38,11 @@ export default {
     },
     computed: {
         stockSeparator() {
-            // return this.product.stock;
             return this.product.stock
                 .toString()
                 .replace(/\d(?=(\d{3})+\.)/g, "$&.");
         },
         convertToRp() {
-            // return this.product.price;
             return `Rp.${this.product.price
                 .toFixed(2)
                 .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`;

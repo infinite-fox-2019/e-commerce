@@ -133,7 +133,7 @@ describe('User Route', function () {
                     expect(err).to.be.null
                     expect(res).to.have.status(200)
                     expect(res.body).to.be.an('object')
-                    expect(res.body).to.have.all.keys('username', 'email', 'token')
+                    expect(res.body).to.have.all.keys('username', 'email', 'token', 'role')
                     const { token } = res.body
                     expect(token).to.include('Bearer ')
                     done()

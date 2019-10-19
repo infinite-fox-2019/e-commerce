@@ -6,12 +6,16 @@
         <v-app-bar app>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title class="headline text-uppercase">
-                <span>Smart Home</span>
+                <span>{{currentPath}}</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-title>
+            <v-btn text v-if="(admin || home) && !loading" @click="refreshProducts">
+                <v-icon>mdi-refresh</v-icon>
+            </v-btn>
+            <v-progress-circular v-if="loading" indeterminate></v-progress-circular>
+            <v-btn text>
                 <v-icon>mdi-magnify</v-icon>
-            </v-toolbar-title>
+            </v-btn>
         </v-app-bar>
     </div>
 </template>
@@ -25,12 +29,66 @@ export default {
     },
     data() {
         return {
-            drawer: null
+            drawer: null,
+            admin: false,
+            home: false,
+            loading: false
         };
     },
     methods: {
         closeDrawer() {
             this.drawer = false;
+        },
+        refreshProducts() {
+            this.loading = true;
+            this.$store
+                .dispatch("product/getProducts")
+                .then(() => {})
+                .catch(this.next)
+                .finally(() => (this.loading = false));
+        }
+    },
+    computed: {
+        currentPath: {
+            get() {
+                switch (this.$route.path) {
+                    case "/cart":
+                        return "Cart";
+                    case "/admin":
+                        return "Admin";
+                    case "/transaction":
+                        return "History";
+                    case "/login":
+                        return "Login";
+                    default:
+                        return "Smart Home";
+                }
+            },
+            set() {
+                return;
+            }
+        }
+    },
+    watch: {
+        $route() {
+            if (this.$route.path === "/") {
+                this.home = true;
+                this.admin = false;
+            } else if (this.$route.path === "/admin") {
+                this.admin = true;
+                this.home = false;
+            } else {
+                this.admin = false;
+                this.home = false;
+            }
+        }
+    },
+    created() {
+        if (this.$route.path === "/") {
+            this.home = true;
+        }
+        if (this.$route.path === "/admin") {
+            this.admin = true;
         }
     }
 };
