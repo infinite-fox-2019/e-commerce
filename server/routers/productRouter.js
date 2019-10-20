@@ -8,7 +8,7 @@ const upload = gcsUpload({
     fileSize: 1e6 // in bytes
   },
   gcsConfig: {
-    keyFilename: 'keyapi.json',
+    keyFilename: 'key_api.json',
     bucketName: 'dipaecommerce'
   }
 })
