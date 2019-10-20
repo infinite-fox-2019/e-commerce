@@ -1,0 +1,29 @@
+const chai = require("chai")
+const chaiHttp = require("chai-http")
+const app = require("../app")
+const expect = chai.expect
+
+chai.use(chaiHttp)
+
+describe("test Masuk", function () {
+    describe("test login", function () {
+        it("semoga bisa", function (done) {
+            this.timeout(10000)
+            chai.request(app)
+            .post("/register")
+            .send({
+                email: "tes123@mail.com",
+                password:"123456",
+                role: "admin"
+            })
+            .end (function (err, res) {
+                expect(err).to.be.null
+                done()
+            })
+       })
+       
+    })
+    
+})
+
+
