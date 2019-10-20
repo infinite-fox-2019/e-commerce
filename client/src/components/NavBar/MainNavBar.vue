@@ -68,14 +68,15 @@ export default {
         ...mapState("cart", ["cart"]),
         currentPath: {
             get() {
-                switch (this.$route.path) {
-                    case "/cart":
+                let p = this.$route.path;
+                switch (p) {
+                    case p.includes("cart"):
                         return "Cart";
-                    case "/admin":
+                    case p.includes("admin"):
                         return "Admin";
-                    case "/transaction":
+                    case p.includes("transaction"):
                         return "History";
-                    case "/login":
+                    case p.includes("login"):
                         return "Login";
                     default:
                         return "Visual Novel";

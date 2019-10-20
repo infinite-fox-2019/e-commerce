@@ -1,6 +1,5 @@
 
 const Product = require('../models/product');
-const gcsdelete = require('../helpers/gcsdelete')
 
 class ProductController {
     static create(req, res, next) {
@@ -12,10 +11,7 @@ class ProductController {
             .then((product) => {
                 res.status(201).json(product)
             })
-            .catch(err => {
-                if (req.file) gcsdelete(create.image)
-                next(err)
-            });
+            .catch(next);
     };
     static read(req, res, next) {
         Product.find({}).sort({ createdAt: -1 })
@@ -33,10 +29,7 @@ class ProductController {
         Product.findByIdAndUpdate(id, { $set: set }, { runValidators: true, new: true })
             .then((product) => {
                 res.status(200).json(product)
-            }).catch(err => {
-                if (req.file) gcsdelete(set.image)
-                next(err)
-            });
+            }).catch(next);
     }
 
     static delete(req, res, next) {

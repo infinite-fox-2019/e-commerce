@@ -2,7 +2,8 @@ import axios from '../config/axios'
 export default {
     namespaced: true,
     state: {
-        cart: []
+        cart: [],
+        checkout: []
     },
     mutations: {
         setCart(state, payload) {

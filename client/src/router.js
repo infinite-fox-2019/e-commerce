@@ -17,12 +17,18 @@ const router = new Router({
         },
         {
             path: '/login',
-            name: 'login',
-            component: () => import(/* webpackChunkName: "login" */'./views/Login.vue')
-        }, {
-            path: '/history',
-            name: 'history',
-            component: () => import(/* webpackChunkName: "transaction" */'./views/Transactions.vue')
+            component: () => import(/* webpackChunkName: "login" */'./views/Login.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'login',
+                    component: () => import(/* webpackChunkName: "loginForm" */ './views/subrouter/login/LoginForm')
+                },
+                {
+                    path: 'register',
+                    component: () => import(/* webpackChunkName: "loginForm" */ './views/subrouter/login/RegisterForm')
+                }
+            ]
         },
         {
             path: '/admin',
@@ -34,20 +40,54 @@ const router = new Router({
                         if (data.role === 'admin') next()
                         else next('/')
                     })
-                    .catch(err => next('/'))
+                    .catch(err => next('login'))
             }
         },
         {
             path: '/cart',
-            name: 'cart',
             component: () => import(/* webpackChunkName: "cart" */ './views/Cart.vue'),
+            children: [
+                {
+                    path: '',
+                    name: 'cart',
+                    component: () => import(/* webpackChunkName: "cartProductList" */ './views/subrouter/cart/ProductList')
+                },
+                {
+                    path: '/checkout',
+                    name: 'checkout',
+                    component: () => import(/* webpackChunkName: "checkout" */ './views/subrouter/cart/Checkout')
+                }
+            ],
             beforeEnter(to, from, next) {
                 store.dispatch('user/verifyUser')
                     .then(() => {
                         next()
                     })
-                    .catch(() => next('/'))
+                    .catch(() => next('login'))
             }
+        },
+        {
+            path: '/transaction',
+            component: () => import(/* webpackChunkName: "transaction" */ './views/Transaction.vue'),
+            beforeEnter(to, from, next) {
+                store.dispatch('user/verifyUser')
+                    .then(() => {
+                        next()
+                    })
+                    .catch(() => next('login'))
+            },
+            children: [
+                {
+                    path: '',
+                    name: 'transaction',
+                    component: () => import(/* webpackChunkName: "transactionList" */ './views/subrouter/transaction/List.vue')
+                },
+                {
+                    path: ':id',
+                    name: 'single-transaction',
+                    component: () => import(/* webpackChunkName: "singleTransaction" */ './views/subrouter/transaction/Single.vue')
+                }
+            ]
         }
     ],
 
