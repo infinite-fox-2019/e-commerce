@@ -31,6 +31,13 @@ export default new Vuex.Store({
     SET_PRODUCTS (state, payload) {
       state.products = payload
     },
+    LOGOUT (state, payload) {
+      state.userId = ''
+      state.username = ''
+      state.userRole = ''
+      state.isLogin = false
+      localStorage.clear()
+    },
     SET_ERR_MESSAGES (state, payload) {
       let messages = ''
       if (!payload.response) {
@@ -146,7 +153,19 @@ export default new Vuex.Store({
           router.push('/')
         })
         .catch(err => {
-          console.log(err)
+          commit('SET_ERR_MESSAGES', err)
+        })
+    },
+    deleteProduct ({ commit }, payload) {
+      axios.delete(`/products/${payload}`, {
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(({ data }) => {
+          router.push('/')
+        })
+        .catch(err => {
           commit('SET_ERR_MESSAGES', err)
         })
     }

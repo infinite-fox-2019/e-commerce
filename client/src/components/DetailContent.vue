@@ -11,7 +11,7 @@
               <i class="fa fa-pencil-alt">
               </i>
             </button>
-            <button class="button">
+            <button @click="deleteProduct" class="button">
               <i class="fa fa-trash">
               </i>
             </button>
@@ -30,10 +30,17 @@
             Stock: {{ product.stock }}
           </div>
           <div v-if="this.$store.state.userRole === 'customer'" class="row">
-            <button class="button is-danger add-cart-button">
+            <button class="button is-danger add-cart-button" @click="isActiveModal = true">
               <i class="fa fa-cart-plus" style="margin-right: 5px;"></i>
               to Cart
             </button>
+          </div>
+          <div class="modal" :class="{ 'is-active': isActiveModal }">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+              <QtyForm :product="product"></QtyForm>
+            </div>
+            <button class="modal-close is-large" aria-label="close" @click="isActiveModal = false"></button>
           </div>
           <div class="row has-text-grey">
             <hr>
@@ -46,16 +53,36 @@
 </template>
 
 <script>
+import swal from 'sweetalert'
+import QtyForm from './QtyForm'
+
 export default {
   name: 'DetailContent',
+  components: {
+    QtyForm
+  },
   data () {
     return {
-      product: ''
+      product: '',
+      isActiveModal: false
     }
   },
   methods: {
     toUpdate () {
       this.$router.push(`/update-product/${this.product._id}`)
+    },
+    deleteProduct () {
+      swal({
+        title: 'Delete this product?',
+        icon: 'warning',
+        buttons: true,
+        dangerMode: true
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            this.$store.dispatch('deleteProduct', this.product._id)
+          }
+        })
     }
   },
   created () {
@@ -64,7 +91,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .rows{
   display: flex;
   flex-direction: column;
@@ -91,5 +118,6 @@ export default {
 }
 .row-button {
   margin-bottom: 10px;
+  display: flex;
 }
 </style>

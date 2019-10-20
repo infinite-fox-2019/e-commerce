@@ -13,26 +13,24 @@ module.exports = {
 
     Product.create({ name, description, price, stock, series, image })
     .then(product => {
-      let sendJson = {
-        id: product._id,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        stock: product.stock,
-        series: product.series,
-        image: product.image
-      }
-      res.status(201).json(sendJson)
+      res.status(201).json(product)
     })
     .catch(next)
   },
   update: (req, res, next) => {
     const { name, description, price, stock, series, image } = req.body
 
-  console.log(image)
     Product.findByIdAndUpdate(req.params.id, {
       name, description, price, stock, series, image
     }, {useFindAndModify: false, omitUndefined: true, runValidators: true})
+    .then(product => {
+      res.status(200).json(product)
+    })
+    .catch(next)
+  },
+  delete: (req, res, next) => {
+    console.log(req.params)
+    Product.findByIdAndDelete(req.params.id)
     .then(product => {
       res.status(200).json(product)
     })

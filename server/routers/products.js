@@ -8,5 +8,6 @@ router.use(authentication)
 router.use(adminAuthorization)
 router.post('/', ProductController.add)
 router.post('/:id', ProductController.update)
+router.delete('/:id', ProductController.delete)
 
 module.exports = router

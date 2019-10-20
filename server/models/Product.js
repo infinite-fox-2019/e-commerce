@@ -28,6 +28,8 @@ productSchema = new Schema({
     type: String,
     required: true
   }
+}, {
+  versionKey: false
 })
 
 const Product = mongoose.model('Product', productSchema)

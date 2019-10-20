@@ -23,8 +23,9 @@
             </b-navbar-item>
             <b-navbar-item v-if="this.$store.state.isLogin" tag="div">
                 <div class="buttons">
-                  <router-link v-if="this.$store.state.userRole === 'customer'" to="/cart">
+                  <router-link v-if="this.$store.state.userRole !== 'admin'" to="/cart">
                     <a class="button is-danger">
+                        <i class="fa fa-shopping-cart" style="margin-right: 5px;"></i>
                         <strong>Cart</strong>
                     </a>
                   </router-link>
@@ -53,8 +54,7 @@ export default {
   },
   methods: {
     logout () {
-      this.$store.commit('SET_IS_LOGIN', false)
-      localStorage.clear()
+      this.$store.dispatch('LOGOUT')
     }
   }
 }
