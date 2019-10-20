@@ -36,6 +36,18 @@ const router = new Router({
                     })
                     .catch(err => next('/'))
             }
+        },
+        {
+            path: '/cart',
+            name: 'cart',
+            component: () => import(/* webpackChunkName: "cart" */ './views/Cart.vue'),
+            beforeEnter(to, from, next) {
+                store.dispatch('user/verifyUser')
+                    .then(() => {
+                        next()
+                    })
+                    .catch(() => next('/'))
+            }
         }
     ],
 

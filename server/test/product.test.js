@@ -1,18 +1,18 @@
 "use strict"
 const chai = require('chai')
 const chaiHTTP = require('chai-http')
-const fs = require('fs')
 const expect = chai.expect
+const fs = require('fs')
 const app = require('../app')
 const gcsdelete = require('../helpers/gcsdelete')
 const Product = require('../models/product')
 const User = require('../models/user')
 
-let image = fs.readFileSync('./test/seed/assets/mi-kit.png')
 let adminToken = null
 let nonAdminToken = null
 let productId
 
+const image = fs.readFileSync('./test/seed/assets/mi-kit.png')
 
 chai.use(chaiHTTP)
 
@@ -50,13 +50,12 @@ before(function (done) {
         })
     }
 
-    const productSeed = JSON.parse(fs.readFileSync('./test/seed/products.json'))
-
-    Promise.all([tokens(), Product.insertMany(productSeed)])
+    Promise.all([tokens()])
         .then(() => done())
 })
 
 after(function (done) {
+    this.timeout(60000)
     Promise.all([Product.deleteMany({}), User.deleteMany({})])
         .then(() => done())
 })
@@ -170,14 +169,9 @@ describe('Product Route', function () {
     describe('Update product', function () {
         it('Success update product', function (done) {
             this.timeout(30000)
-            const data = {
-                name: "Mi Home Kit",
-                price: 4500000,
-                stock: 30,
-            }
             chai.request(app)
                 .put('/products/' + productId)
-                .set({ authorization: adminToken })
+                .set({ Authorization: adminToken })
                 .field('name', 'Mi Home Kit - Edit')
                 .field('price', 5000000)
                 .field('stock', 25)

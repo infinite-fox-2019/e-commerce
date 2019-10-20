@@ -2,6 +2,20 @@ const mongoose = require('mongoose')
 const { hash } = require('../helpers/bcryptjs')
 const Schema = mongoose.Schema
 
+const cartSchema = new Schema({
+    product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Products',
+        required: [() => this.quantity, "Product id must be set"]
+    },
+    quantity: {
+        type: Number,
+        required: [() => this.product, "Buy amount must be set"],
+        min: [0, "You cannot buy a product with 0 or lower amount"]
+    }
+}, { _id: false })
+
+
 const userSchema = new Schema({
     username: {
         type: String,
@@ -33,16 +47,14 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'Password Required'],
     },
-    cart: [{
-        product: { type: Schema.Types.ObjectId, ref: 'Products' },
-        quantity: Number
-    }]
+    cart: [cartSchema]
 }, { timestamps: true })
 
 userSchema.pre('save', function (next) {
     this.password = hash(this.password)
     next()
 })
+
 
 const User = mongoose.model('Users', userSchema)
 

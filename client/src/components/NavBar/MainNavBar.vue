@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-navigation-drawer v-model="drawer" @close="closeDrawer" app>
+        <v-navigation-drawer v-model="drawer" @input="getInput" @close="closeDrawer" app>
             <NavigationDrawer />
         </v-navigation-drawer>
         <v-app-bar app>
@@ -9,30 +9,43 @@
                 <span>{{currentPath}}</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn text v-if="(admin || home) && !loading" @click="refreshProducts">
+            <v-btn
+                text
+                v-if="(path === '/admin' || path === '/') && !loading"
+                @click="refreshProducts"
+            >
                 <v-icon>mdi-refresh</v-icon>
             </v-btn>
             <v-progress-circular v-if="loading" indeterminate></v-progress-circular>
-            <v-btn text>
+            <v-btn text v-if="(path === '/admin' || path === '/')">
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
+
+            <v-dialog v-model="dialog" max-width="374" v-if="(path === '/cart') && cart.length">
+                <template v-slot:activator="{ on }">
+                    <v-btn text color="red" v-on="on">Clear Cart</v-btn>
+                </template>
+                <ConfirmClear @close="dialog = false" />
+            </v-dialog>
         </v-app-bar>
     </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import NavigationDrawer from "./NavigationDrawer";
+import ConfirmClear from "../Cart/ConfirmClear";
 export default {
     name: "main-nav-bar",
     components: {
-        NavigationDrawer
+        NavigationDrawer,
+        ConfirmClear
     },
     data() {
         return {
             drawer: null,
-            admin: false,
-            home: false,
-            loading: false
+            loading: false,
+            dialog: false
         };
     },
     methods: {
@@ -46,9 +59,13 @@ export default {
                 .then(() => {})
                 .catch(this.next)
                 .finally(() => (this.loading = false));
+        },
+        getInput(val) {
+            this.drawer = val;
         }
     },
     computed: {
+        ...mapState("cart", ["cart"]),
         currentPath: {
             get() {
                 switch (this.$route.path) {
@@ -61,36 +78,18 @@ export default {
                     case "/login":
                         return "Login";
                     default:
-                        return "Smart Home";
+                        return "Visual Novel";
                 }
             },
             set() {
                 return;
             }
+        },
+        path: function() {
+            return this.$route.path;
         }
     },
-    watch: {
-        $route() {
-            if (this.$route.path === "/") {
-                this.home = true;
-                this.admin = false;
-            } else if (this.$route.path === "/admin") {
-                this.admin = true;
-                this.home = false;
-            } else {
-                this.admin = false;
-                this.home = false;
-            }
-        }
-    },
-    created() {
-        if (this.$route.path === "/") {
-            this.home = true;
-        }
-        if (this.$route.path === "/admin") {
-            this.admin = true;
-        }
-    }
+    created() {}
 };
 </script>
 
