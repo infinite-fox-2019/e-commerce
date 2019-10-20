@@ -31,9 +31,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    transaction: {
+    cart: {
         type: Schema.Types.ObjectId,
-        ref: 'Transaction'
+        ref: 'Cart'
     }
 
 }, {

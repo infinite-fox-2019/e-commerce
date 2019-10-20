@@ -1,14 +1,15 @@
-const chai = require("chai");
-const chaiHttp = require('chai-http');
-const expect = chai.expect;
-const app = require('../app');
+const chai = require("chai")
+const chaiHttp = require('chai-http')
+const expect = chai.expect
+const app = require('../app')
 const seedDatabase = require("../helpers/test/seedDatabase")
 
 chai.use(chaiHttp);
 
-let tokenGhozi = "";
-let tokenRizky = "";
+let tokenGhozi = ""
+let tokenRizky = ""
 let idProduct = ""
+let dataProducts = []
 
 before(function (done) {
     seedDatabase(done)
@@ -59,7 +60,8 @@ describe("Product Test", function () {
                     expect(res.body.length).to.equal(7)
                     res.body.forEach(element => {
                         expect(element).to.have.keys(["_id", "name", "image", "price", "stock", "brand", "createdAt", "updatedAt"])
-                    });
+                    })
+                    dataProducts = res.body
                     done();
                 })
         })
@@ -291,4 +293,41 @@ describe("Product Test", function () {
 
     })
 
+})
+
+describe("Cart Test" function () {
+    describe("POST /cart", function () {
+        it("Successfully create cart (status: 201)", function (done) {
+            let cart = {
+                products: [dataProducts[0]._id],
+                address: `Pondok Indah, Kebayoran Lama, Jakarta Selatan`
+            }
+            chai
+                .request(app)
+                .post('/cart')
+                .set("token", tokenGhozi)
+                .send(cart)
+                .end(function (err, res) {
+                    expect(err).to.be.null
+                    expect(res).to.have.status(201)
+                    expect(res.body).to.be.an("object")
+                    expext(res.body).to.have.keys(["_id", "user", "products", "status", "address"])
+                })
+        })
+        it("Error while add cart: with empty address (status:400) ", function (done) {
+            let product = {}
+            chai
+                .request(app)
+                .post("/cart")
+                .set("token", tokenGhozi)
+                .send(product)
+                .end(function (err, res) {
+                    expect(err).to.be.null;
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.have.all.keys('message');
+                    expect(res.body.message).to.equal('your product needs name. your product needs image. your product needs price. your product needs stock. your product needs brand')
+                    done()
+                })
+        })
+    })
 })
