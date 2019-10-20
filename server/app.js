@@ -16,7 +16,7 @@ const mongooseConfig = {
     useFindAndModify: false
 }
 
-mongoose.connect("mongodb://localhost/e-commerce", mongooseConfig)
+mongoose.connect(process.env.MONGOOSE_URL, mongooseConfig)
     .then((result) => {
         console.log("database connected")    
     })

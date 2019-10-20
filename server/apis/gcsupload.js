@@ -6,7 +6,7 @@ const upload = gcsUpload({
     },
     gcsConfig: {
         keyFilename: 'keyfile.json',
-        bucketName: "e-commerce-storage.panji-h8.online"
+        bucketName: process.env.BUCKET_NAME
     }
 })
 

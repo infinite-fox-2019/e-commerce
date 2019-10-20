@@ -53,7 +53,6 @@ export default {
   },
   methods: {
     createProduct () {
-      console.log(this.imageData)
       let payload = {
         product: this.product,
         price: this.price,
@@ -115,10 +114,8 @@ export default {
               timer: 2000
             })
             this.imageData = data.imageData
-            console.log(this.imageData)
           })
           .catch(err => {
-            console.log(err)
             let message =
             (err.response && err.response.data && err.response.data.message) ||
             'error failed to upload file'

@@ -94,8 +94,6 @@ export default new Vuex.Store({
     checkOut (state, payload) {
       state.totalPrice = payload.TotalPrice
       state.arrCheckout = payload.TotalProduct
-      console.log(state.totalPrice)
-      console.log(state.arrCheckout)
     }
   },
   actions: {
@@ -134,7 +132,6 @@ export default new Vuex.Store({
                   2000
                 )
                 this.dispatch('checkCart')
-                console.log(data)
               })
               .catch(() => {
                 swal.fire({
@@ -200,7 +197,6 @@ export default new Vuex.Store({
                   2000
                 )
                 this.dispatch('checkCart')
-                console.log(result)
               })
               .catch(() => {
                 swal.fire({
@@ -247,9 +243,8 @@ export default new Vuex.Store({
           commit('checkCart', data)
           swal.close()
         })
-        .catch((err) => {
+        .catch(() => {
           swal.close()
-          console.log(err)
         })
     },
     addToCart ({ commit }, payload) {
@@ -289,7 +284,6 @@ export default new Vuex.Store({
                   'success',
                   2000
                 )
-                console.log(result)
               })
               .catch(() => {
                 swal.fire({
@@ -349,8 +343,8 @@ export default new Vuex.Store({
           })
           commit('createProduct', data)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(() => {
+          swal.close()
         })
     },
     deleteProduct ({ commit }, payload) {
@@ -388,7 +382,6 @@ export default new Vuex.Store({
                   2000
                 )
                 this.dispatch('showProduct')
-                console.log(result)
               })
               .catch(() => {
                 swal.fire({
@@ -420,7 +413,6 @@ export default new Vuex.Store({
         })
     },
     showProduct ({ commit }) {
-      console.log('masuk')
       swal.fire({
         title: 'Fetching Data',
         showConfirmButton: false
@@ -437,13 +429,11 @@ export default new Vuex.Store({
           data.forEach(element => {
             arr.unshift(element)
           })
-          console.log(arr)
           commit('setProduct', arr)
           swal.close()
         })
-        .catch(err => {
+        .catch(() => {
           swal.close()
-          console.log(err)
         })
     },
     updateProduct ({ commit }, payload) {
@@ -486,7 +476,6 @@ export default new Vuex.Store({
         })
     },
     showUpdate ({ commit }, payload) {
-      console.log(payload)
       swal.fire({
         title: 'fetching data',
         allowOutsideClick: () => swal.isLoading()
@@ -502,13 +491,11 @@ export default new Vuex.Store({
           swal.close()
           commit('update', data)
         })
-        .catch(err => {
+        .catch(() => {
           swal.close()
-          console.log(err)
         })
     },
     register ({ commit }, payload) {
-      console.log(payload)
       swal.fire({
         title: 'wait a minute to register',
         allowOutsideClick: () => swal.isLoading()
@@ -612,7 +599,7 @@ export default new Vuex.Store({
           commit('setAllProduct', arr)
           swal.close()
         })
-        .catch(err => {
+        .catch(() => {
           swal.close()
           swal.fire({
             type: 'error',
@@ -620,7 +607,6 @@ export default new Vuex.Store({
             text: 'Database not connected',
             showConfirmButton: false
           })
-          console.log(err)
         })
     }
   },
