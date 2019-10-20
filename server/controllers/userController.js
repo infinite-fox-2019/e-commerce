@@ -7,12 +7,11 @@ class UserController {
   static login(req,res,next){
     const {email,password} = req.body
     User.findOne({email})
-      .then(data => {
-        console.log(decodeHash(password, data.password))
+    .then(data => {
         if(data && decodeHash(password, data.password)){
           console.log(data)
           let token = generateToken({name:data.name, email:data.email, _id:data._id, role:data.role})
-          res.status(200).json({token})
+          res.status(200).json({token,role:data.role})
         }
         else{
           throw {msg : "Wrong password or email", status : 400}
@@ -22,14 +21,15 @@ class UserController {
   }
 
   static register(req,res,next){
-      const {name, email, password} = req.body
+      const {email, password} = req.body
       let roleStatus;
       if(req.loggedUser && req.loggedUser.role === "superadmin"){
         roleStatus = 'admin'
       }
-      User.create({name, email, password, role: roleStatus})
+      User.create({email, password, role: roleStatus})
         .then(data => {
-          res.status(201).json(data)
+          let token = generateToken({email:data.email, _id:data._id, role:data.role})
+          res.status(201).json({message:"Register berhasil",token})
         })
         .catch(next)
     }

@@ -4,7 +4,7 @@
       <ImageHeader/>
       <b-row>
         <b-col cols="12" md="3" v-for="(value,index) in productData" :key="index">
-          <Card 
+          <Card
           :imgsrc="value.image"
           :title="value.name"
           :price="value.price"
@@ -37,7 +37,7 @@ export default {
         method: 'get',
         url: 'http://localhost:3000/products'
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           console.log(data)
           this.productData = data
         })
@@ -46,7 +46,7 @@ export default {
         })
     }
   },
-  created(){
+  created () {
     this.fetchData()
   }
 

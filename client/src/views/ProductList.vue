@@ -16,6 +16,7 @@
           </b-table>
           <div class="mt-3">
             <b-button variant="success" class="mr-1"> Save Change </b-button>
+            <router-link to="/add-product"><b-button class="mr-2" variant="secondary">Add Product</b-button></router-link>
           </div>
         </div>
       </b-col>
@@ -28,30 +29,30 @@ import axios from 'axios'
 
 export default {
   components: {
-    
+
   },
-  data(){
-    return{
+  data () {
+    return {
       fields: [
-          {
-            key: 'name',
-            sortable: true
-          },
-          {
-            key: 'stock',
-            sortable: true
-          },
-          {
-            key: 'price',
-            label: 'price ($)',
-            sortable: true,
-          },
-          { 
-            key: 'actions', 
-            label: 'Actions' 
-          }
-        ],
-        items: []
+        {
+          key: 'name',
+          sortable: true
+        },
+        {
+          key: 'stock',
+          sortable: true
+        },
+        {
+          key: 'price',
+          label: 'price ($)',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Actions'
+        }
+      ],
+      items: []
     }
   },
   methods: {
@@ -60,7 +61,7 @@ export default {
         method: 'get',
         url: 'http://localhost:3000/products'
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           console.log(data)
           this.items = data
         })
@@ -74,8 +75,8 @@ export default {
         method: 'delete',
         url: `http://localhost:3000/products/${id}`
       })
-        .then(({data}) => {
-          console.log("delete berhasil")
+        .then(({ data }) => {
+          console.log('delete berhasil')
           this.fetchData()
         })
         .catch(err => {
@@ -83,7 +84,7 @@ export default {
         })
     }
   },
-  created(){
+  created () {
     this.fetchData()
   }
 }

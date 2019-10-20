@@ -2,7 +2,7 @@
 
   <b-container class="h-100">
     <b-row class="h-100 justify-content-center align-items-center">
-      <b-col cols="8" style="margin-top:25vh">      
+      <b-col cols="8" style="margin-top:25vh">
           <p class="h1 mb-4" style="font-weight:bold;">Login Here...</p>
           <b-form @submit.prevent="login" @reset="onReset" v-if="show">
             <b-form-group
@@ -22,7 +22,7 @@
             <b-form-group id="input-group-2" label="Password:" label-for="input-2">
               <b-form-input
                 id="input-2"
-                v-model="form.name"
+                v-model="form.password"
                 required
                 placeholder="Enter password"
                 type="password"
@@ -36,7 +36,7 @@
             </div>
 
           </b-form>
-        
+
       </b-col>
     </b-row>
   </b-container>
@@ -44,42 +44,57 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
-        },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-        show: true
-      }
-    },
-    methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+import axios from 'axios'
+
+export default {
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
       },
-      login () {
-        console.log('login')
-      },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
+      show: true
+    }
+  },
+  methods: {
+    login () {
+      console.log('login')
+      console.log(this.form.password)
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/users/login',
+        data: {
+          email: this.form.email,
+          password: this.form.password
+        }
+      })
+        .then(({ data }) => {
+          console.log(data)
+          localStorage.setItem('token', data.token)
+          if (data.role === 'admin' || data.role === 'superadmin') {
+            this.$emit('adminStatus', true)
+            localStorage.setItem('admin', data.role)
+          }
+          this.$emit('loginStatus', true)
+          this.$router.push('/')
         })
-      }
+        .catch(err => {
+          console.log(err.response)
+        })
+    },
+    onReset (evt) {
+      evt.preventDefault()
+      // Reset our form values
+      this.form.email = ''
+      this.form.password = ''
+      // Trick to reset/clear native browser form validation state
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
     }
   }
+}
 </script>
 
 <style scoped>

@@ -4,8 +4,8 @@ const{generateHash} = require('../helpers/bcrypt')
 
 const userSchema = new Schema({
   name : {
-    type:String, 
-    required: "Name is required"},
+    type:String
+  },
   email : {
     type:String, 
     required: "Email is required", 

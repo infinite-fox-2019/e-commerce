@@ -15,9 +15,10 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
 
-        <router-link to="/cart"><b-button pill class="mr-2" variant="secondary">Cart</b-button></router-link>
-        <router-link to="/login"><b-button pill class="mr-2" variant="secondary">Login</b-button></router-link>
-        <b-button pill class="mr-2" variant="secondary">Logout</b-button>
+        <router-link v-if="!loginStatusFromApp" to="/login"><b-button pill class="mr-2" variant="secondary">Login</b-button></router-link>
+        <router-link v-if="loginStatusFromApp && adminStatusFromApp" to="/product-list"><b-button pill class="mr-2" variant="secondary">Product List</b-button></router-link>
+        <router-link v-if="loginStatusFromApp" to="/cart"><b-button pill class="mr-2" variant="secondary">Cart</b-button></router-link>
+        <b-button pill v-if="loginStatusFromApp" @click="logout()" class="mr-2" variant="secondary">Logout</b-button>
 
         </b-navbar-nav>
       </b-collapse>
@@ -28,11 +29,26 @@
 
 <script>
 export default {
-  name:"navbar",
-  methods:{
-    logout () {
+  name: 'navbar',
+  data () {
+    return {
 
     }
+  },
+  methods: {
+    logout () {
+      console.log('logout')
+      localStorage.removeItem('token')
+      this.$emit('adminStatus', false)
+      this.$emit('loginStatus', false)
+    }
+  },
+  props: {
+    loginStatusFromApp: Boolean,
+    adminStatusFromApp: Boolean
+  },
+  created () {
+    console.log(this.loginStatusFromApp, 'from nav')
   }
 }
 </script>

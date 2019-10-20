@@ -42,6 +42,6 @@ export default new Router({
       path: '/product-list',
       name: 'product list',
       component: ProductList
-    },
+    }
   ]
 })

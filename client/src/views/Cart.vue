@@ -25,42 +25,42 @@ import axios from 'axios'
 
 export default {
   components: {
-    
+
   },
-  data(){
-    return{
+  data () {
+    return {
       fields: [
-          {
-            key: 'name',
-            sortable: true
-          },
-          {
-            key: 'stock',
-            sortable: true
-          },
-          {
-            key: 'price',
-            label: 'price ($)',
-            sortable: true,
-          },
-          { 
-            key: 'actions', 
-            label: 'Actions' 
-          }
-        ],
-        items: []
+        {
+          key: 'name',
+          sortable: true
+        },
+        {
+          key: 'stock',
+          sortable: true
+        },
+        {
+          key: 'price',
+          label: 'price ($)',
+          sortable: true
+        },
+        {
+          key: 'actions',
+          label: 'Actions'
+        }
+      ],
+      items: []
     }
   },
-  methods:{
+  methods: {
     fetchCartData () {
       axios({
-        method:'get',
-        url:'http://localhost:3000/carts'
+        method: 'get',
+        url: 'http://localhost:3000/carts'
       })
-        .then(({data}) => {
+        .then(({ data }) => {
           console.log(data)
           this.items = []
-          data.forEach(element   => {
+          data.forEach(element => {
             this.items.push(element)
           })
         })
@@ -74,8 +74,8 @@ export default {
         method: 'delete',
         url: `http://localhost:3000/carts/${id}`
       })
-        .then(({data}) => {
-          console.log("delete berhasil")
+        .then(({ data }) => {
+          console.log('delete berhasil')
           this.fetchCartData()
         })
         .catch(err => {
@@ -83,7 +83,7 @@ export default {
         })
     }
   },
-  created(){
+  created () {
     this.fetchCartData()
   }
 }

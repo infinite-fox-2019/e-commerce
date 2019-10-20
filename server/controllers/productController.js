@@ -12,11 +12,12 @@ class ProductController {
 
   static addProduct(req,res,next){
     const {name, qty, price} = req.body
-    Product.create({name, qty, price})
-      .then(data => {
-        res.status(201).json(data)
-      })
-      .catch(next)
+    res.status(200).json(req.body)
+    // Product.create({name, qty, price})
+    //   .then(data => {
+    //     res.status(201).json(data)
+    //   })
+    //   .catch(next)
   }
 
   static editProduct(req,res,next){

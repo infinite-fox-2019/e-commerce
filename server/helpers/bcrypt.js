@@ -6,7 +6,6 @@ function generateHash(password){
 }
 
 function decodeHash(password, hash){
-  console.log(password, hash)
   return bcrypt.compareSync(password,hash)
 }
 
