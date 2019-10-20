@@ -7,7 +7,6 @@
           <Card 
           :imgsrc="value.image"
           :title="value.name"
-          :subtitle="value.manufacturer"
           :price="value.price"
           />
         </b-col>
@@ -36,7 +35,7 @@ export default {
     fetchData () {
       axios({
         method: 'get',
-        url: 'http://localhost:3000/product'
+        url: 'http://localhost:3000/products'
       })
         .then(({data}) => {
           console.log(data)

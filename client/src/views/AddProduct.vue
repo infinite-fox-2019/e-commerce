@@ -40,19 +40,17 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group
-              id="input-group-1"
-              label="Product description:"
-              label-for="input-1"
-            >
-            <b-form-textarea
-              id="textarea"
-              v-model="text"
-              placeholder="Enter something..."
-              rows="3"
-              max-rows="6"
-            ></b-form-textarea>
+            <b-form-group id="input-group-2" label="Stock:" label-for="input-2">
+              <b-form-input
+                id="input-2"
+                v-model="form.stock"
+                required
+                placeholder="Enter stock"
+                type="number"
+              ></b-form-input>
             </b-form-group>
+
+            
 
             <b-button type="submit" class="mr-2" variant="primary">Add Product</b-button>
             <b-button type="reset" class="mr-2" variant="warning">Reset</b-button>
@@ -70,11 +68,11 @@
       return {
         form: {
           productName: '',
-          price: '',
+          price: null,
           food: null,
           checked: [],
           file: null,
-          text: ''
+          stock: null
         },
         foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true

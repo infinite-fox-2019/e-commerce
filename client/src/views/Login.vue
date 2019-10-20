@@ -4,7 +4,7 @@
     <b-row class="h-100 justify-content-center align-items-center">
       <b-col cols="8" style="margin-top:25vh">      
           <p class="h1 mb-4" style="font-weight:bold;">Login Here...</p>
-          <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+          <b-form @submit.prevent="login" @reset="onReset" v-if="show">
             <b-form-group
               id="input-group-1"
               label="Email address:"
@@ -30,7 +30,7 @@
             </b-form-group>
 
             <div class="mt-4">
-              <router-link to="/login"><b-button type="submit" class="mr-2" variant="primary">Login</b-button></router-link>
+              <b-button type="submit" class="mr-2" variant="primary">Login</b-button>
               <b-button type="reset" class="mr-2" variant="danger">Reset</b-button>
               <router-link to="/register"><b-button class="mr-2" variant="secondary">Register</b-button></router-link>
             </div>
@@ -61,6 +61,9 @@
       onSubmit(evt) {
         evt.preventDefault()
         alert(JSON.stringify(this.form))
+      },
+      login () {
+        console.log('login')
       },
       onReset(evt) {
         evt.preventDefault()

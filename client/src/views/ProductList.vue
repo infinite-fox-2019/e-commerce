@@ -9,7 +9,7 @@
               <b-button size="sm" variant="warning" class="mr-1">
                 Edit
               </b-button>
-              <b-button size="sm" variant="danger" class="mr-1">
+              <b-button size="sm" variant="danger" class="mr-1" @click="deleteCartData(row.item.id)">
                 Delete
               </b-button>
             </template>
@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   components: {
     
@@ -32,16 +34,16 @@ export default {
     return{
       fields: [
           {
-            key: 'last_name',
+            key: 'name',
             sortable: true
           },
           {
-            key: 'first_name',
+            key: 'stock',
             sortable: true
           },
           {
-            key: 'age',
-            label: 'Person age',
+            key: 'price',
+            label: 'price ($)',
             sortable: true,
           },
           { 
@@ -49,13 +51,40 @@ export default {
             label: 'Actions' 
           }
         ],
-        items: [
-          { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-          { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-          { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-        ]
+        items: []
     }
+  },
+  methods: {
+    fetchData () {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/products'
+      })
+        .then(({data}) => {
+          console.log(data)
+          this.items = data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteCartData (id) {
+      console.log(id)
+      axios({
+        method: 'delete',
+        url: `http://localhost:3000/products/${id}`
+      })
+        .then(({data}) => {
+          console.log("delete berhasil")
+          this.fetchData()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created(){
+    this.fetchData()
   }
 }
 </script>

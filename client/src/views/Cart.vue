@@ -6,14 +6,13 @@
         <div>
           <b-table striped hover :items="items" :fields="fields">
             <template v-slot:cell(actions)="row">
-              <b-button size="sm" variant="warning" class="mr-1">
+              <b-button size="sm" variant="warning" class="mr-1" @click="deleteCartData(row.item.id)">
                 Delete Cart
               </b-button>
             </template>
           </b-table>
           <div class="mt-3">
             <b-button variant="success" class="mr-1"> Checkout </b-button>
-            <b-button variant="danger" class="mr-1"> Delete Cart </b-button>
           </div>
         </div>
       </b-col>
@@ -22,6 +21,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   components: {
     
@@ -30,16 +31,16 @@ export default {
     return{
       fields: [
           {
-            key: 'last_name',
+            key: 'name',
             sortable: true
           },
           {
-            key: 'first_name',
+            key: 'stock',
             sortable: true
           },
           {
-            key: 'age',
-            label: 'Person age',
+            key: 'price',
+            label: 'price ($)',
             sortable: true,
           },
           { 
@@ -47,13 +48,43 @@ export default {
             label: 'Actions' 
           }
         ],
-        items: [
-          { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-          { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-          { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-          { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-        ]
+        items: []
     }
+  },
+  methods:{
+    fetchCartData () {
+      axios({
+        method:'get',
+        url:'http://localhost:3000/carts'
+      })
+        .then(({data}) => {
+          console.log(data)
+          this.items = []
+          data.forEach(element   => {
+            this.items.push(element)
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteCartData (id) {
+      console.log(id)
+      axios({
+        method: 'delete',
+        url: `http://localhost:3000/carts/${id}`
+      })
+        .then(({data}) => {
+          console.log("delete berhasil")
+          this.fetchCartData()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  created(){
+    this.fetchCartData()
   }
 }
 </script>

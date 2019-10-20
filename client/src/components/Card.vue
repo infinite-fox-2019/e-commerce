@@ -13,12 +13,14 @@
         ${{price || 1.00}}
       </b-card-text>
       
-      <b-button href="#" variant="outline-dark"> <span><img src="https://image.flaticon.com/icons/svg/265/265731.svg" class="mb-1 mr-2" width="15px" height="15px"></span> Add to Cart</b-button>
+      <b-button @click.prevent="addToCart()" href="#" variant="outline-dark"> <span><img src="https://image.flaticon.com/icons/svg/265/265731.svg" class="mb-1 mr-2" width="15px" height="15px"></span> Add to Cart</b-button>
     </b-card>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'Card',
   data () {
@@ -31,6 +33,27 @@ export default {
     title: String,
     subtitle: String,
     price: Number
+  },
+  methods:{
+    addToCart (index) {
+      axios({
+        method:'post',
+        url:'http://localhost:3000/carts',
+        data: {
+          name: this.title,
+          price: this.price,
+          image: this.imgsrc,
+          user: "123", //Ini nanti tempat user id nya
+          amount: 1
+        }
+      })
+        .then(({data}) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
   }
 }
 </script>

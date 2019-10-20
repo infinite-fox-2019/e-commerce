@@ -28,7 +28,12 @@
 
 <script>
 export default {
-  name:"navbar"
+  name:"navbar",
+  methods:{
+    logout () {
+
+    }
+  }
 }
 </script>
 
