@@ -15,13 +15,20 @@ app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
 mongoose.set('useFindAndModify', false);
-mongoose.connect(`${process.env.MONGO_DB}-${process.env.NODE_ENV}`,{useNewUrlParser : true, useUnifiedTopology : true})
+// mongoose.connect(`${process.env.MONGO_DB}-${process.env.NODE_ENV}`,{useNewUrlParser : true, useUnifiedTopology : true})
+//   .then(()=>{
+//     console.log(`Connected to DB ${process.env.NODE_ENV}`)
+//   })
+//   .catch((err)=>{
+//     console.log(err)
+//   })
+
+mongoose.connect(process.env.MONGO_ATLAS,{useNewUrlParser:true,useUnifiedTopology:true})
   .then(()=>{
-    console.log(`Connected to DB ${process.env.NODE_ENV}`)
+    console.log('connectedOnAtlas')
   })
-  .catch((err)=>{
-    console.log(err)
-  })
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'));
 
 app.use(morgan('dev'))
 app.use(cors())
