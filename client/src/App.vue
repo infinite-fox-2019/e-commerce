@@ -37,7 +37,6 @@ export default {
   },
   created () {
     if (localStorage.userId && localStorage.username && localStorage.userRole && localStorage.access_token) {
-      console.log('masuk access token')
       this.$store.commit('SET_USER_ID', localStorage.userId)
       this.$store.commit('SET_USERNAME', localStorage.username)
       this.$store.commit('SET_USER_ROLE', localStorage.userRole)
