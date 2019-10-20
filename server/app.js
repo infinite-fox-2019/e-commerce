@@ -1,4 +1,4 @@
-if (process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'){
   require('dotenv').config()
 }
 
@@ -14,7 +14,14 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
-mongoose.connect('mongodb://localhost:27017/e-commerce',{useNewUrlParser : true, useUnifiedTopology : true})
+mongoose.set('useFindAndModify', false);
+mongoose.connect(`${process.env.MONGO_DB}-${process.env.NODE_ENV}`,{useNewUrlParser : true, useUnifiedTopology : true})
+  .then(()=>{
+    console.log(`Connected to DB ${process.env.NODE_ENV}`)
+  })
+  .catch((err)=>{
+    console.log(err)
+  })
 
 app.use(morgan('dev'))
 app.use(cors())

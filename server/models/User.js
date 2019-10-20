@@ -14,7 +14,15 @@ const users = new Schema({
   password : {
     type : String,
     required : [true,'password is required']
-  }
+  },
+  admin : {
+    type : Boolean,
+    default : false
+  },
+  cart : [{
+    productId : {type : Schema.Types.ObjectId, ref : 'Product'},
+    qty : {type : Number}
+  }]
 },{
   versionKey : false
 })

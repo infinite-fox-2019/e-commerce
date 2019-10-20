@@ -8,7 +8,21 @@ const products = new Schema({
     },
     price: {
       type: Number,
-      required: [true, "Price is required"]
+      required: [true, "Price is required"],
+      min : [1,"Price cannot 0"]
+    },
+    quantity : {
+      type : Number,
+      required : [true, "Quantity is required"],
+      min : [0,"Quantity cannot -1"]
+    },
+    detail : {
+      type : String,
+      required : [true, "Detail product is required"]
+    },
+    image : {
+      type : String,
+      default : ''
     }
   },
   {

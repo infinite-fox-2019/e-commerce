@@ -17,7 +17,7 @@ const errorhandler = (err,req,res,next)=>{
     case 'Email format is invalid':
       res.status(400).json(err.name)
     break;
-    case 'Username/Email wrong':
+    case 'Email/Password wrong':
       res.status(403).json(err.name)
     break;
     default:
