@@ -14,7 +14,7 @@
   <footer class="card-footer">
       <div class="card-footer-item">
         <b-button type="is-primary" class="btm"  @click="toDetail(item._id)">Show More</b-button>
-        <b-button type="is-success" class="btm" v-if="isLogin" @click="addTOcart(item._id)">Buy Item</b-button>
+        <b-button type="is-success" class="btm" v-if="isLogin && maximum !== 0" @click="addTOcart(item._id)">Buy Item</b-button>
       </div>
   </footer>
 </div>
@@ -26,6 +26,7 @@ export default {
   props: ['item'],
   data () {
     return {
+      maximum: 0
     }
   },
   computed: {
@@ -39,12 +40,16 @@ export default {
   methods: {
     addTOcart (id) {
       this.$store.dispatch('addCart', { itemId: id })
+      this.maximum -= 1
     },
     toDetail (id) {
       // console.log(this.$router)
       this.$router.push({ path: '/shop/item/' + id })
       // this.$router.push({ path: '/' })
     }
+  },
+  created () {
+    this.maximum = this.item.stock
   }
 }
 </script>

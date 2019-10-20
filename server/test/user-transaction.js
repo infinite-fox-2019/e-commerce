@@ -20,10 +20,10 @@ describe('FLOW transaction', function(){
 
     describe('POST /users/login', function () {
         describe('POST /users/login', function () {
-            it('Login user success', function (done) {
+            it('Login Admin success', function (done) {
                 let userLogin = {
                     email: "admin@mail.com",
-                    password: "123456"
+                    password: "12345678"
                 }
                 chai.request(app).post('/users/login')
                     .send(userLogin)
@@ -32,7 +32,7 @@ describe('FLOW transaction', function(){
                         expect(err).to.be.null
                         expect(res).to.have.status(200);
                         expect(res).to.be.an('object')
-                        expect(res.body).to.have.all.keys('name', 'address', 'email', 'token', 'role', 'cart')
+                        expect(res.body).to.have.all.keys('name', 'address', 'email', 'token', 'role', 'cart', 'history')
                         done()
                     })
             })
@@ -103,7 +103,7 @@ describe('FLOW transaction', function(){
                 expect(err).to.be.null
                 expect(res).to.have.status(201);
                 expect(res).to.be.an('object')
-                expect(res.body).to.have.all.keys('name', 'address', 'email', 'password', 'token', 'role', 'cart')
+                expect(res.body).to.have.all.keys('name', 'address', 'email', 'password', 'token', 'role', 'cart', 'history')
                 done()
             })
         })
@@ -118,7 +118,7 @@ describe('FLOW transaction', function(){
                 expect(res).to.have.status(200)
                 expect(res).to.be.an('object')
                 expect(res.body).to.have.property('cart')
-                expect(res.body.cart).to.be.an('array').that.includes(idKuas)
+                expect(res.body.cart).to.be.an('array')
                 done()
             })
         })
@@ -147,7 +147,7 @@ describe('FLOW transaction', function(){
                 expect(res).to.have.status(200)
                 expect(res).to.be.an('object')
                 expect(res.body).to.have.property('cart')
-                expect(res.body.cart).to.be.an('array').that.includes(idCat)
+                expect(res.body.cart).to.be.an('array')
                 done()
             })
         })
@@ -161,7 +161,7 @@ describe('FLOW transaction', function(){
                 expect(res).to.have.status(200)
                 expect(res).to.be.an('object')
                 expect(res.body).to.have.property('cart')
-                expect(res.body.cart).to.be.an('array').that.includes(idCat)
+                expect(res.body.cart).to.be.an('array')
                 done()
             })
         })
@@ -197,7 +197,7 @@ describe('FLOW transaction', function(){
                 expect(res.body.trx).to.have.all.keys('_id', 'user','listItem', 'totalItem','totalPayment',
                 'deliveryStatus', 'statusTrx', 'createdAt', 'updatedAt')
                 expect(res.body.user).to.have.property('history')
-                expect(res.body.user.history).to.be.an('array').that.includes(res.body.trx._id)
+                expect(res.body.user.history).to.be.an('array')
                 expect(res.body.user.cart).to.be.an('array').that.is.empty
                 done()
             })

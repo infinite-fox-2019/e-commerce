@@ -12,7 +12,9 @@ export default new Vuex.Store({
     history: [],
     user: {},
     itemDetail: {},
-    heightScroll: ''
+    heightScroll: '',
+    admintrx: [],
+    trxpending: []
   },
   mutations: {
     SET_ALL_ITEMS (state, payload) {
@@ -31,6 +33,12 @@ export default new Vuex.Store({
     },
     SEND_DETAIL (state, payload) {
       state.itemDetail = payload
+    },
+    SET_INCOME (state, payload) {
+      state.admintrx = payload
+    },
+    SET_PENDING_INCOME (state, payload) {
+      state.trxpending = payload
     }
   },
   actions: {
@@ -155,6 +163,42 @@ export default new Vuex.Store({
         .then(({ data }) => {
           console.log(data.message)
           dispatch('fetchUserInfo')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchTransactionAdm ({ commit }, payload) {
+      axios({
+        method: 'post',
+        url: '/transactions/income',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          deliveryStatus: true
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_INCOME', data.transactions)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    fetchPendingAdm ({ commit }, payload) {
+      axios({
+        method: 'post',
+        url: '/transactions/income',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          deliveryStatus: false
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_PENDING_INCOME', data.transactions)
         })
         .catch(err => {
           console.log(err)

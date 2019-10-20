@@ -46,6 +46,7 @@
 
 <script>
 import axios from '../config/axios.js'
+import Swal from 'sweetalert2'
 export default {
   data () {
     return {
@@ -88,12 +89,18 @@ export default {
             cart,
             history
           }
+          this.$router.push({ path: '/shop' })
           this.$store.commit('SET_USERINFO', payload)
           this.$store.commit('SET_ISLOGIN', true)
           this.$store.commit('SET_CART', cart)
         })
         .catch(err => {
           let errors = err.response.data.errMsg.join('<br>')
+          Swal.fire({
+            type: 'error',
+            title: 'Error!',
+            html: errors
+          })
           console.log(errors)
         })
         .finally(() => {
@@ -130,6 +137,11 @@ export default {
         })
         .catch(err => {
           let errors = err.response.data.errMsg
+          Swal.fire(
+            `Can't Login`,
+            `${errors}`,
+            'warning'
+          )
           console.log(errors)
         })
         .finally(() => {

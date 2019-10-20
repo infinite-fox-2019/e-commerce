@@ -19,8 +19,9 @@
        <h3> {{priceItem}} </h3>
     </div>
     <div class="btnn">
-      <b-button class="is-success is-large" @click="toCart(item._id)">Buy</b-button>
+      <b-button class="is-success is-large" @click="toCart(item._id)" v-if="isLogin">Buy</b-button>
     </div>
+    <br><br>
   </div>
 </template>
 
@@ -36,6 +37,9 @@ export default {
     ButtonTag
   },
   computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    },
     routerId () {
       console.log(this.$route)
       return this.$route.params.id

@@ -12,7 +12,7 @@ class UserController {
       password
     })
       .then(data => {
-        const { name, email, address, password } = data
+        const { name, email, address, password , role, cart, history} = data
         res.status(201).json({
           name, email, address, password,role,cart,history,
           token: getToken({ _id: data._id, email: data.email })

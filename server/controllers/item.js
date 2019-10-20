@@ -28,7 +28,7 @@ class ItemController {
 
   static filterTag(req, res, next){
     let tags = [req.params.tag]
-    console.log('here');
+    // console.log('here');
     Item.find({ tags : {$all : tags}})
     .sort({createdAt : -1})
     .then(data =>{

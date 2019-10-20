@@ -26,6 +26,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import Swal from 'sweetalert2'
 export default {
   name: 'app',
   data () {
@@ -38,9 +39,21 @@ export default {
   },
   methods: {
     logout () {
-      localStorage.clear()
-      this.$router.push({ path: '/' })
-      this.$store.commit('SET_ISLOGIN', false)
+      Swal.fire({
+        title: 'Are you sure to logout?',
+        text: '',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Logout'
+      }).then(result => {
+        if (result.value) {
+          localStorage.clear()
+          this.$router.push({ path: '/' })
+          this.$store.commit('SET_ISLOGIN', false)
+        }
+      })
     }
   },
   created () {
@@ -97,7 +110,5 @@ nav{
 #nav a.router-link-exact-active {
   color: #7957d5;
 }
-h2:hover {
-  cursor: pointer;
-}
+
 </style>

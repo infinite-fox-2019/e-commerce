@@ -5,7 +5,7 @@ const {transAuthz, adminAuthz} = require('../middlewares/authorization')
 
 router.use(authentication)
 router.post('/', TransactionController.create)
-
+router.post('/income', adminAuthz, TransactionController.find)
 // router.get('/', adminAuthz, TransactionController.getAll)
 
 router.use('/:route/:id', transAuthz)

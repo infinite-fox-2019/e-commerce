@@ -30,8 +30,8 @@
             <td>{{item.sumrp}}</td>
             <td>
               <div class="update">
-              <b-button class="mini" @click="toCart(item._id)" size="is-small is-success"></b-button>
-              <b-button class="mini" @click="delCart(item._id)" size="is-small is-primary"></b-button>
+              <b-button class="mini" @click="toCart(item._id)" size="is-small is-success"><i class="fas fa-caret-up"></i></b-button>
+              <b-button class="mini" @click="delCart(item._id)" size="is-small is-primary"><i class="fas fa-caret-down"></i></b-button>
               </div>
             </td>
           </tr>
@@ -53,6 +53,8 @@
 
 <script>
 import { mapState } from 'vuex'
+import Swal from 'sweetalert2'
+
 export default {
   name: 'Cart',
   computed: {
@@ -103,6 +105,12 @@ export default {
     },
     pay () {
       this.$store.dispatch('payNow')
+      Swal.fire(
+        'Sucess',
+        'Buy Item From ARTZONE',
+        'success'
+      )
+      this.$router.push({ path: '/shop' })
     }
   }
 }

@@ -8,7 +8,7 @@ function authentication(req, res, next) {
       .then(result => {
         // console.log(result);
         if (!result) {
-          console.log('hereeee');
+          // console.log('hereeee');
           next({ status: 403, message: "Forbidden" })
         } else {
           req.decoded = result

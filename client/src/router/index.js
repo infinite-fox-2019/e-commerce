@@ -6,6 +6,10 @@ import Items from '../views/Items.vue'
 import Cart from '../views/Cart.vue'
 import Detail from '../components/Detail.vue'
 import TRX from '../views/Trx.vue'
+import Admin from '../views/Admin.vue'
+import Listitem from '../views/Listitem.vue'
+import Income from '../views/Income.vue'
+import CreateItem from '../components/CreateItem.vue'
 
 Vue.use(VueRouter)
 
@@ -34,9 +38,6 @@ const routes = [
   {
     path: '/signin',
     name: 'signin',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Signin.vue'),
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('token') && localStorage.getItem('email')) {
@@ -59,6 +60,20 @@ const routes = [
     path: '/shop',
     name: 'shop',
     component: Shop,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token') && localStorage.getItem('email')) {
+        let role = localStorage.getItem('role')
+        if (role === 'customer') {
+          next()
+        } else if (role === 'admin') {
+          next({
+            path: '/admin'
+          })
+        }
+      } else {
+        next()
+      }
+    },
     children: [
       {
         path: '',
@@ -94,6 +109,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
+    component: Admin,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('token') && localStorage.getItem('email')) {
         let role = localStorage.getItem('role')
@@ -109,7 +125,24 @@ const routes = [
           path: '/'
         })
       }
-    }
+    },
+    children: [
+      {
+        path: '',
+        name: 'Income',
+        component: Income
+      },
+      {
+        path: 'items',
+        name: 'Listitem',
+        component: Listitem
+      },
+      {
+        path: 'create',
+        name: 'CreateItem',
+        component: CreateItem
+      }
+    ]
   },
   {
     path: '/cart',

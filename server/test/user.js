@@ -25,7 +25,7 @@ describe('User Routes', function(){
                 expect(err).to.be.null
                 expect(res).to.have.status(201);
                 expect(res).to.be.an('object')
-                expect(res.body).to.have.all.keys('name', 'address', 'email', 'password', 'token', 'cart')
+                expect(res.body).to.have.all.keys('name', 'address', 'email', 'password', 'token', 'cart', 'history', 'role')
                 done()
             })
         })
@@ -77,7 +77,7 @@ describe('User Routes', function(){
                     expect(err).to.be.null
                     expect(res).to.have.status(200);
                     expect(res).to.be.an('object')
-                    expect(res.body).to.have.all.keys('name', 'address', 'email', 'token', 'role', 'cart')
+                    expect(res.body).to.have.all.keys('name', 'address', 'email', 'token', 'role', 'cart', 'history')
                     done()
                 })
             })

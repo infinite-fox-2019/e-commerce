@@ -1,5 +1,6 @@
 const Transaction = require('../models/transaction')
 const User = require('../models/user')
+const Item = require('../models/item')
 
 class TransactionController {
     static create(req, res, next){
@@ -33,10 +34,18 @@ class TransactionController {
                     $push: { history: data._id }, $set: {cart : []}
                 })
                 .then(() => {
+                    data.listItem.forEach(el => {
+                        Item.findById(el._id)
+                        .then(data =>{
+                            let newStock = data.stock - el.quantity
+                            data.stock = newStock
+                            data.save()
+                        })
+                    })
                     return User.findById(req.decoded._id)
                     .populate({path : 'history'})
                     .then(user => {
-                        console.log(data);
+                        // console.log(data);
                           res.status(201).json({
                               trx : data,
                               user : user
@@ -82,6 +91,15 @@ class TransactionController {
                     message : 'Transaction Not Found'
                 })
             }
+        })
+        .catch(next)
+    }
+
+    static find(req, res, next){
+        let {deliveryStatus} = req.body
+        Transaction.find({deliveryStatus : deliveryStatus, statusTrx : true})
+        .then(data =>{
+            res.status(200).json({transactions : data})
         })
         .catch(next)
     }

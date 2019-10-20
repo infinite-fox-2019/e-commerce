@@ -15,22 +15,22 @@ let token
 
 describe('Items Routes', function () {
 
-    describe('POST /users/login', function () {
-        it('Login user success', function (done) {
+    describe('POST /users/login', function(){
+        it ('Login user success', function(done){
             let userLogin = {
                 email: "admin@mail.com",
-                password: "123456"
+                password: '12345678'
             }
             chai.request(app).post('/users/login')
-                .send(userLogin)
-                .end(function (err, res) {
-                    token = res.body.token
-                    expect(err).to.be.null
-                    expect(res).to.have.status(200);
-                    expect(res).to.be.an('object')
-                    expect(res.body).to.have.all.keys('name', 'address', 'email', 'token', 'rple')
-                    done()
-                })
+            .send(userLogin)
+            .end(function(err, res){
+                token = res.body.token
+                expect(err).to.be.null
+                expect(res).to.have.status(200);
+                expect(res).to.be.an('object')
+                expect(res.body).to.have.all.keys('name', 'address', 'email', 'token', 'role', 'cart', 'history')
+                done()
+            })
         })
     })
 
@@ -182,7 +182,6 @@ describe('Items Routes', function () {
                 add: 50
             }
             chai.request(app).patch(`/items/stock`)
-                .send()
                 .set('token', token)
                 .send(decrease)
                 .end(function (err, res) {
@@ -203,7 +202,6 @@ describe('Items Routes', function () {
                 add: -10
             }
             chai.request(app).patch(`/items/stock`)
-                .send()
                 .set('token', token)
                 .send(decrease)
                 .end(function (err, res) {
@@ -270,7 +268,6 @@ describe('Items Routes', function () {
                     add: -999999
                 }
                 chai.request(app).patch(`/items/stock`)
-                    .send()
                     .set('token', token)
                     .send(decrease)
                     .end(function (err, res) {
