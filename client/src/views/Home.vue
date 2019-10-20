@@ -1,6 +1,7 @@
+
 <template>
   <div id="app">
-       <div id="navbar">
+    <div id="navbar">
       <Navbar :transNav="transNav" :displayTransaction="displayTransaction" :checkout="checkout" :updateTransaction="updateTransaction" :checkAdmin="checkAdmin" :isAdmin="isAdmin" :getCart="getCart" :onCart="onCart" :getProducts="getProducts" :search="search"/>
     </div>
 
@@ -37,10 +38,10 @@
                   <b-button @click="addProduct()" variant="success">Submit</b-button>
             </div>
           </center>
+
           <div id="products">
             <div id="product" v-for="(product, index) in fetchData" :key="index">
               <Product :deleteProduct="deleteProduct" :getProducts="getProducts" v-if="!onCart && !onAddProduct && !onEditProduct && !checkout" :checkAdmin="checkAdmin" :productfromhome="product"/>
-
             </div>
           </div>
 
@@ -50,11 +51,11 @@
             </div>
             <h5 v-if="onCart && !checkout"> Total: ${{totalprice}}</h5>
             <center>
-              
-              <b-button id="checkout-btn" v-if="onCart && !onAddProduct && !checkout" class="buttons" @click="updateTransaction()" variant="success"><strong> Checkout!</strong></b-button></center>
-              <h2 v-if="!isAdmin && checkout">Your payment note is here! </h2>
-              <b-button @click="updateTransaction()" v-if="!isAdmin && checkout && finished" class="buttons" variant="primary"><strong>See Details</strong></b-button>
-              <Transaction v-if="checkout && finished" :cardTrans="cardTrans" :userTransaction="userTransaction" :checkout="checkout" />
+              <b-button id="checkout-btn" v-if="onCart && !onAddProduct && !checkout" class="buttons" @click="updateTransaction()" variant="success"><strong> Checkout!</strong></b-button>
+            </center>
+            <h2 v-if="!isAdmin && checkout">Your payment note is here! </h2>
+            <b-button @click="updateTransaction()" v-if="!isAdmin && checkout && finished" class="buttons" variant="primary"><strong>See Details</strong></b-button>
+            <Transaction v-if="checkout && finished" :cardTrans="cardTrans" :userTransaction="userTransaction" :checkout="checkout" />
           </div>
         </b-col>
       </b-row>
@@ -70,7 +71,6 @@ import Product from '../components/Product.vue'
 import Cart from '../components/Cart.vue'
 import Transaction from '../components/Transaction.vue'
 import Swal from 'sweetalert2'
-
 export default {
   name: 'home',
   components: {
@@ -96,7 +96,6 @@ export default {
       isAdmin: false,
       onCart: false,
       onAddProduct: false,
-      onEditProduct: false,
       checkout: false,
       userEmail: localStorage.getItem('email'),
       totalprice: 0,
@@ -124,7 +123,6 @@ export default {
         url: `http://localhost:3000/transaction/`
       })
         .then(({ data }) => {
-          console.log(data.transaction[0])
           this.userTransaction = data.transaction[0]
           this.checkout = true
           this.finished = true
@@ -149,7 +147,6 @@ export default {
         method: 'delete',
         url: `http://localhost:3000/products/${id}`,
         headers: {token}
-
       })
         .then(({ data }) => {
           console.log('Deleted')
@@ -227,7 +224,6 @@ export default {
                 console.log(err)
               })
             
-
         })
     },
     checkAdmin () {
@@ -294,7 +290,6 @@ export default {
     this.getCategories()
     this.checkAdmin()
     this.onAddProduct = false
-
     if (this.cartData.length === 0) {
       this.transNav = true
     }
@@ -306,7 +301,6 @@ export default {
 #navbar {
   padding-bottom: 30px;
 }
-
 #categories {
   display: flex;
   flex-direction: column;
@@ -318,39 +312,32 @@ export default {
   color: white;
   border-radius: 10px;
 }
-
 #categories h4 {
   padding: 10px;
   margin: 0;
 }
-
 #category {
   padding: 10px;
   color: white;
 }
-
 #products {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
 }
-
 #product {
   padding: 15px;
 }
-
 #cart {
   padding: 15px;
 }
-
 .category-heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
 }
-
 .color-block {
   background-color: #ffa500;
   height: 30px;
@@ -359,34 +346,26 @@ export default {
   border-radius: 2px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-
 .col {
     width: 20px;
 }
-
 #checkout-btn {
   height: 50px;
   margin-bottom: 60px;
   font-weight: bold;
 }
-
 #trans-card {
   margin-bottom: 100px;
   
 }
-
 h5 {
   font-weight: bold;
 }
-
 h4 {
   color:#ffa500;
 }
-
 .card-title {
   font-weight: bold;
   font-size: 25px;
 }
-
-
 </style>

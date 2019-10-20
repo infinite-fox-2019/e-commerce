@@ -19,7 +19,6 @@
 <script>
 export default {
     props: ['userTransaction', 'checkout']
-
 }
 </script>
 

@@ -8,8 +8,6 @@ class cartController {
             product: req.body.product
         }
 
-        console.log(req.body)
-
         Cart.create(createdData)
             .then(created_data => {
                 res.status(201).json(created_data)

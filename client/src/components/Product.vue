@@ -64,7 +64,6 @@ export default {
             `Success`,
             'success'
           )
-          console.log('updateCart => ', data)
         })
         .catch(err => {
           console.log(err)
@@ -80,7 +79,6 @@ export default {
   created () {
     this.checkAdmin()
   }
-
 }
 </script>
 

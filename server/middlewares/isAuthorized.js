@@ -8,8 +8,6 @@ function isAuthorized(req, res, next) {
 
     Dashboard.findOne(id)
         .then(dashboard => {
-            console.log(dashboard.user)
-            console.log(req.LoggedUser)
             if(dashboard.user == req.LoggedUser.id) {
                 next()
             } else{

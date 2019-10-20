@@ -12,8 +12,6 @@ function isAdmin(req, res, next) {
             status: 403,
             msg: 'Need Admin-authorized access'
         })
-        
-
     }
 }
 

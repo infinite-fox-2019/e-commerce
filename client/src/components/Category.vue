@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 import axios from 'axios'
 
 export default {
@@ -15,13 +14,9 @@ export default {
     }
   },
   props: ['categoriesfromhome', 'showCategory'],
-  methods: {
-
-  },
   created () {
     this.categoriesData = this.categoriesfromhome
   }
-
 }
 </script>
 

@@ -67,7 +67,6 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data)
           Swal.fire(
             'Register Success!',
             `Welcome, ${this.registerData.name}!`,

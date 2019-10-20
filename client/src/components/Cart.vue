@@ -14,7 +14,6 @@
             </b-card-body>
         </b-col>
         </b-row>
-       
     </b-card> <br><br>
   </div>
 </template>

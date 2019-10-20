@@ -2,7 +2,6 @@ const verifyToken = require('../helpers/verifyToken')
 
 function isLogin(req, res, next) {
     const token = req.headers.token
-    console.log('req headers =>', token)
 
     try {
         const decodedToken = verifyToken(token)
