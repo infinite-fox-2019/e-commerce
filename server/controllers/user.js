@@ -1,5 +1,5 @@
 const User = require('../models/user')
-const { encodeToken } = require('../helpers/jwt')
+const { decodeToken, encodeToken } = require('../helpers/jwt')
 const { comparePassword } = require('../helpers/bcrypt')
 class UserController {
     static register (req, res, next) {
@@ -40,6 +40,20 @@ class UserController {
                 next({ msg: "Incorrect Email / Password" })
             }
         })
+    }
+    static reLog(req, res, next) {
+        const { token } = req.headers
+        const user = decodeToken(token)
+        User.findOne({ _id: user._id }).exec()
+        .then(user => {
+            if (user) {
+                const { username, email, role } = user
+                res.status(200).json({ username, email, role, token })
+            } else {
+                next({ msg: "User Not Found" })
+            }
+        })
+        .catch(next)
     }
 }
 

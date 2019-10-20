@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 const ObjectId = Schema.Types.ObjectId
 const validate = require('mongoose-validator')
 const { hashPassword } = require('../helpers/bcrypt')
+const uniqueValidator = require('mongoose-unique-validator');
 
 const emailValidator = [
     validate({
@@ -14,12 +15,12 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: [true, 'Username Is Required'],
-        unique: true
+        unique: [true, "Username Is Already Taken"]
     },
     email: {
         type: String,
         required: [true, 'Email Is Required'],
-        unique: true,
+        unique: [true, "Email Is Already Taken"],
         validate: emailValidator
     },
     password: {
@@ -28,6 +29,8 @@ const userSchema = new Schema({
     },
     role: String
 })
+
+userSchema.plugin(uniqueValidator, { message: '{PATH} is already taken.' });
 
 userSchema.pre('save', function(next) {
     if (!this.role) {

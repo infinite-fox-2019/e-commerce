@@ -1,6 +1,14 @@
 const router = require('express').Router()
 const productController = require('../controllers/product')
 const { authorization, authentication } = require("../middlewares/auth")
+const gcsUpload = require("gcs-upload")
+
+const upload = gcsUpload({
+    gcsConfig: {
+      keyFilename: './keyfile.json',
+      bucketName: 'shopimages.ricky-works.online'
+    }
+  })
 
 router.get('/', productController.findAll)
 router.get('/:id', productController.findOne)

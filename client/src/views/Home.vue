@@ -7,6 +7,8 @@
         :product="product"
         :customer="customer"
         @responseFromProduct="addSuccess"
+        @updated="refresh"
+        @deleted="refresh"
       />
     </b-card-group>
   </div>
@@ -43,7 +45,10 @@ export default {
         .catch(console.log);
     },
     addSuccess(msg) {
-      Swal.fire("Congratulations!", msg, "success")
+      Swal.fire("Congratulations!", msg, "success");
+    },
+    refresh() {
+      this.fetchProducts();
     }
   },
   mounted() {

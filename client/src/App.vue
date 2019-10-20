@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <Navbar />
-    <router-view @passUser="logUser" :customer="user" />
+    <Navbar @logout="logout" :user="user" />
+    <router-view @login="login" :customer="user" />
   </div>
 </template>
 
 <script>
-import Navbar from "@/components/Navbar"
+import Navbar from "@/components/Navbar";
+import Axios from "axios";
 
 export default {
+  name: "App",
   components: {
     Navbar
   },
@@ -18,14 +20,36 @@ export default {
     };
   },
   methods: {
-    logUser(user) {
-      console.log(user)
+    login(user) {
       this.user = user;
+    },
+    logout() {
+      localStorage.removeItem("token");
+      this.user = null;
+      if (this.$router.currentRoute.path !== "/") {
+        this.$router.push("/");
+      }
+    },
+    refresh() {
+      if (localStorage.getItem("token")) {
+        Axios({
+          method: "post",
+          url: "http://localhost:3000/user/refresh",
+          headers: { token: localStorage.getItem("token") }
+        })
+          .then(({ data }) => {
+            this.user = data;
+          })
+          .catch(console.log);
+      }
     }
   },
   mounted() {
-    if (!localStorage.getItem("token") || !this.user) {
-      localStorage.removeItem("token")
+    this.refresh();
+  },
+  watch: {
+    user() {
+      this.refresh();
     }
   }
 };

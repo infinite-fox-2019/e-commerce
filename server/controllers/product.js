@@ -17,7 +17,7 @@ class ProductController {
         .catch(next)
     }
     static create (req, res, next) {
-        const { name, description, stock, price } = req.body
+        const { name, description, stock, price, file } = req.body
         Product.create({ name, description, stock, price })
         .then(product => {
             if (product) {
@@ -31,7 +31,7 @@ class ProductController {
         const { id } = req.params
         let obj = {}
         for (let prop in req.body) {
-            if (req.body[prop]) {
+            if (req.body[prop] || Number(req.body[prop]) === req.body[prop] ) {
                 obj[prop] = req.body[prop]
             }
         }
@@ -45,7 +45,7 @@ class ProductController {
         const { id } = req.params
         Product.deleteOne({ _id: id }).exec()
         .then(_ => {
-            res.json(200).json({ response: "Product Removed Successfully" })
+            res.status(200).json({ response: "Product Removed Successfully" })
         })
         .catch(next)
     }
