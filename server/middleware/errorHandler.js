@@ -1,5 +1,4 @@
 module.exports = (err,req,res,next)=>{
-    console.log(err)
     if(err.name=='ValidationError'){
         res.status(403).json({msg: 'Validation Error'})
     }else if(err.code == 11000){
@@ -14,12 +13,7 @@ module.exports = (err,req,res,next)=>{
         res.status(403).json({msg: 'Authorization Error'})
     }else if(err.name == 'CastError'){
         res.status(404).json({msg: 'Product Not Found'})
-    }
-    else{
+    }else{
         res.status(500).json({msg: 'Internal Server Error'})
     }
-    // const status = err.status || 500;
-    // const msg = err.msg || 'Internal Server Error'
-
-    // res.status(status).json({msg})
 }

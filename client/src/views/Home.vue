@@ -40,7 +40,8 @@ export default {
           url: 'http://localhost:3000/brands'
       })
       .then(({data})=>{
-          this.fetchData = data
+        this.$awn.success('Fetching Data')
+        this.fetchData = data
       })
       .catch(console.log)
   }

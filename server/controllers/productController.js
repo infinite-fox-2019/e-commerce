@@ -16,21 +16,30 @@ class ProductController {
             brand: req.params.name
         })
             .then(products=>{
-                // console.log(products)
                 res.status(200).json(products);
             })
             .catch(next)
     }
+    static findIdProduct(req,res,next){
+        Product.findById({
+            _id: req.params.id
+        })
+            .then(product=>{
+                res.status(200).json(product)
+            })
+            .catch(next)
+    }
     static create(req,res,next){
+        let url = req.file.cloudStoragePublicUrl
         const {name,category,price,description,brand} = req.body;
-        const image = req.file.cloudStoragePublicUrl;
+
         Product.create(
             {
                 name,
                 category,
                 price,
                 description,
-                image,
+                image: url,
                 brand
             })
             .then(product=>{
@@ -44,7 +53,7 @@ class ProductController {
                 res.status(201).json({msg:'sukses created'});
             })
             .catch(err=>{
-                if(err.errmsg == 'E11000 duplicate key error collection: e-commerce-test.products index: name_1 dup key: { : "aventador" }'){
+                if(err.errmsg == `E11000 duplicate key error collection: e-commerce-test.products index: name_1 dup key: { : "${name}" }`){
                     next({status:403,msg:'nameUsed'})
                 }else{
                     next(err)
@@ -67,12 +76,12 @@ class ProductController {
             })
     }
     static delete(req,res,next){
+        const brand = req.body.brand
         const id = req.params.id;
         Product.deleteOne({
             _id : id
         })
             .then(product=>{
-                console.log(product)
                 res.status(200).json({msg: "Success Delete"});
             })
             .catch(err=>{

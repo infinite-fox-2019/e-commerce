@@ -16,7 +16,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-mongoose.connect('mongodb://localhost/e-commerce-test',
+mongoose.connect(process.env.MONGODB_URL,
 { 
     useUnifiedTopology: true ,
     useNewUrlParser: true,

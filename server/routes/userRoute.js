@@ -8,7 +8,7 @@ Route.get('/',authentication,authorizationAdmin,UserCont.findAll);
 
 //==================PUT for Admin======================//
 
-Route.put('/:id',authentication,authorizationAdmin,UserCont.updateForAdmin);
+Route.patch('/:id',authentication,authorizationAdmin,UserCont.updateForAdmin);
 
 //==================REGISTER======================//
 
@@ -21,6 +21,9 @@ Route.post('/login',UserCont.login);
 //==================LOGIN======================//
 
 Route.get('/findprofile',authentication,UserCont.findOne);
+
+
+Route.delete('/:id',authentication,authorizationAdmin,UserCont.delete);
 
 //==================EXPORTS======================//
 

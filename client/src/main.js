@@ -1,10 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import AWN from 'vue-awesome-notifications'
+import 'vue-awesome-notifications/dist/styles/style.css'
 
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+Vue.use(AWN, {
+  durations: {
+      global: 2000
+  }
+})
 
 Vue.use(BootstrapVue)
 

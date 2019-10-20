@@ -1,29 +1,27 @@
 <template>
-<div class='card'>   
-    <div>
-        <h2>{{takeProduct.brand}} {{takeProduct.name}}</h2>
-        <b-card-group deck>
-        <b-card :img-src="takeProduct.image" img-alt="Card image" img-top>
-            <b-card-text>
-            {{takeProduct.description}}
-            </b-card-text>
-            <div class="row">
-                <div class="col" style='background-color: blue'>
-                    Price <h1>$ {{takeProduct.price}}</h1>
-                </div>
-                <div class="col-2" style='background-color: green'>
-                    <b-button pill variant="success">Order Now</b-button>
-                </div>
-                <div class="col-2">
-                    <button class="slide">&nbsp;</button>
-                </div>
-            </div>
-        </b-card>
-        </b-card-group>
-        <!-- cards try -->
-
-        <div class="card card-1"></div>
-    </div>
+<div 
+  class="car">
+  <figure 
+    class="card" 
+    style="--bg-image-url: url();">
+      <img 
+        class="card__image" 
+        alt="Alt text here" 
+        :src="getProduct.image"
+        >
+      <figcaption 
+        class="card__info"
+        >{{getProduct.brand+ ' ' +getProduct.name}}
+        <br>
+         Started $ {{getProduct.price}}
+      <button>
+        <router-link 
+          :to="{ name: 'book', params: {id: getProduct._id} }"
+          >Book Now!
+        </router-link>
+      </button>
+      </figcaption>
+  </figure>
 </div>
 
 </template>
@@ -32,84 +30,104 @@
 export default {
     data(){
         return {
+
         }
     },
-    props: ['takeProduct'],
+    props: ['getProduct'],
 }
 
 </script>
 
 <style>
 
-button {
+button{
+  background:transparent;
+  color:turquoise;
+  border:none;
+  position:relative;
+  height:35px;
+  font-size:1em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+button:hover{
+  background:black;
+  color:red;
+}
+button:before,button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: gold;
+  transition:400ms ease all;
+}
+button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+button:hover:before,button:hover:after{
+  width:100%;
+  transition:550ms ease all;
+}
+
+
+.car{
+  padding-left:15px;
+  padding-right: 10px
+}
+.card {
+  margin-top: 25px;
   position: relative;
-  display:block;
-  height: 45px;
-  width: 150px;
-  margin: 10px 7px;
-  padding: 5px 5px;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: 2px;
-  color: #383736;
-  border: 2px #383736 solid;
-  border-radius: 4px;
-  text-transform: uppercase;
-  outline: 0;
-  overflow:hidden;
-  background: none;
-  z-index: 1;
-  cursor: pointer;
-  transition:         0.08s ease-in;
-  -o-transition:      0.08s ease-in;
-  -ms-transition:     0.08s ease-in;
-  -moz-transition:    0.08s ease-in;
-  -webkit-transition: 0.08s ease-in;
-}
-.slide:after{
-  content:"View Story";
-  position:absolute;
-  width:100%;
-  height:100%;
-  left:0;
-  text-align:center;
-  -webkit-transition: all 400ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
+  width: 600px;
+  height: 350px;
+  
+  border-radius: 20px;
+  overflow: hidden;
+  
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
-.slide:before {
-  content:"Read it →";
-  height:100%;
-  width:100%;
-  position:absolute;
-  color:#383736;
-  left:-100%;
+.card > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.card__image {
+  display: block;
+}
+
+.card__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  
+  padding: 2em;
   opacity: 0;
-  -webkit-transition: all 500ms cubic-bezier(0.680, -0.550, 0.265, 1.550); 
+  font-size: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  
+  transition: opacity 300ms ease;
 }
 
-.slide:hover{
-  background:#383736;
+.card:hover .card__info,
+.card:focus-within .card__info {
+  opacity: 1;
 }
 
-.slide:hover:before{
-  left:0;
-  opacity:1;
-  color:#fff;
+.card__info a {
+  color: #fdca40;
 }
-.slide:hover:after{
-  left:100%;
-  opacity:0;
-}
-
-.card{
-    background-color: transparent;
-    padding :10px;
-}
-h2{
-    font-size: 35px;
-    color: gold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 
 </style>

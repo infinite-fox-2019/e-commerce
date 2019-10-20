@@ -24,16 +24,40 @@ class UserController {
             })
     }
     static updateForAdmin(req,res,next){
-        User.findByIdAndUpdate({
-            _id: req.params.id
-        },{
-            role: req.body.role
-        })
-            .then(_=>{
-                res.status(201).json({msg:"Success Update!"})
+        if(req.body.role == 'Customer'){
+            User.findByIdAndUpdate({
+                _id: req.params.id
+            },{
+                role: 'Admin'
+            })
+                .then(_=>{
+                    res.status(201).json({msg:"Success Update!"})
+                })
+                .catch(err=>{
+                    next(err);
+                })
+        }else{
+            User.findByIdAndUpdate({
+                _id: req.params.id
+            },{
+                role: 'Customer'
+            })
+                .then(_=>{
+                    res.status(201).json({msg:"Success Update!"})
+                })
+                .catch(err=>{
+                    next(err);
+                })
+        }
+    }
+    static delete(req,res,next){
+        const id = req.params.id
+        User.deleteOne({_id:id})
+            .then(()=>{
+                res.status(200).json({msg: "success Delete"})
             })
             .catch(err=>{
-                next(err);
+                next(err)
             })
     }
     static register(req,res,next){
@@ -55,8 +79,8 @@ NB: This message is automatically answered`
             .catch(next)
     }
     static login(req,res,next){
-        const {username,password} = req.body;
-        User.findOne({username})
+        const {email,password} = req.body;
+        User.findOne({email})
             .then(user=>{
                 if(comparePassword(password,user.password)){
                     const payload = {
@@ -69,7 +93,7 @@ NB: This message is automatically answered`
                     const serverToken = signToken(payload);
                     res.status(200).json({
                         token : serverToken,
-                        msg: `Welcome ${username}`,
+                        msg: `Welcome ${user.username}`,
                         role: user.role
                     })
                 }else{
@@ -77,12 +101,11 @@ NB: This message is automatically answered`
                 }
             })
             .catch(err=>{
-                next({status: 404,msg: 'Wrong'})
+                next(err)
             })
     }
     static findOne(req,res,next){
         const id = req.loggedUser._id;
-        console.log(id)
         User.findById({_id: id})
             .then(user=>{
                 res.status(200).json(user);

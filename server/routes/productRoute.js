@@ -14,15 +14,21 @@ Route.get('/',authentication,authorizationAdmin,productCont.findAll);
 
 //==================FINDName======================//
 
-Route.get('/:name',productCont.findByName);
+Route.get('/:name',authentication,productCont.findByName);
+
+//==================FINDName======================//
+
+Route.get('/sc/:id',authentication,productCont.findIdProduct);
 
 //==================CREATE======================//
 
-Route.post('/',authentication,authorizationAdmin,images.multer.single('image'), 
+Route.post('/',authentication,authorizationAdmin,
+images.multer.single('image'), 
 images.sendUploadToGCS,productCont.create);
 
 //==================UPDATE======================//
 
+  
 Route.put('/:id',authentication,authorizationAdmin,productCont.update);
 
 //==================DELETE======================//

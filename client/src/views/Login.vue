@@ -8,10 +8,10 @@
         >
     <h1>Login</h1>
     <input 
-      type="text" 
+      type="email" 
       name="" 
-      placeholder="Username"
-      v-model='form.username'
+      placeholder="username@example.id"
+      v-model='form.email'
       >
     <input 
       type="password" 
@@ -43,7 +43,7 @@ export default {
     data(){
         return {
             form: {
-                username: '',
+                email: '',
                 password: ''
             },
             isloading: false
@@ -54,14 +54,14 @@ export default {
         this.$router.push('/register')
       },
       login(){
-          const username = this.form.username;
+          const email = this.form.email;
           const password = this.form.password;
           this.isloading= true;
           axios({
               method : 'post',
               url: 'http://localhost:3000/login',
               data: {
-                  username,
+                  email,
                   password
               }
           })
@@ -118,7 +118,7 @@ body{
   font-family: fantasy;
   font-weight: 500;
   color: gold; }
-.box input[type = "text"],.box input[type = "password"]{
+.box input[type = "email"],.box input[type = "password"]{
   border:2;
   background: none;
   display: block;
@@ -131,7 +131,7 @@ body{
   color: white;
   border-radius: 25px;
   transition: 0.2s; }
-.box input[type = "text"]:focus,.box input[type = "password"]:focus{
+.box input[type = "email"]:focus,.box input[type = "password"]:focus{
   width: 280px;
   border-color: #1bbb55; }
 .box input[type = "submit"]{

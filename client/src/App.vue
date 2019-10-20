@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+<div>
     <Nav
       :login-status='loginStatus'
       :login-role='loginRole'
@@ -15,11 +15,7 @@
       @islogin='gotStatus'
       :login-role='loginRole'
     />
-
-
-
-    
-  </div>
+</div>
 </template>
 
 <script>
@@ -66,7 +62,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
 body{
   background-image: url("https://images.unsplash.com/photo-1570280407069-9017ba84a3a2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80");
 }
@@ -76,6 +72,8 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  justify-content: center;
+  align-items: center
 }
 #nav {
   padding: 30px;

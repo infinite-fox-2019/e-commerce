@@ -29,7 +29,12 @@ ProductSchema.pre('save',function(next){
     this.stock = 15 || this.stock
     next()
 })
-
+ProductSchema.pre('remove', function(next) {
+    // 'this' is the client being removed. Provide callbacks here if you want
+    // to be notified of the calls' result.
+    Brand.remove({client_id: this._id}).exec();
+    next();
+});
 const product = Mongoose.model('products',ProductSchema);
 
 product.createCollection()

@@ -22,7 +22,6 @@ use VueJs,bostrap for Client side
 |/cart|DELETE|Route used to Delete cart|
 |/transactions|GET|Route used to Get Transaction|
 |/transactions|POST|Route used to Create Transaction|
-|/upload|POST|Route used to Upload Image|
 
 ---
 **Register**

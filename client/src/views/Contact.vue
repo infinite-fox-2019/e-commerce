@@ -15,7 +15,7 @@
     </div>
     <div class="box-two">
       <div class="image " >
-      <img src="https://storage.cloud.google.com/ecommerce_project/IMG_2741.jpeg" >
+      <img class='img22' src="https://storage.cloud.google.com/ecommerce_project/IMG_2741.jpeg" >
       </div>
     </div>
 </div>
@@ -109,7 +109,7 @@ h1 {
   background: linear-gradient(-35deg, #F0DA50 63%, black 42%);
   color: white;
 }
-img {
+.img22 {
   max-width: 100%;
   height: auto;
   margin: -50px;

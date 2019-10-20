@@ -1,6 +1,6 @@
 <template>
 <div class="container">  
-  <form id="contact" @submit.prevent='createProduct()'>
+  <form id='myForm' class="contact" @submit.prevent='createProduct()' enctype="multipart/form-data">
     <h3>Create New Product</h3>
     <h4>Contact us today, and get reply with in 24 hours!</h4>
     <fieldset>
@@ -71,10 +71,13 @@
     </fieldset>
     <fieldset>
       <input
-        @click='takeFile()'
+        @change="takeFile()"
+        ref="file"
         type="file" 
-        tabindex="4" 
-        required
+        name='file'
+        tabindex="4"
+        class="form-control-file"
+        id="exampleFormControlFile1"
         >
     </fieldset>
     <fieldset>
@@ -87,8 +90,6 @@
     </fieldset>
     <fieldset>
       <button 
-        name="submit" 
-        type="submit" 
         id="contact-submit" 
         data-submit="...Sending"
         >Save
@@ -103,6 +104,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import swal from 'sweetalert2'
+
 export default {
     data(){
         return {
@@ -112,45 +116,83 @@ export default {
                 price: 0,
                 description: '',
                 stock: 0,
-                file: ''
+                url: ''
             },
-            isloading: false
+            isloading: false,
+            file: ""
         }
     },
     methods: {
+        takeFile(){
+            const file = this.$refs.file.files[0]
+            console.log(file)
+            this.file = file
+        },
         createProduct(){
-            const formData = new FormData();
-            formData.append("image", this.file)
-            axios({
-                method: "post",
-                url: 'http://localhost:3000/products',
-                data: {
-                    name: this.form.name,
-                    description: this.form.description,
-                    price: this.form.price,
-                    stock: this.form.stock,
-                    brand: this.form.brand,
-                    image: formData
-                }
-            })
-                .then(_=>{
-                    this.isloading= true
-                    console.log('success');
+            console.log(this.file)
+            let myForm = document.getElementById('myForm');
+
+            //2 jm bermasalah lagi tidak bisa mendapatkan new FormData() udh search mngkn blum ketemu tidak bisa append.. udah di coba masukin object bisa tapi tidak kebaca juga oleh gcs
+            //dari server aman krna dicoba tembak di postman bisa
+
+            let formData = new FormData(myForm);
+            formData.append('image', this.file)
+            console.log(formData)
+            const name = this.form.name
+            const brand = this.form.brand
+            const price = this.form.price
+            const description = this.form.description
+            const stock = this.form.stock
+            this.isloading = true
+            // axios({
+            //     method: 'post',
+            //     url: 'http://localhost:3000/upload',
+            //     data: formData,
+            //     config: {headers : {"Content-Type" : "multipart/form-data"}}
+            // })
+            //     .then(({data})=>{
+                    // console.log(data)
+                    // this.form.url = data.link
+                    // console.log(this.form.url)
+                    // const image = this.form.url
+                    axios({
+                        method: "post",
+                        url: 'http://localhost:3000/products',
+                        headers:{
+                            token: localStorage.getItem('token')
+                        },
+                        data:{
+                            formData: this.file,
+                            name,
+                            brand,
+                            price,
+                            stock,
+                            description
+                        },
+                        config: {headers : {"Content-Type" : "multipart/form-data"}}
+                    })
+                // })
+                .then(({data})=>{
+                    swal.fire({
+                        type: 'success',
+                        title: 'yess',
+                        text: data.msg
+                    })
+                    this.isloading= false
                 })
                 .catch(err=>{
-                    this.isloading= true
-                    console.log(err.response.data.msg);
+                    this.isloading= false
                 })
-            console.log(this.form.file)
-        },
-        takeFile(){
-            this.form.file = this.$refs.file.files[0]
+
+
+            
         }
     }
 }
 </script>
 
-<style>@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
+<style>
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
 
 * {
 	margin:0;
@@ -161,6 +203,8 @@ export default {
 	-webkit-font-smoothing:antialiased;
 	-moz-font-smoothing:antialiased;
 	-o-font-smoothing:antialiased;
+    align-items: center;
+    text-align: center;
 	text-rendering:optimizeLegibility;
 }
 
@@ -173,20 +217,21 @@ export default {
 
 #contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea, #contact button[type="submit"] { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }
 
-#contact {
+.contact {
 	background:#F9F9F9;
 	padding:25px;
 	margin:50px 0;
+    width:35%
 }
 
-#contact h3 {
+.contact h3 {
 	color: #F96;
 	display: block;
 	font-size: 30px;
 	font-weight: 400;
 }
 
-#contact h4 {
+.contact h4 {
 	margin:5px 0 15px;
 	display:block;
 	font-size:13px;
@@ -200,7 +245,7 @@ fieldset {
 	width: 100%;
 }
 
-#contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea {
+.contact input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea {
 	width:100%;
 	border:1px solid #CCC;
 	background:#FFF;
@@ -208,20 +253,20 @@ fieldset {
 	padding:10px;
 }
 
-#contact input[type="text"]:hover, #contact input[type="email"]:hover, #contact input[type="tel"]:hover, #contact input[type="url"]:hover, #contact textarea:hover {
+.contact input[type="text"]:hover, #contact input[type="email"]:hover, .contact input[type="tel"]:hover, #contact input[type="url"]:hover, .contact textarea:hover {
 	-webkit-transition:border-color 0.3s ease-in-out;
 	-moz-transition:border-color 0.3s ease-in-out;
 	transition:border-color 0.3s ease-in-out;
 	border:1px solid #AAA;
 }
 
-#contact textarea {
+.contact textarea {
 	height:100px;
 	max-width:100%;
   resize:none;
 }
 
-#contact button[type="submit"] {
+.contact button[type="submit"] {
 	cursor:pointer;
 	width:100%;
 	border:none;
@@ -232,16 +277,16 @@ fieldset {
 	font-size:15px;
 }
 
-#contact button[type="submit"]:hover {
+.contact button[type="submit"]:hover {
 	background:#09C;
 	-webkit-transition:background 0.3s ease-in-out;
 	-moz-transition:background 0.3s ease-in-out;
 	transition:background-color 0.3s ease-in-out;
 }
 
-#contact button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }
+.contact button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }
 
-#contact input:focus, #contact textarea:focus {
+.contact input:focus, #contact textarea:focus {
 	outline:0;
 	border:1px solid #999;
 }

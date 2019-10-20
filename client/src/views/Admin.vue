@@ -11,19 +11,13 @@
         </Left>
     </div>
     <div class="col-8">
-        <Right
-            :the-command='command'
-            :the-users='users'
-            :the-products='getAllProduct'
-            >
-        </Right>
+        <router-view />
     </div>
 </div>
 </template>
 
 <script>
 import Left from '../components/Leftside';
-import Right from '../components/Rightside';
 import axios from 'axios'
 import swal from 'sweetalert2'
 
@@ -56,44 +50,9 @@ export default {
     },
     components:{
         Left,
-        Right,
     },
     props:['login-role'],
     created(){
-        axios({
-            method: 'get',
-            url: 'http://localhost:3000/',
-            headers: {token: localStorage.getItem('token')
-                
-            }
-        })
-            .then(({data})=>{
-                console.log(data)
-                this.getAllUser = data
-            })
-            .catch(err=>{
-                console.log(err.response.data.msg)
-                if(err.response.data.msg == 'Authentication Error'){
-                    swal.fire({
-                        type: 'warning',
-                        title: 'Hmmmmm',
-                        text: "Please Login First!"
-                    })
-                }else if(err.response.data.msg == 'Authorization Error'){
-                    swal.fire({
-                        type: 'error',
-                        title: 'DANGER!!',
-                        text: "You went too far, do not have access to enter here"
-                    })
-                }else{
-                    swal.fire({
-                        type: 'warning',
-                        title: 'oops!!',
-                        text: err.response.data.msg
-                    })
-                }
-                this.$router.push('/');
-            })
     },
     watch:{
         command(){
@@ -104,4 +63,8 @@ export default {
 </script>
 
 <style scoped>
+.col-8{
+    justify-content: center;
+    align-items: center
+}
 </style>

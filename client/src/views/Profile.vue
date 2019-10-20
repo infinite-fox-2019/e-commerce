@@ -10,34 +10,42 @@
     </div>
     <div id="stats">
         <div class="col">
-            <p class="stat">108</p>
-            <p class="label">Posts</p>
+            <p class="stat"></p>
+            <p class="label"></p>
         </div>
-                <div class="col">
-            <p class="stat">457</p>
-            <p class="label">Followers</p>
+		<div class="col">
+            <p class="stat">{{ fetchUser.role }}</p>
+            <p class="label">Role</p>
         </div>
-                <div class="col">
-            <p class="stat">229</p>
-            <p class="label">Following</p>
+		<div 	class="col">
+            <p class="stat"></p>
+            <p class="label"></p>
         </div>
     </div>
     <div id="buttons">
-        <button>Edit Profile</button>
-        <button class="button button--moema button--text-thick button--text-upper button--size-s">Verification</button>
+        <button @click='coomingSoon()'>Edit Profile</button>
+        <button @click='coomingSoon()' class="button button--moema button--text-thick button--text-upper button--size-s">Verification</button>
     </div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
+import swal from 'sweetalert2'
+
 export default {
     data(){
         return{
             fetchUser: ''
         }
     },
-    methods: {
+	methods: {
+		coomingSoon(){
+			swal.fire({
+				type: 'info',
+				title: 'Comming Soon'
+			})
+		},
         goProfile(){
           axios({
             method: 'get',
@@ -48,7 +56,10 @@ export default {
           })
             .then(({data})=>{
               this.fetchUser = data
-            })
+			})
+			.catch(err=>{
+				this.$awn.warning('something Wrong')
+			})
         }
     },
     created(){
@@ -59,7 +70,7 @@ export default {
 
 <style scoped>
 #card {
-	background-color: #393B45;
+	background-color: rgb(62, 95, 255);
 	height: auto;
 	width: 350px;
 	margin: 10vh auto;
@@ -69,11 +80,11 @@ export default {
 }
 
 h1 {
-	color: white;
+	color: grey !important;
 	text-align: center;
 	width: 100%;
     font-size: 30px;
-	background-color: #E6EBEE;
+	background-color: gold;
 	border-radius: 25px 25px 0 0;
 	color: #393B45;
 	padding: 30px 0;
@@ -107,9 +118,9 @@ h1 {
 }
 
 #bio p {
-	color: #E6EBEE;
+	color: black;
 	font-weight: lighter;
-	font-size: 15px;
+	font-size: 20px;
 	text-align: justify;
 }
 
