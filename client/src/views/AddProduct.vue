@@ -82,11 +82,6 @@ export default {
       console.log(this.form.file)
       console.log(JSON.stringify(this.form))
 
-      // const formData = new FormData()
-      // formData.append("file", this.form.file)
-      // console.log(formData,"<<<<<")
-      // console.log("kok lewat")
-
       let bodyFormData = new FormData()
       bodyFormData.append('file', this.form.file)
       bodyFormData.append('price', this.form.price)
@@ -101,11 +96,11 @@ export default {
         data: bodyFormData,
         headers: {
           Authorization: localStorage.getItem('token')
-          // "Content-Type" : "multipart/form-data"
         }
       })
         .then(({ data }) => {
           console.log(data)
+          this.$router.push('/')
         })
         .catch(err => {
           console.log(err.response)

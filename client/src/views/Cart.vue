@@ -55,17 +55,21 @@ export default {
     fetchCartData () {
       axios({
         method: 'get',
-        url: 'http://localhost:3000/carts'
+        url: 'http://localhost:3000/carts',
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
       })
         .then(({ data }) => {
-          console.log(data)
+          // console.log(data)
           this.items = []
           data.forEach(element => {
-            this.items.push(element)
+            // this.items.push(element)
+            console.log(element.cart)
           })
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response)
         })
     },
     deleteCartData (id) {

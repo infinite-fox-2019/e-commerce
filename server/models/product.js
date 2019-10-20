@@ -14,6 +14,10 @@ const productShema  = new Shema({
   price: {
     type: Number,
     required: true
+  },
+  file: {
+    type: String,
+    required: true
   }
 })
 

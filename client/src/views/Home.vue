@@ -5,9 +5,10 @@
       <b-row>
         <b-col cols="12" md="3" v-for="(value,index) in productData" :key="index">
           <Card
-          :imgsrc="value.image"
+          :imgsrc="value.file"
           :title="value.name"
           :price="value.price"
+          :_id="value._id"
           />
         </b-col>
       </b-row>

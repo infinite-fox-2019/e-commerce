@@ -7,7 +7,7 @@
       img-alt="Image"
 
       class="mb-3"
-      style="height: 13rem;"
+      style="height: 12rem;"
     >
       <b-card-text>
         ${{price || 1.00}}
@@ -29,30 +29,36 @@ export default {
     }
   },
   props: {
+    _id: String,
     imgsrc: String,
     title: String,
     subtitle: String,
     price: Number
   },
   methods: {
-    addToCart (index) {
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/carts',
-        data: {
-          name: this.title,
-          price: this.price,
-          image: this.imgsrc,
-          user: '123', // Ini nanti tempat user id nya
-          amount: 1
-        }
-      })
-        .then(({ data }) => {
-          console.log(data)
+    addToCart () {
+      console.log(this._id)
+      if (localStorage.getItem('token')) {
+        axios({
+          method: 'post',
+          url: 'http://localhost:3000/carts',
+          data: {
+            productId: this._id,
+            amount: 1
+          },
+          headers:{
+            Authorization:localStorage.getItem('token')
+          }
         })
-        .catch(err => {
-          console.log(err)
-        })
+          .then(({ data }) => {
+            console.log(data)
+          })
+          .catch(err => {
+            console.log(err.response)
+          })
+      } else {
+        console.log('Mohon login terlebih dahulu')
+      }
     }
   }
 }

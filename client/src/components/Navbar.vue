@@ -41,6 +41,7 @@ export default {
       localStorage.removeItem('token')
       this.$emit('adminStatus', false)
       this.$emit('loginStatus', false)
+      this.$router.push('/')
     }
   },
   props: {
