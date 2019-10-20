@@ -21,6 +21,7 @@ export default {
   methods: {
     seeDetail () {
       this.$router.push(`/products/${this.product._id}`)
+      this.$emit('setShowChildren', true)
     }
   },
   computed: {

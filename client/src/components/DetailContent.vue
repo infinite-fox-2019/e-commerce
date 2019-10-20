@@ -1,50 +1,52 @@
 <template>
   <div>
-    <div class="columns">
-      <div class="column">
-        <img :src="product.image">
-      </div>
-      <div class="column">
-        <div class="rows">
-          <div v-if="this.$store.state.userRole === 'admin'" class="row-button">
-            <button @click="toUpdate" class="button is-danger" style="margin-right: 5px;">
-              <i class="fa fa-pencil-alt">
-              </i>
-            </button>
-            <button @click="deleteProduct" class="button">
-              <i class="fa fa-trash">
-              </i>
-            </button>
-          </div>
-          <div class="row product-name">
-            {{ product.name }}
-          </div>
-          <div class="row product-series has-text-grey">
-            By {{ product.series }}
-            <hr>
-          </div>
-          <div class="row product-price has-text-danger">
-            <strong>IDR {{ product.price.toLocaleString() }}</strong>
-          </div>
-          <div class="row product-stock">
-            Stock: {{ product.stock }}
-          </div>
-          <div v-if="this.$store.state.userRole !== 'admin'" class="row">
-            <button class="button is-danger add-cart-button" @click="showModal">
-              <i class="fa fa-cart-plus" style="margin-right: 5px;"></i>
-              to Cart
-            </button>
-          </div>
-          <div class="modal" :class="{ 'is-active': isActiveModal }">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-              <QtyForm :product="product" @closeModal="isActiveModal = false"></QtyForm>
+    <div>
+      <div class="columns">
+        <div class="column">
+          <img :src="product.image">
+        </div>
+        <div class="column">
+          <div class="rows">
+            <div v-if="this.$store.state.userRole === 'admin'" class="row-button">
+              <button @click="toUpdate" class="button is-danger" style="margin-right: 5px;">
+                <i class="fa fa-pencil-alt">
+                </i>
+              </button>
+              <button @click="deleteProduct" class="button">
+                <i class="fa fa-trash">
+                </i>
+              </button>
             </div>
-            <button class="modal-close is-large" aria-label="close" @click="isActiveModal = false"></button>
-          </div>
-          <div class="row has-text-grey">
-            <hr>
-            {{ product.description }}
+            <div class="row product-name">
+              {{ product.name }}
+            </div>
+            <div class="row product-series has-text-grey">
+              By {{ product.series }}
+              <hr>
+            </div>
+            <div class="row product-price has-text-danger">
+              <strong>IDR {{ product.price.toLocaleString() }}</strong>
+            </div>
+            <div class="row product-stock">
+              Stock: {{ product.stock }}
+            </div>
+            <div v-if="this.$store.state.userRole !== 'admin'" class="row">
+              <button class="button is-danger add-cart-button" @click="showModal">
+                <i class="fa fa-cart-plus" style="margin-right: 5px;"></i>
+                to Cart
+              </button>
+            </div>
+            <div class="modal" :class="{ 'is-active': isActiveModal }">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <QtyForm :product="product" @closeModal="isActiveModal = false"></QtyForm>
+              </div>
+              <button class="modal-close is-large" aria-label="close" @click="isActiveModal = false"></button>
+            </div>
+            <div class="row has-text-grey">
+              <hr>
+              {{ product.description }}
+            </div>
           </div>
         </div>
       </div>
@@ -64,6 +66,7 @@ export default {
   data () {
     return {
       product: '',
+      productId: this.$route.params.id,
       isActiveModal: false
     }
   },
@@ -94,6 +97,11 @@ export default {
   },
   created () {
     this.product = this.$store.state.products.find(x => x._id === this.$route.params.id)
+  },
+  watch: {
+    productId () {
+      this.product = this.$store.state.products.find(x => x._id === this.$route.params.id)
+    }
   }
 }
 </script>

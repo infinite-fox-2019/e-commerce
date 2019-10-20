@@ -1,5 +1,4 @@
 module.exports = (err, req, res, next) => {
-  console.log(err.message)
   let messages = []
   if(err.msg) {
     messages = err.msg
@@ -19,7 +18,8 @@ module.exports = (err, req, res, next) => {
   } else if(err.message === `Cannot read property 'originalname' of undefined`) {
     err.status = 400
     messages.push('You have to upload an image')
+  } else if(err.message === 'File too large') {
+    messages.push('File size is too large')
   }
-  console.log(messages)
   res.status(err.status || 500).json({messages: messages.length !== 0 ? messages : ['Something went wrong in the server']})
 }

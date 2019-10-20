@@ -56,7 +56,7 @@
           </b-field>
           <textarea v-model="description" class="textarea" placeholder="Write the description of the product here"></textarea>
           <div class="control">
-            <button type="submit" class="button is-danger" style="width: 200px; float: right; margin-top: 40px;">Add Product</button>
+            <button type="submit" class="button is-danger">Add Product</button>
           </div>
         </form>
       </div>

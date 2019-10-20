@@ -33,7 +33,6 @@ adminAuthorization = (req, res, next) => {
 },
 
 cartAuthorization = (req, res, next) => {
-  console.log(req.params)
   Cart.findById(req.params.id)
   .then(cart => {
     try {

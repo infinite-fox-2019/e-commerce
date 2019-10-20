@@ -1,7 +1,10 @@
 <template>
-  <div class="container">
-    <div class="notification has-background-white">
-      <DetailContent></DetailContent>
+  <div>
+    <router-view></router-view>
+    <div class="container">
+      <div class="notification has-background-white">
+        <DetailContent></DetailContent>
+      </div>
     </div>
   </div>
 </template>

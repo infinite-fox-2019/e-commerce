@@ -102,7 +102,9 @@ export default new Vuex.Store({
         .then(({ data }) => {
           commit('SET_PRODUCTS', data)
         })
-        .catch(console.log)
+        .catch(err => {
+          commit('SET_ERR_MESSAGES', err)
+        })
     },
     addProduct ({ commit }, payload) {
       let bodyFormData = new FormData()
@@ -120,7 +122,6 @@ export default new Vuex.Store({
           router.push('/')
         })
         .catch(err => {
-          console.log(err)
           commit('SET_ERR_MESSAGES', err)
         })
     },
@@ -130,7 +131,7 @@ export default new Vuex.Store({
       axios.post('/upload-single', bodyFormData)
         .then(({ data }) => {
           payload.image = data.file
-          return axios.post(`/products/${payload.id}`, payload, {
+          return axios.put(`/products/${payload.id}`, payload, {
             headers: {
               access_token: localStorage.access_token
             }
@@ -140,12 +141,11 @@ export default new Vuex.Store({
           router.push('/')
         })
         .catch(err => {
-          console.log(err)
           commit('SET_ERR_MESSAGES', err)
         })
     },
     updateProduct ({ commit }, payload) {
-      axios.post(`/products/${payload.id}`, payload, {
+      axios.put(`/products/${payload.id}`, payload, {
         headers: {
           access_token: localStorage.access_token
         }

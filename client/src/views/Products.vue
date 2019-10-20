@@ -12,8 +12,12 @@
         </div>
       </div>
     </section>
+    <router-view></router-view>
     <div class="container products-container">
       <div class="notification has-background-white">
+        <div v-if="this.$store.state.products.length === 0">
+          <p>No product yet.</p>
+        </div>
         <div class="columns is-multiline is-1">
           <div v-for="product in this.$store.state.products" :key="product.id" class="column is-one-fifth">
             <Product :product="product"/>
@@ -42,6 +46,9 @@ export default {
   methods: {
     getProducts () {
       this.$store.dispatch('getProducts')
+    },
+    setShowChildren (value) {
+      this.showChildren = value
     }
   },
   created () {

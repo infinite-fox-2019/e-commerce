@@ -6,11 +6,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'products',
-    component: Products
-  },
-  {
     path: '/register',
     name: 'register',
     component: () => import('../views/Register.vue')
@@ -21,26 +16,33 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/add-product',
-    name: 'addProduct',
-    component: () => import('../views/AddProduct.vue'),
-    beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('access_token') && localStorage.getItem('userRole') === 'admin') {
-        next()
-      } else {
-        next('/')
-      }
-    }
+    path: '/',
+    name: 'products',
+    component: Products
   },
   {
     path: '/products/:id',
     name: 'productDetail',
-    component: () => import('../views/ProductDetail.vue')
+    component: () => import('../views/ProductDetail.vue'),
+    children: [
+      {
+        path: '/products/:id/update',
+        name: 'updateProduct',
+        component: () => import('../views/UpdateProduct.vue'),
+        beforeEnter: (to, from, next) => {
+          if (localStorage.getItem('access_token') && localStorage.getItem('userRole') === 'admin') {
+            next()
+          } else {
+            next('/')
+          }
+        }
+      }
+    ]
   },
   {
-    path: '/products/:id/update',
-    name: 'updateProduct',
-    component: () => import('../views/UpdateProduct.vue'),
+    path: '/add-product',
+    name: 'addProduct',
+    component: () => import('../views/AddProduct.vue'),
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('access_token') && localStorage.getItem('userRole') === 'admin') {
         next()
