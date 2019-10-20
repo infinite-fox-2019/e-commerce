@@ -1,23 +1,32 @@
-# Smart Home API Server
+# Visual Novel Store API Server
 
+# SERVER INFO
 
-
-
-
-# SERVER
+Server request example will be using [Axios]('#'), since it's what the client use.
 
 ## Server Location
 
 Server is located on this URL
 
 ```http
-http://smart-home.crowfx.online/
+http://visual-novel-api.crowfx.online/
 ```
 
 ## `GET` Server Test
 
 ```http
-http://smart-home.crowfx.online/
+http://visual-novel-api.crowfx.online/
+```
+
+**Request Example**
+
+```js
+axios({
+    method: 'get',
+    url: 'http://visual-novel-api.crowfx.online'
+})
+.then(({ data }) => { console.log(data) }) // Success Response
+.catch(({ response: { data: err }}) => { console.log(err) }) // Error response
 ```
 
 **Response**: `200 OK`
@@ -56,12 +65,20 @@ http://smart-home.crowfx.online/
 
 ### Example
 
-```json
-{
+```js
+const body = {
     "username": "Gabriel",
     "email": "gabriel@email.com",
     "password": "12345"
 }
+
+axios({
+    method: 'post',
+    url: 'http://visual-novel-api.crowfx.online/users/register',
+    data: body
+})
+.then(({ data }) => { console.log(data) }) // Success Response
+.catch(({ response: { data: err }}) => { console.log(err) }) // Error response
 ```
 
 ### Success Response
@@ -121,11 +138,19 @@ Message Error appears depending on the user's request body. This one denotes all
 
 ### Example
 
-```json
-{
+```js
+const body = {
     "identity": "Gabriel",
     "password": "12345"
 }
+
+axios({
+    method: 'post',
+    url: 'http://visual-novel-api.crowfx.online/users/login',
+    data: body
+})
+.then(({ data }) => { console.log(data) }) // Success Response
+.catch(({ response: { data: err } }) => { console.log(err) }) // Error response
 ```
 
 ### Success Response

@@ -16,51 +16,59 @@ const image = fs.readFileSync('./test/seed/assets/mi-kit.png')
 
 chai.use(chaiHTTP)
 
-before(function (done) {
-    this.timeout(30000)
-    const adminData = {
-        username: "adminTigor",
-        email: "adminTigor@email.com",
-        password: "12345",
-        SECRET_KEY: process.env.SECRET_KEY
-    }
-    const nonAdminData = {
-        username: "nonAdmin",
-        email: "nonAdmin@email.com",
-        password: "12345"
-    }
-
-    const tokens = () => {
-        return new Promise((resolve, reject) => {
-            chai.request(app)
-                .post('/users/register/admin')
-                .send(adminData)
-                .end(function (err, res) {
-                    if (err) return reject(err)
-                    adminToken = res.body.token
-                    chai.request(app)
-                        .post('/users/register')
-                        .send(nonAdminData)
-                        .end(function (err, res) {
-                            if (err) return reject(err)
-                            nonAdminToken = res.body.token
-                            resolve()
-                        })
-                })
-        })
-    }
-
-    Promise.all([tokens()])
-        .then(() => done())
-})
-
-after(function (done) {
-    this.timeout(60000)
-    Promise.all([Product.deleteMany({}), User.deleteMany({})])
-        .then(() => done())
-})
-
 describe('Product Route', function () {
+    before(function (done) {
+        this.timeout(30000)
+        const adminData = {
+            username: "adminTigor",
+            email: "adminTigor@email.com",
+            password: "12345",
+            SECRET_KEY: process.env.SECRET_KEY
+        }
+        const nonAdminData = {
+            username: "nonAdmin",
+            email: "nonAdmin@email.com",
+            password: "12345"
+        }
+
+        const tokens = () => {
+            return new Promise((resolve, reject) => {
+                chai.request(app)
+                    .post('/users/register/admin')
+                    .send(adminData)
+                    .end(function (err, res) {
+                        if (err) return reject(err)
+                        adminToken = res.body.token
+                        chai.request(app)
+                            .post('/users/register')
+                            .send(nonAdminData)
+                            .end(function (err, res) {
+                                if (err) return reject(err)
+                                nonAdminToken = res.body.token
+                                resolve()
+                            })
+                    })
+            })
+        }
+
+        Promise.all([tokens()])
+            .then(() => done())
+            .catch(err => {
+                console.error(err)
+                return Promise.all([Product.deleteMany({}), User.deleteMany({})])
+            })
+            .then(() => done())
+            .catch(console.error)
+    })
+
+    after(function (done) {
+        this.timeout(60000)
+        Promise.all([Product.deleteMany({}), User.deleteMany({})])
+            .then(() => done())
+            .catch(console.error)
+    })
+
+
     let imageurl = null
     afterEach(function () {
         if (imageurl) {
