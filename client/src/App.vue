@@ -34,7 +34,7 @@ export default {
       if (localStorage.getItem("token")) {
         Axios({
           method: "post",
-          url: "http://localhost:3000/user/refresh",
+          url: "http://shopify-server.ricky-works.online/user/refresh",
           headers: { token: localStorage.getItem("token") }
         })
           .then(({ data }) => {

@@ -28,7 +28,7 @@ export default {
     fetchCart() {
       Axios({
         method: "get",
-        url: "http://localhost:3000/cart",
+        url: "http://shopify-server.ricky-works.online/cart",
         headers: {
           token: this.$attrs.customer.token
         }

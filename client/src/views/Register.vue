@@ -48,7 +48,7 @@ export default {
       console.log(data);
       Axios({
         method: "post",
-        url: "http://localhost:3000/user/register",
+        url: "http://shopify-server.ricky-works.online/user/register",
         data
       })
         .then(data => {

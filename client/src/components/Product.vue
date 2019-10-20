@@ -81,7 +81,7 @@ export default {
       } else {
         Axios({
           method: "post",
-          url: "http://localhost:3000/cart",
+          url: "http://shopify-server.ricky-works.online/cart",
           headers: { token: localStorage.getItem("token") },
           data: { product_id }
         })
@@ -121,7 +121,7 @@ export default {
       }
       Axios({
         method: "patch",
-        url: `http://localhost:3000/product/${this.product._id}`,
+        url: `http://shopify-server.ricky-works.online/product/${this.product._id}`,
         headers: { token: localStorage.getItem("token") },
         data
       })
@@ -135,7 +135,7 @@ export default {
     destroy(id) {
       Axios({
         method: "delete",
-        url: `http://localhost:3000/product/${id}`,
+        url: `http://shopify-server.ricky-works.online/product/${id}`,
         headers: { token: localStorage.getItem("token") }
       })
       .then(({ data }) => {

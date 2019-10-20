@@ -37,7 +37,7 @@ export default {
     fetchProducts() {
       Axios({
         method: "get",
-        url: "http://localhost:3000/product"
+        url: "http://shopify-server.ricky-works.online/product"
       })
         .then(({ data }) => {
           this.products = data;

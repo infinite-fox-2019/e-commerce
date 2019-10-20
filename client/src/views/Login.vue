@@ -39,7 +39,7 @@ export default {
       const info = { email: this.email, password: this.password };
       Axios({
         method: "post",
-        url: "http://localhost:3000/user/login",
+        url: "http://shopify-server.ricky-works.online/user/login",
         data: info
       })
         .then(({ data }) => {
