@@ -1,7 +1,7 @@
 function errorHandler(err, req, res, next){
   let error = err.message || 'Error Internal Server'
   let status = err.status || 500
-  console.log(err.message);
+  
   if (err.name && err.name.includes('Token')) {
     status = 401
     error = 'Unauthorized'

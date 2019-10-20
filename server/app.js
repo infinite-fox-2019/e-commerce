@@ -15,7 +15,7 @@ app.use(express.urlencoded({extended : false}))
 
 
 mongoose.connect('mongodb://localhost:27017/e_commerce', {
-    useNewUrlParser : true , useUnifiedTopology: true 
+    useNewUrlParser : true , useUnifiedTopology: true , useFindAndModify : false
 }, function(err){
     if(err) {
         console.log(err)

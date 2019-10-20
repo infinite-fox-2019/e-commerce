@@ -13,7 +13,9 @@
 | --     | ---------     | ----    | -----                           | -----                         |
 | POST   | /items        | token   | name, description, tag(array),  | Create item to sell           |
 |        |               |         | featured_image, stock, price    |                               |
-| DELETE | /itesms/:id   | token   |                                 | Delete item                   |
+| DELETE | /items/:id    | token   |                                 | Delete item                   |
+| GET    | /items        | none    |                                 | Get all items                 |
+| GET    | /items/:id    | none    |                                 | Get one item by id            |
 
 
 # Detail
@@ -115,6 +117,46 @@ Headers :
 ```
 Response : 
 {
-    message : 'Success Delete Item'
+    message : 'Success Delete Item **item name** '
+}
+```
+
+## Get All Items
+- HTTP : 'get'
+- Url : '/items'
+- Status : **200**
+```
+Response :
+[
+  {
+    tags: [ 'high quality', 'best seller', 'expert' ],
+    _id: '5da5667476c84d470a763923',
+    name: 'Van Gogh',
+    featured_image: 'https://images-na.ssl-images-amazon.com/images/I/61mRJKocYNL.jpg',
+    description: 'for best quality paint',
+    stock: 6,
+    price: 160000,
+    createdAt: '2019-10-15T06:25:56.214Z',
+    updatedAt: '2019-10-15T06:25:56.214Z'
+  }
+]
+```
+
+## Get One Item
+- HTTP : 'get'
+- Url : '/items/:id'
+- Status : **200**
+```
+Response :
+{
+  tags: [ 'high quality', 'best seller', 'expert' ],
+  _id: '5da566b8ba2f9f47a10b826f',
+  name: 'Van Gogh',
+  featured_image: 'https://images-na.ssl-images-amazon.com/images/I/61mRJKocYNL.jpg',
+  description: 'for best quality paint',
+  stock: 6,
+  price: 160000,
+  createdAt: '2019-10-15T06:27:04.399Z',
+  updatedAt: '2019-10-15T06:27:04.399Z'
 }
 ```

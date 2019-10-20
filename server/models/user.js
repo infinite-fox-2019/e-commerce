@@ -34,6 +34,10 @@ const userSchema = mongoose.Schema({
   cart : [{
       type : mongoose.Schema.Types.ObjectId,
       ref : 'Item'
+  }],
+  history : [{
+    type : mongoose.Schema.Types.ObjectId,
+    ref: 'Transaction'
   }]
 }, {
     timestamps: true,
@@ -55,6 +59,7 @@ userSchema.path('email').validate(function (value) {
           throw err;
       })
 }, 'Email is already registed')
+
 
 const User = mongoose.model('User', userSchema)
 
