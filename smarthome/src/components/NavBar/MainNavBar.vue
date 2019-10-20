@@ -21,11 +21,7 @@
                 <v-icon>mdi-magnify</v-icon>
             </v-btn>
 
-            <v-dialog
-                v-model="dialog"
-                max-width="374"
-                v-if="(path === '/cart') && (cart.cart.length)"
-            >
+            <v-dialog v-model="dialog" max-width="374" v-if="(path === '/cart') && cart.length">
                 <template v-slot:activator="{ on }">
                     <v-btn text color="red" v-on="on">Clear Cart</v-btn>
                 </template>
@@ -82,7 +78,7 @@ export default {
                     case "/login":
                         return "Login";
                     default:
-                        return "Smart Home";
+                        return "Visual Novel";
                 }
             },
             set() {
@@ -93,15 +89,7 @@ export default {
             return this.$route.path;
         }
     },
-    created() {
-        console.log(this.cart.cart.length);
-        if (this.$route.path === "/") {
-            this.home = true;
-        }
-        if (this.$route.path === "/admin") {
-            this.admin = true;
-        }
-    }
+    created() {}
 };
 </script>
 

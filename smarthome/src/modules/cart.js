@@ -2,7 +2,7 @@ import axios from '../config/axios'
 export default {
     namespaced: true,
     state: {
-        cart: { cart: [] }
+        cart: []
     },
     mutations: {
         setCart(state, payload) {
@@ -25,7 +25,7 @@ export default {
             const { id, quantity } = payload
             return new Promise((resolve, reject) => {
                 axios.post('/cart', { id, quantity })
-                    .then(({ data: { cart: { cart } } }) => {
+                    .then(({ data: { cart } }) => {
                         commit('setCart', cart)
                         resolve()
                     })
@@ -36,7 +36,7 @@ export default {
         removeProductToCart({ commit }, id) {
             return new Promise((resolve, reject) => {
                 axios.patch('/cart/' + id)
-                    .then(({ data: { cart: { cart } } }) => {
+                    .then(({ data: { cart } }) => {
                         commit('setCart', cart)
                         resolve()
                     })
@@ -51,7 +51,7 @@ export default {
                         commit('setCart', [])
                         resolve(message)
                     })
-                    .cart(reject)
+                    .catch(reject)
             })
         }
     }

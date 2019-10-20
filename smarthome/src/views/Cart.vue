@@ -1,16 +1,16 @@
 <template>
     <v-container>
         <v-row>
-            <v-col v-for="(product, index) in cart.cart" :key="index" cols="12" lg="6">
+            <v-col v-for="(product, index) in cart" :key="index" cols="12" lg="6">
                 <CardProduct :product="product" />
             </v-col>
-            <v-col cols="12" v-if="cart.cart.length">
+            <v-col cols="12" v-if="cart.length">
                 <v-btn block color="indigo" dark>Checkout</v-btn>
             </v-col>
-            <v-col cols="12" v-if="!cart.cart.length" class="d-flex justify-center">
+            <v-col cols="12" v-if="!cart.length" class="d-flex justify-center">
                 <h1>Empty Cart...</h1>
             </v-col>
-            <v-col cols="12" v-if="!cart.cart.length" class="d-flex justify-center">
+            <v-col cols="12" v-if="!cart.length" class="d-flex justify-center">
                 <v-img contain max-width="500" src="../assets/602652_1.png"></v-img>
             </v-col>
         </v-row>

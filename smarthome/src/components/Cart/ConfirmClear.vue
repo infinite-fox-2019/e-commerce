@@ -32,7 +32,8 @@ export default {
             this.loading = true;
             this.$store
                 .dispatch("cart/emptyCart")
-                .then(() => {
+                .then(message => {
+                    this.$awn.success(message);
                     this.$emit("close");
                     this.$router.push("/");
                 })
