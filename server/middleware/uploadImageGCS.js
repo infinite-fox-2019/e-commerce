@@ -5,10 +5,12 @@ module.exports = ({ limits, gcsConfig }) => {
   const multerStorage = multer.memoryStorage()
   const upload = multer({ storage: multerStorage, limits })
 
+  
   return {
     single: (fieldname) => [
       upload.single(fieldname),
       async (req, res, next) => {
+      console.log(req.body, "<<<<<<<<<<<<<<<<<<")
         try {
           req.body[fieldname] = await uploadToGcs({ file: req.file, gcsConfig })
           next()

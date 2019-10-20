@@ -12,6 +12,7 @@ class ProductController {
 
   static addProduct(req,res,next){
     const {name, qty, price} = req.body
+    console.log(req.body, "<<<<<<<<<<<<<<<<<<")
     res.status(200).json(req.body)
     // Product.create({name, qty, price})
     //   .then(data => {

@@ -81,19 +81,35 @@ export default {
       evt.preventDefault()
       console.log(this.form.file)
       console.log(JSON.stringify(this.form))
+
+      // const formData = new FormData()
+      // formData.append("file", this.form.file)
+      // console.log(formData,"<<<<<")
+      // console.log("kok lewat")
+
+      let bodyFormData = new FormData()
+      bodyFormData.append('file', this.form.file)
+      bodyFormData.append('price', this.form.price)
+      bodyFormData.append('name', this.form.productName)
+      bodyFormData.append('qty', this.form.stock)
+
+      console.log(bodyFormData)
+
       axios({
         method: 'post',
         url: 'http://localhost:3000/products',
-        data: {
-          name: this.form.productName,
-          price: this.form.price,
-          img: this.form.file,
-          qty: this.form.stock
-        },
+        data: bodyFormData,
         headers: {
           Authorization: localStorage.getItem('token')
+          // "Content-Type" : "multipart/form-data"
         }
       })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err.response)
+        })
     },
     onReset (evt) {
       evt.preventDefault()
