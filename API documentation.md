@@ -10,6 +10,10 @@ Password : admins
 just admin that can Create, Update, Delete Products
 all other people that register is count as an users
 
+link : https://h8-commerce.firebaseapp.com
+
+note : the server still in http, make sure to allow load unsafe script to test it out
+
 **Usage**
 
 # Register and Login
