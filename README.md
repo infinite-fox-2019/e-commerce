@@ -14,7 +14,7 @@
 
 ### Get All Products
 
-| URL              | http://localhost:3000/product                                |
+| URL              | http://shopify-server.ricky-works.online/product             |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | GET                                                          |
 | Params           | `none`                                                       |
@@ -25,7 +25,7 @@
 
 ### Get One Product
 
-| URL              | http://localhost:3000/product/:id                            |
+| URL              | http://shopify-server.ricky-works.online/product/:id         |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | GET                                                          |
 | Params           | `id: String`                                                 |
@@ -37,7 +37,7 @@
 
 ### Create New Product
 
-| URL              | http://localhost:3000/product                                |
+| URL              | http://shopify-server.ricky-works.online/product             |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | POST                                                         |
 | Params           | `none`                                                       |
@@ -48,7 +48,7 @@
 
 ### Update Product
 
-| URL              | http://localhost:3000/product/:id                            |
+| URL              | http://shopify-server.ricky-works.online/product/:id         |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | PATCH                                                        |
 | Params           | `id: String`                                                 |
@@ -59,7 +59,7 @@
 
 ### Delete Product
 
-| URL              | http://localhost:3000/product/:id                            |
+| URL              | http://shopify-server.ricky-works.online/product/:id         |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | DELETE                                                       |
 | Params           | `id: String`                                                 |
@@ -78,7 +78,7 @@
 
 ### Add To Cart
 
-| URL              | http://localhost:3000/cart/:product_id                       |
+| URL              | http://shopify-server.ricky-works.online/cart/:product_id    |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | POST                                                         |
 | Params           | `product_id: String`                                         |
@@ -89,7 +89,7 @@
 
 ### Update Quantity
 
-| URL              | http://localhost:3000/cart/:product_id                       |
+| URL              | http://shopify-server.ricky-works.online/cart/:product_id    |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | PATCH                                                        |
 | Params           | `product_id: String`                                         |
@@ -100,7 +100,7 @@
 
 ### Remove From Cart
 
-| URL              | http://localhost:3000/cart/:product_id                       |
+| URL              | http://shopify-server.ricky-works.online/cart/:product_id    |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | DELETE                                                       |
 | Params           | `product_id: String`                                         |
@@ -118,7 +118,7 @@
 
 ### Create Transaction
 
-| URL              | http://localhost:3000/transaction/:product_id                |
+| URL              | http://shopify-server.ricky-works.online/transaction/:product_id |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | POST                                                         |
 | Params           | `product_id: String`                                         |
@@ -129,7 +129,7 @@
 
 ### Delete Transaction
 
-| URL              | http://localhost:3000/transaction/:product_id                |
+| URL              | http://shopify-server.ricky-works.online/transaction/:product_id |
 | ---------------- | ------------------------------------------------------------ |
 | HTTP (Method)    | DELETE                                                       |
 | Params           | `product_id: String`                                         |
@@ -147,7 +147,7 @@
 
 ### Register New User
 
-| URL              | http://localhost:3000/user/register                          |
+| URL              | http://shopify-server.ricky-works.online/user/register       |
 | ---------------- | ------------------------------------------------------------ |
 | Method           | POST                                                         |
 | Params           | `none`                                                       |
@@ -158,7 +158,7 @@
 
 ### Login User
 
-| URL              | http://localhost:3000/user/login                             |
+| URL              | http://shopify-server.ricky-works.online/user/login          |
 | ---------------- | ------------------------------------------------------------ |
 | Method           | POST                                                         |
 | Params           | `none`                                                       |
@@ -176,7 +176,7 @@
 
 ###  Register Admin
 
-| URL              | http://localhost:3000/superuser                              |
+| URL              | http://shopify-server.ricky-works.online/superuser           |
 | ---------------- | ------------------------------------------------------------ |
 | Method           | POST                                                         |
 | Params           | `none`                                                       |
@@ -187,7 +187,7 @@
 
 ### Remove Admin
 
-| URL              | http://localhost:3000/superuser/:id                          |
+| URL              | http://shopify-server.ricky-works.online/superuser/:id       |
 | ---------------- | ------------------------------------------------------------ |
 | Method           | DELETE                                                       |
 | Params           | `id: String`                                                 |
@@ -209,6 +209,6 @@ $ npm run dev
 
 ## Server Link
 
-Access the website via http://localhost:3000
+Access the website via http://shopify.ricky-works.online
 
 
