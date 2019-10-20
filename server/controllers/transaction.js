@@ -1,11 +1,13 @@
 const User = require('../models/user');
 const Transaction = require('../models/transaction')
 const mongoose = require('mongoose')
+const Product = require('../models/product')
 
 class TransactionController {
     static create(req, res, next) {
         const userId = req.decode.id
         let userData
+        let promises = []
         User.findById(userId)
             .then((user) => {
                 if (!user.cart.length) {
@@ -16,6 +18,16 @@ class TransactionController {
                     userData = user.cart
                     return user.updateOne({ $set: { cart: [] } })
                 }
+            })
+            .then(() => {
+                userData.forEach(el => {
+                    promises.push(
+                        Product.findByIdAndUpdate(
+                            el.product, {
+                            $subtract: ["$stock", () => el.quantity]
+                        }))
+                })
+                return Promise.all(promises)
             })
             .then(() => {
                 return Transaction.create({

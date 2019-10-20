@@ -4,6 +4,7 @@
             <v-col v-for="product in products" :key="product._id" cols="12" lg="3" md="4" sm="6">
                 <ProductCardAdmin :product="product" />
             </v-col>
+
             <v-dialog
                 v-model="dialog"
                 fullscreen
@@ -34,7 +35,8 @@ export default {
     data() {
         return {
             dialog: false,
-            formKey: 0
+            formKey: 0,
+            fab: true
         };
     },
     created() {
