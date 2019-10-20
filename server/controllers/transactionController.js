@@ -2,11 +2,11 @@ const Transaction = require('../models/transaction');
 
 class TransactionController {
     static find (req, res, next){
-
-        let objParams = {user: req.loggedUser}
-        
-        Transaction.find(objParams).populate(['user'])
+        let objParams = { user: req.loggedUser.id }
+        console.log(objParams);
+        Transaction.find(objParams).populate(['user', 'items.id'])
             .then(transactions=>{
+                console.log(transactions);
                 res.status(200).json(transactions)
             })
             .catch(next)
@@ -20,7 +20,7 @@ class TransactionController {
             .catch(next)
     }
     static create (req, res, next){
-        const {price, items} = req.body;
+        const {price, items} = req.body
         const user = req.loggedUser.id
         Transaction.create({
             price, 
@@ -28,7 +28,9 @@ class TransactionController {
             user
         })
             .then(transaction=>{
+                console.log(transaction);
                 res.status(201).json(transaction)
+                next()
             })
             .catch(next)
     }

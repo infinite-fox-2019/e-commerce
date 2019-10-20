@@ -5,6 +5,7 @@ const upload = require('../middlewares/gcs');
 
 route.use(authenticate)
 route.patch('/:id', isAdmin, upload.single('image'), productController.update)
+// route.post('/cart', productController.findItems)
 route.delete('/:id', isAdmin,  productController.delete)
 route.get('/:id', productController.findById)
 route.post('/', isAdmin, upload.single('image'), productController.create)

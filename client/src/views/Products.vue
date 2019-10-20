@@ -1,7 +1,7 @@
 <template>
-  <div>
-      <div class="container-product">
-        <Card v-for="product in products" :key="product._id" :product="product"/>
+  <div style="margin: 20px auto;">
+      <div class="container flex flex-wrap items-start justify-start" style="margin:0 auto;">
+        <Card v-for="product in products" :key="product._id" :product="product" class="w-1/3"/>
       </div>
   </div>
 </template>
@@ -24,10 +24,4 @@ export default {
 </script>
 
 <style>
-.container-product {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
 </style>

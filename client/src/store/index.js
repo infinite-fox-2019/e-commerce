@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 const server = 'http://localhost:3000'
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkYTVhNDE1YTUwY2FjNjJlY2RjYzhhOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNTcxMzM2Nzc0fQ.QhjJkHcet1KJZHOrkGplxcwD1-sD3k9PKlvztlkFzEs'
+let token = localStorage.getItem('token')
 
 Vue.use(Vuex)
 
@@ -12,7 +12,8 @@ export default new Vuex.Store({
     product: {},
     cart: [],
     transactions: [],
-    user: { role: '' }
+    user: { role: '' },
+    isLogin: false
   },
   mutations: {
     GET_PRODUCTS (state, products) {
@@ -26,9 +27,41 @@ export default new Vuex.Store({
     },
     GET_CART (state, cart) {
       state.cart = cart
+    },
+    UPDATE_TRANSACTION (state, transactions) {
+      state.transactions = transactions
+    },
+    UPDATE_LOGIN (state, payload) {
+      state.isLogin = payload
     }
   },
   actions: {
+    login (context, payload) {
+      axios({
+        method: 'POST',
+        url: `${server}/users/login`,
+        data: { email: payload.email, password: payload.password }
+      })
+        .then(({ data }) => {
+          localStorage.setItem('token', data.token)
+          context.commit('UPDATE_LOGIN', true)
+        })
+        .catch(console.log)
+    },
+    register (context, payload) {
+      axios({
+        url: `${server}/users/register`,
+        method: 'POST',
+        data: { name: payload.name, email: payload.email, password: payload.password }
+      })
+        .then(({ data }) => {
+          context.dispatch('login', { email: payload.email, password: payload.password })
+        })
+    },
+    logout (context) {
+      localStorage.removeItem('token')
+      context.commit('UPDATE_LOGIN', false)
+    },
     fetchProducts (context) {
       axios({
         method: 'GET',
@@ -51,30 +84,19 @@ export default new Vuex.Store({
         })
         .catch(console.log)
     },
-    createTransaction (context, payload) {
-      axios({
-        method: 'POST',
-        url: `${server}/transactions`,
-        data: payload,
-        headers: { token }
-      })
-        .then(({ data }) => {
-        // console.log(data)
-          alert(data)
-        })
-        .catch(console.log)
-    },
     updateCart () {
       axios({
         method: 'PATCH',
         url: `${server}/users/cart`,
-        data: this.state.cart,
+        data: { cart: this.state.cart },
         headers: { token }
       })
         .then(({ data }) => {
-          alert(data)
+          console.log(data, 'abis update (user)')
         })
-        .catch(alert)
+        .catch(({ response }) => {
+          console.log(response.data)
+        })
     },
     getCart (context) {
       axios({
@@ -83,9 +105,53 @@ export default new Vuex.Store({
         headers: { token }
       })
         .then(({ data }) => {
-          context.commit('GET_CART', data)
+          context.commit('GET_CART', data.cart)
         })
-        .catch(alert)
+        .catch(({ response }) => {
+          console.log(response.data)
+        })
+    },
+    deleteFromCart (context, payload) {
+      axios({
+        method: 'DELETE',
+        url: `${server}/users/cart/${payload.id}`,
+        headers: { token }
+      })
+    },
+    checkout (context, payload) {
+      axios({
+        url: `${server}/transactions`,
+        method: 'POST',
+        headers: { token },
+        data: { price: payload.price, items: this.state.cart }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(console.log)
+    },
+    getTransaction (context) {
+      axios({
+        url: `${server}/transactions`,
+        method: 'GET',
+        headers: { token }
+      })
+        .then(({ data }) => {
+          context.commit('UPDATE_TRANSACTION', data)
+        })
+        .catch(console.log)
+    },
+    updateTransaction (context, payload) {
+      axios({
+        url: `${server}/transactions/${payload.id}`,
+        method: 'PATCH',
+        headers: { token },
+        data: { status: payload.status }
+      })
+        .then(({ data }) => {
+          console.log(data)
+        })
+        .catch(console.log)
     }
   }
 })

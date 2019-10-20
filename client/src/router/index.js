@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+// import productDetail from '../views/ProductDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -11,42 +12,30 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'about',
+    path: '/products/:id',
+    name: 'productDetail',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/ProductDetail.vue')
   },
   {
     path: '/products',
-    name: 'product',
+    name: 'products',
+    component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue')
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "products" */ '../views/Products.vue')
   },
   {
-    path: '/products/:id',
-    name: 'productDetail',
-    component: () => import(/* webpackChunkName: "productDetail" */ '../views/ProductDetail.vue')
-  },
-  {
-    path: '/user',
+    path: '/user/cart',
     name: 'user',
-    component: () => import(/* webpackChunkName: "user" */ '../views/User.vue'),
-    children: [
-      {
-        path: '/transactions',
-        name: 'transactions',
-        component: () => import(/* webpackChunkName: "transactions" */ '../views/Transactions.vue')
-      },
-      {
-        path: '/cart',
-        name: 'cart',
-        component: () => import(/* webpackChunkName: "cart" */ '../views/Cart.vue')
-      }
-    ]
+    component: () => import(/* webpackChunkName: "user" */ '../views/Cart.vue')
+  },
+  {
+    path: '/transactions',
+    name: 'transactions',
+    component: () => import(/* webpackChunkName: "transactions" */ '../views/Transactions.vue')
   }
 ]
 

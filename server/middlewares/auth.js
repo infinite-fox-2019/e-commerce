@@ -21,10 +21,10 @@ module.exports = {
     },
     authorize(req,res,next){
         const {id} = req.params
-        
         Transaction.findById(id)
-            .then(transaction=>{
-                if(transaction.user===req.loggedUser.id){
+        .then(transaction=>{
+            console.log(transaction.user._id, '==', req.loggedUser.id );
+                if(transaction.user._id.toString() === req.loggedUser.id){
                     next()
                 } else {
                     res.status(403).json({ message: 'Authorization failed' })

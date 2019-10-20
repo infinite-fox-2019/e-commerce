@@ -2,8 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
       <router-link to="/products">Products</router-link> |
+      <router-link to="/user/cart">Cart</router-link> |
+      <router-link to="/transactions">Transactions</router-link> |
+
     </div>
     <router-view/>
   </div>
@@ -16,6 +18,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  /* font-size: 80%; */
 }
 
 #nav {

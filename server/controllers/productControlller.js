@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const ObjectId = require('mongoose').Types.ObjectId
 
 class ProductController {
 
@@ -18,6 +19,28 @@ class ProductController {
                 res.status(200).json(product)
             })
             .catch(next)
+    }
+
+    static findItems(req, res, next) {
+      const {cart} = req.body
+    //   console.log(req.body, 'body');
+    //   console.log(cart, 'di server');
+    //   let amounts = cart.map(item=> { return item.qty })
+      let ids = cart.map(item=> {
+        //   console.log(item);
+          return ObjectId(item._id)
+      })
+    //   console.log(ids);
+      Product.find({ '_id' : { $in : ids}})
+        .then(products=>{
+            // console.log(products);
+            cart.forEach((item, index) => {
+                item.product = products[index]
+               
+            })
+            res.status(200).json(cart)
+        })
+        .catch(next)      
     }
 
     static create(req, res, next) {
@@ -76,7 +99,7 @@ class ProductController {
                 })
                 if (article.image) {
                     let image = article.image
-                    let fileName = image.replace(/(https:\/\/storage.googleapis.com\/whatpress_image\/)/, '')
+                    let fileName = image.replace(/(https:\/\/storage.googleapis.com\/bikelah\/)/, '')
                     storage
                         .bucket(bucket)
                         .file(fileName)

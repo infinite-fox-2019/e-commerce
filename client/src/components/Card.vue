@@ -1,12 +1,21 @@
 <template>
- <div class="card">
-  <img :src="product.image" :alt="product.image" style="width:100%">
-  <h1>{{ product.name }}</h1>
-  <h2>{{ priceUSD }}</h2>
-  <h5>In Stock: {{ product.stock}}</h5>
-  <p class="title">{{ product.description }}</p>
-
-  <p><button @click.prevent="goToDetail">Detail</button></p>
+ <div class="card flex m-4 shadow items-between flex-wrap justify-center" style="height:500px;">
+   <div class="flex-column justify-center items-center">
+    <div class="flex justify-center items-center p-4 h-1/2" >
+      <img :src="product.image" :alt="product.image" style="width:300px; height:300px object-fit:fill;" class="rounded">
+    </div>
+    <div class="p-4 flex-column justify-end">
+      <h1>{{ product.name }}</h1>
+      <h2>{{ priceUSD }}</h2>
+      <h5>In Stock: {{ product.stock}}</h5>
+      <p class="title">{{ productSummary }}</p>
+    </div>
+   </div>
+   <div class="flex items-end w-full">
+    <div class="w-full p-4 h-20">
+      <button @click.prevent="goToDetail" class="w-full bg-black text-white hover:bg-gray-800 hover:text-gray-100 p4">Detail</button>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -30,38 +39,4 @@ export default {
 </script>
 
 <style>
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-}
-
-.title {
-  color: grey;
-  font-size: 12px;
-}
-
-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
-
-a {
-  text-decoration: none;
-  font-size: 22px;
-  color: black;
-}
-
-button:hover, a:hover {
-  opacity: 0.7;
-}
 </style>

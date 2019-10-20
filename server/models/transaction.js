@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const transactionSchema = new Schema({
-    status: { type: String, default: 'pending' }, //order, paid, delivery, confirmed
+    status: { type: String, default: 'pending' }, //pending, paid, delivery, confirmed
     price: { type: Number, min: 0 },
-    items: [{ productId: { type: Schema.Types.ObjectId, ref: 'Product' }, qty: { type: Number, min: 1 } }],
+    items: [{ id: { type: Schema.Types.ObjectId, ref: 'Product' }, qty: { type: Number, min: 1 } }],
     user: { type: Schema.Types.ObjectId, ref: 'User' }
 }, {
     versionKey: false,

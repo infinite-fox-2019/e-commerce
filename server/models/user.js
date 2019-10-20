@@ -16,11 +16,12 @@ const userSchema = new Schema({
     },
     role: { type: String, default: 'user' },
     cart: [{
-        productId: { type: Schema.Types.ObjectId, ref: 'Product' },
+        id: { type: Schema.Types.ObjectId, ref: 'Product' },
         qty: { type: Number, min: 1 }
     }]
 }, {
-    versionKey: false
+    versionKey: false,
+    timestamps: true
 })
 
 userSchema.pre('save', function(next) {

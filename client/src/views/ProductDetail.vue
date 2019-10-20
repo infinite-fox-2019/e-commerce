@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between items-center p-10 border border-black">
+    <div style="position: absolute;" class="flex justify-between items-center p-10 border border-black">
         <div class="p-10">
             <img :src="product.image" :alt="product.image" class="object-cover">
         </div>
@@ -43,6 +43,7 @@ export default {
     addToCart () {
       let qty = Number(this.qty)
       if (qty >= 1) {
+        console.log(this.$route.params.id, qty)
         this.$store.commit('ADD_TO_CART', { id: this.$route.params.id, qty })
         this.$store.dispatch('updateCart')
       } else {
@@ -59,6 +60,7 @@ export default {
     }
   },
   created () {
+    console.log(this.$route.params.id)
     this.$store.dispatch('getProduct', { id: this.$route.params.id })
   }
 }
