@@ -1,9 +1,7 @@
 <template>
-    <div class="container">
-      <div class="d-flex justify-content-center flex-wrap">
-        <div class="col">
-          <div class="sm-4 md-3">
-            <div v-for="(item, index) in arrProductAll" class="card" v-bind:key="index" style="max-width: 18rem;">
+    <div class="container d-flex justify-content-center flex-wrap">
+        <div class="row sm-3 md-3">
+            <div v-for="(item, index) in arrProductAll" class="card ml-1 mt-1" v-bind:key="index">
               <h2 class="card-title" v-html="item.product">
               </h2>
               <a @click.prevent="showAddToCart(item._id)" href="#" data-toggle="modal" data-target="#myCart">
@@ -35,8 +33,6 @@
           </form>
         </div>
       </div>
-    </div>
-    </div>
     </div>
   </div>
  </div>

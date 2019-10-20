@@ -1,6 +1,7 @@
 <template>
-  <div class="container">
-        <div v-for="(item, index) in arrProduct" class="card" v-bind:key="index" id="ListItem">
+  <div class="d-flex justify-content-center flex-wrap container">
+    <div class="row sm-3 md-3">
+        <div v-for="(item, index) in arrProduct" class="card ml-1 m t-1" v-bind:key="index" id="ListItem">
             <div class="row" id="cardtemplate">
               <div>
               <h2 v-html="item.product" style="margin-left: 40px;"></h2>
@@ -27,6 +28,7 @@
             <label for="price">Sold :</label>
             <h4 class="card-text" v-html="item.sold"></h4>
         </div>
+    </div>
   <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">
       <!-- Modal content-->
@@ -103,11 +105,6 @@ export default {
 img {
   height: 250px;
   width: 100%;
-}
-#card-template {
-  display: flex;
-  flex-direction: row;
-  align-items: space-between;
 }
 
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-      <div v-for="(item, index) in arrCart" class="card" v-bind:key="index" id="ListItem">
+    <div class="row sm-3 md-3  d-flex justify-content-center flex-wrap">
+      <div v-for="(item, index) in arrCart" class="card ml-1 mt-1" v-bind:key="index" id="ListItem">
             <label for="stock">ProductName :</label>
             <h3 class="card-text" v-html="item.product.product"></h3>
             <div class="col">
@@ -15,6 +16,7 @@
             <label for="price">Price :</label>
             <h4 class="card-text" v-html="item.price"></h4>
         </div>
+    </div>
         <a type="button" class="btn btn-default" @click="checkOut">Check Out</a>
         <div class="" id="checkOut" role="dialog">
                <div class="container">
