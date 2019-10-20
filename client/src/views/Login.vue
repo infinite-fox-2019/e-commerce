@@ -5,7 +5,7 @@
                 <v-col cols="12" class="d-flex justify-center align-center">
                     <v-img
                         alt="logo"
-                        src="https://via.placeholder.com/500"
+                        src="../assets/VNStore.jpg"
                         max-height="500"
                         max-width="100%"
                         contain

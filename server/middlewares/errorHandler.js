@@ -1,7 +1,10 @@
 
+const gcsdelete = require('../helpers/gcsdelete')
 module.exports = (err, req, res, next) => {
     let status
     let message
+
+    if (req.file) gcsdelete(req.file.cloudStoragePublicUrl)
 
     switch (err.name) {
         case 'ValidationError':
