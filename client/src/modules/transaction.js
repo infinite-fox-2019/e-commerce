@@ -27,7 +27,7 @@ export default {
             return new Promise((resolve, reject) => {
                 axios.get('/transactions')
                     .then(({ data }) => {
-                        commit('setTransaction', data)
+                        commit('setTransactions', data)
                         resolve()
                     })
                     .catch(reject)

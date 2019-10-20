@@ -1,30 +1,38 @@
 <template>
-    <v-form @submit.prevent="submit">
-        <v-text-field
-            prepend-icon="mdi-account"
-            v-model="username"
-            label="Username"
-            :success-messages="usernameTriggers.success ? 'Username Available' : ''"
-            :error-messages="usernameTriggers.error ? usernameTriggers.errorMessage : ''"
-            :loading="usernameTriggers.loading"
-        ></v-text-field>
-        <v-text-field
-            prepend-icon="mdi-email"
-            v-model="email"
-            label="Email"
-            type="email"
-            :success-messages="emailTriggers.success ? 'Email Available' : ''"
-            :error-messages="emailTriggers.error ? emailTriggers.errorMessage : ''"
-            :loading="emailTriggers.loading"
-        ></v-text-field>
-        <v-text-field
-            prepend-icon="mdi-textbox-password"
-            v-model="password"
-            label="Password"
-            type="password"
-        ></v-text-field>
-        <v-btn type="submit" block dark>Register</v-btn>
-    </v-form>
+    <v-row>
+        <v-col cols="12">
+            <v-form @submit.prevent="submit">
+                <v-text-field
+                    prepend-icon="mdi-account"
+                    v-model="username"
+                    label="Username"
+                    :success-messages="usernameTriggers.success ? 'Username Available' : ''"
+                    :error-messages="usernameTriggers.error ? usernameTriggers.errorMessage : ''"
+                    :loading="usernameTriggers.loading"
+                ></v-text-field>
+                <v-text-field
+                    prepend-icon="mdi-email"
+                    v-model="email"
+                    label="Email"
+                    type="email"
+                    :success-messages="emailTriggers.success ? 'Email Available' : ''"
+                    :error-messages="emailTriggers.error ? emailTriggers.errorMessage : ''"
+                    :loading="emailTriggers.loading"
+                ></v-text-field>
+                <v-text-field
+                    prepend-icon="mdi-textbox-password"
+                    v-model="password"
+                    label="Password"
+                    type="password"
+                ></v-text-field>
+                <v-btn type="submit" block dark>Register</v-btn>
+            </v-form>
+        </v-col>
+        <v-col cols="12" class="d-flex justify-center align-center flex-column">
+            <p>Already a User?</p>
+            <v-btn outlined @click="$router.push('/login')">Login</v-btn>
+        </v-col>
+    </v-row>
 </template>
 
 <script>

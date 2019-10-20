@@ -7,6 +7,7 @@ import vuetify from './plugins/vuetify';
 import VueAWN from "vue-awesome-notifications"
 import "vue-awesome-notifications/dist/styles/style.css"
 import next from './config/errorHandler'
+import vueMoment from 'vue-moment'
 
 
 Vue.use(VueAWN, {
@@ -14,6 +15,8 @@ Vue.use(VueAWN, {
         global: 2000
     }
 })
+
+Vue.use(vueMoment)
 
 Vue.config.productionTip = false
 
