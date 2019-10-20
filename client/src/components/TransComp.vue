@@ -79,7 +79,7 @@ export default {
         deleteTransaction(id){
             axios({
                 method: 'delete',
-                url: `http://localhost:3000/transactions/${id}`,
+                url: `http://dreamcarserver.dreamcarofficial.com/transactions/${id}`,
                 headers:{
                     token: localStorage.getItem('token')
                 }

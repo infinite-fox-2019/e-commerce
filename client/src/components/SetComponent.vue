@@ -45,7 +45,7 @@ export default {
     sureDelete(id,brand){
       axios({
         method: 'delete',
-        url: `http://localhost:3000/products/${id}`,
+        url: `http://dreamcarserver.dreamcarofficial.com/products/${id}`,
         headers: {
           token: localStorage.getItem('token')
         }
