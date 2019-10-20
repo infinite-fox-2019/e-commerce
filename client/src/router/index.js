@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Shop from '../views/Shop.vue'
 import Items from '../views/Items.vue'
+import Cart from '../views/Cart.vue'
+import Detail from '../components/Detail.vue'
+import TRX from '../views/Trx.vue'
 
 Vue.use(VueRouter)
 
@@ -81,6 +84,10 @@ const routes = [
         path: 'profesional',
         name: 'profesional',
         component: Items
+      }, {
+        path: 'item/:id',
+        name: 'itemDetails',
+        component: Detail
       }
     ]
   },
@@ -96,6 +103,55 @@ const routes = [
           })
         } else if (role === 'admin') {
           next()
+        }
+      } else {
+        next({
+          path: '/'
+        })
+      }
+    }
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: Cart,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token') && localStorage.getItem('email')) {
+        let role = localStorage.getItem('role')
+        if (role === 'customer') {
+          next()
+        } else if (role === 'admin') {
+          next({
+            path: '/admin'
+          })
+        }
+      } else {
+        next({
+          path: '/'
+        })
+      }
+    },
+    children: [
+      {
+        path: ':id',
+        name: 'Item',
+        component: Detail
+      }
+    ]
+  },
+  {
+    path: '/transactions',
+    name: 'trx',
+    component: TRX,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('token') && localStorage.getItem('email')) {
+        let role = localStorage.getItem('role')
+        if (role === 'customer') {
+          next()
+        } else if (role === 'admin') {
+          next({
+            path: '/admin'
+          })
         }
       } else {
         next({

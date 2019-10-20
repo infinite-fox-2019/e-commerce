@@ -17,13 +17,13 @@ class TransactionController {
                     quantity : 0
                 }
             }
-            for (let i=0; i<cart.length; i++){
-                for(let k in listItem){
+            for(let k in listItem){
+                for (let i=0; i<cart.length; i++){
                     if(k == cart[i]._id){
                         listItem[k].quantity += 1
-                        listItem[k].sum = cart[i].price
                     }
                 }
+                listItem[k].sum = listItem[k].price * listItem[k].quantity
             }
             listItem = Object.values(listItem)
             return Transaction.create({listItem : listItem, user : req.decoded._id})
@@ -34,6 +34,7 @@ class TransactionController {
                 })
                 .then(() => {
                     return User.findById(req.decoded._id)
+                    .populate({path : 'history'})
                     .then(user => {
                         console.log(data);
                           res.status(201).json({

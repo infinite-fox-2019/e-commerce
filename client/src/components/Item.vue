@@ -13,8 +13,8 @@
   </div>
   <footer class="card-footer">
       <div class="card-footer-item">
-        <b-button type="is-primary" class="btm">Show More</b-button>
-        <b-button type="is-success" class="btm" v-if="isLogin">Buy Item</b-button>
+        <b-button type="is-primary" class="btm"  @click="toDetail(item._id)">Show More</b-button>
+        <b-button type="is-success" class="btm" v-if="isLogin" @click="addTOcart(item._id)">Buy Item</b-button>
       </div>
   </footer>
 </div>
@@ -24,12 +24,26 @@
 export default {
   name: 'item',
   props: ['item'],
+  data () {
+    return {
+    }
+  },
   computed: {
     isLogin () {
       return this.$store.state.isLogin
     },
     price () {
       return this.item.price.toLocaleString('id', { style: 'currency', currency: 'IDR' })
+    }
+  },
+  methods: {
+    addTOcart (id) {
+      this.$store.dispatch('addCart', { itemId: id })
+    },
+    toDetail (id) {
+      // console.log(this.$router)
+      this.$router.push({ path: '/shop/item/' + id })
+      // this.$router.push({ path: '/' })
     }
   }
 }

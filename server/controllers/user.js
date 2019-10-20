@@ -61,6 +61,7 @@ class UserController {
     })
       .then(() => {
         return User.findById(req.decoded._id)
+        .populate({path : 'cart', select: '_id name price featured_image'})
           .then(data => {
             res.status(200).json({ cart: data.cart })
           })
@@ -70,9 +71,10 @@ class UserController {
   static removeCart(req, res, next) {
     let { idItem } = req.params
     User.findById(req.decoded._id)
+    .populate({path : 'cart', select: '_id name price featured_image'})
       .then(data => {
         for (let i=0; i<data.cart.length; i++){
-          if (data.cart[i] == idItem){
+          if (data.cart[i]._id == idItem){
              data.cart.splice(i, 1)
              break
           }

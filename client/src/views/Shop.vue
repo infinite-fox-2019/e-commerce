@@ -10,6 +10,10 @@ import Main from '../components/Main.vue'
 
 export default {
   name: 'Shop',
+  data () {
+    return {
+    }
+  },
   components: {
     Slideout, Main
   },
@@ -40,7 +44,7 @@ body {
   -webkit-overflow-scrolling: touch;
   z-index: 0;
   display: none;
-  background-color: #1d1f20;
+  background-color: #3a3d3f;
   color: white;
 }
 

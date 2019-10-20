@@ -7,7 +7,7 @@
     </div>
     <nav id="navuser" v-else>
       <div class="l">
-       ARTZONE
+        <h2>ARTZONE</h2>
       </div>
       <div class="right">
         <div class="r" v-if="role === 'customer'">
@@ -17,7 +17,7 @@
           Hallo admin!
         </div>
         <div class="r" @click="logout">
-          logout
+          <h2>Logout</h2>
         </div>
       </div>
     </nav>
@@ -39,6 +39,7 @@ export default {
   methods: {
     logout () {
       localStorage.clear()
+      this.$router.push({ path: '/' })
       this.$store.commit('SET_ISLOGIN', false)
     }
   },
@@ -95,5 +96,8 @@ nav{
 }
 #nav a.router-link-exact-active {
   color: #7957d5;
+}
+h2:hover {
+  cursor: pointer;
 }
 </style>

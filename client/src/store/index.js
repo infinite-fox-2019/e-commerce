@@ -9,7 +9,10 @@ export default new Vuex.Store({
     allitems: [],
     isLogin: false,
     cart: [],
-    user: {}
+    history: [],
+    user: {},
+    itemDetail: {},
+    heightScroll: ''
   },
   mutations: {
     SET_ALL_ITEMS (state, payload) {
@@ -20,9 +23,14 @@ export default new Vuex.Store({
     },
     SET_USERINFO (state, payload) {
       state.user = payload
+      state.cart = payload.cart
+      state.history = payload.history
     },
     SET_CART (state, payload) {
       state.cart = payload
+    },
+    SEND_DETAIL (state, payload) {
+      state.itemDetail = payload
     }
   },
   actions: {
@@ -57,9 +65,13 @@ export default new Vuex.Store({
       }
     },
     addCart ({ commit }, payload) {
+      console.log(payload)
       axios({
         method: 'patch',
-        url: '/users/add' + payload.idItem
+        url: '/users/add/' + payload.itemId,
+        headers: {
+          token: localStorage.getItem('token')
+        }
       })
         .then(({ data }) => {
           let cart = data.cart
@@ -79,6 +91,70 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           commit('SET_USERINFO', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getItemDetail ({ commit }, payload) {
+      axios({
+        method: 'get',
+        url: '/items/' + payload
+      })
+        .then(({ data }) => {
+          console.log(data)
+          commit('SEND_DETAIL', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    removeCart ({ commit }, payload) {
+      console.log(payload)
+      axios({
+        method: 'patch',
+        url: '/users/remove/' + payload.itemId,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          let cart = data.cart
+          commit('SET_CART', cart)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    payNow ({ commit }, payload) {
+      axios({
+        method: 'post',
+        url: '/transactions/',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          commit('SET_USERINFO', data.user)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    changeDelStatus ({ commit, dispatch }, payload) {
+      axios({
+        method: 'patch',
+        url: '/transactions/delivery/' + payload,
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: {
+          status: true
+        }
+      })
+        .then(({ data }) => {
+          console.log(data.message)
+          dispatch('fetchUserInfo')
         })
         .catch(err => {
           console.log(err)

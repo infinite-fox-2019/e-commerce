@@ -2,7 +2,7 @@
   <div class="hello">
     <vue-accordion :items="items"  :styles="style"></vue-accordion>
     <p>Click picture to see items <b>or</b></p>
-    <b-button type="is-primary" class="btm" size="is-medium">Click Here</b-button>
+    <b-button type="is-primary" class="btm" size="is-medium" @click="toSign">Click Here</b-button>
   </div>
 </template>
 
@@ -75,6 +75,11 @@ export default {
           textTransform: 'uppercase'
         }
       }
+    }
+  },
+  methods: {
+    toSign () {
+      this.$router.push({ path: '/signin' })
     }
   }
 }
