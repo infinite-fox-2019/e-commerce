@@ -146,7 +146,7 @@ export default {
             this.isloading = true
             // axios({
             //     method: 'post',
-            //     url: 'http://localhost:3000/upload',
+            //     url: 'http://dreamcarserver.dreamcarofficial.com/upload',
             //     data: formData,
             //     config: {headers : {"Content-Type" : "multipart/form-data"}}
             // })
@@ -157,7 +157,7 @@ export default {
                     // const image = this.form.url
                     axios({
                         method: "post",
-                        url: 'http://localhost:3000/products',
+                        url: 'http://dreamcarserver.dreamcarofficial.com/products',
                         headers:{
                             token: localStorage.getItem('token')
                         },

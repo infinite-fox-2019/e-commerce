@@ -35,7 +35,7 @@ export default {
         const name = this.$route.params.name
         let promise = axios({
             method : 'get',
-            url : `http://localhost:3000/products/${name}`,
+            url : `http://dreamcarserver.dreamcarofficial.com/products/${name}`,
             headers: {
                 token: localStorage.getItem('token')
             }

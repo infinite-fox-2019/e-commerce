@@ -32,7 +32,7 @@ export default {
       deleteee(id){
         axios({
           method: 'delete',
-          url: `http://localhost:3000/${id}`,
+          url: `http://dreamcarserver.dreamcarofficial.com/${id}`,
           headers: {
             token: localStorage.getItem('token')
           }
@@ -48,7 +48,7 @@ export default {
       fetchData(){
         axios({
               method: 'get',
-              url: 'http://localhost:3000/',
+              url: 'http://dreamcarserver.dreamcarofficial.com/',
               headers: {token: localStorage.getItem('token')
                   
               }
@@ -83,7 +83,7 @@ export default {
         console.log(id)
         axios({
           method: 'patch',
-          url: `http://localhost:3000/${id}`,
+          url: `http://dreamcarserver.dreamcarofficial.com/${id}`,
           data: {
             role
           },

@@ -37,7 +37,7 @@ export default {
   created(){
       axios({
           method : 'get',
-          url: 'http://localhost:3000/brands'
+          url: 'http://dreamcarserver.dreamcarofficial.com/brands'
       })
       .then(({data})=>{
         this.$awn.success('Fetching Data')

@@ -74,7 +74,7 @@ export default {
             this.isloading= true;
             axios({
                 method: 'post',
-                url: 'http://localhost:3000/register',
+                url: 'http://dreamcarserver.dreamcarofficial.com/register',
                 data:{
                     username,
                     password,

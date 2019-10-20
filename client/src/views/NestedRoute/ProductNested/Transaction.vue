@@ -98,7 +98,7 @@ export default {
         let minus = this.getData.price - dp
         axios({
           method: 'post',
-          url: 'http://localhost:3000/transactions',
+          url: 'http://dreamcarserver.dreamcarofficial.com/transactions',
           data : {
             transactionId,
             brand,
@@ -144,7 +144,7 @@ export default {
       this.getRandomId()
       axios({
           method: 'get',
-          url: `http://localhost:3000/products/sc/${this.$route.params.id}`,
+          url: `http://dreamcarserver.dreamcarofficial.com/products/sc/${this.$route.params.id}`,
           headers: {
               token: localStorage.getItem('token')
           }

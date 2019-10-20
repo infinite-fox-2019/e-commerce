@@ -27,7 +27,7 @@ export default {
         fetchData(){
             axios({
                 method: 'get',
-                url: 'http://localhost:3000/transactions/admin',
+                url: 'http://dreamcarserver.dreamcarofficial.com/transactions/admin',
                 headers:{
                     token: localStorage.getItem('token')
                 }

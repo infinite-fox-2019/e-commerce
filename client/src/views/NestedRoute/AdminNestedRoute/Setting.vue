@@ -27,7 +27,7 @@ export default {
         this.$awn.info('loading...')
           axios({
               method : 'get',
-              url: 'http://localhost:3000/products',
+              url: 'http://dreamcarserver.dreamcarofficial.com/products',
               headers: {
                   token: localStorage.getItem('token')
               }

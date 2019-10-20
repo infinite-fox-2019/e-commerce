@@ -49,7 +49,7 @@ export default {
         goProfile(){
           axios({
             method: 'get',
-            url: 'http://localhost:3000/findprofile',
+            url: 'http://dreamcarserver.dreamcarofficial.com/findprofile',
             headers: {
               token: localStorage.getItem('token')
             }

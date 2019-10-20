@@ -51,7 +51,7 @@ export default {
         fetchData(){
             axios({
                 method: 'get',
-                url: `http://localhost:3000/products/sc/${this.$route.params.id}`,
+                url: `http://dreamcarserver.dreamcarofficial.com/products/sc/${this.$route.params.id}`,
                 headers: {
                     token: localStorage.getItem('token')
                 }
