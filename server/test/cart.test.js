@@ -23,138 +23,128 @@ let cartAmount = 0
 
 const image = fs.readFileSync('./test/seed/assets/350x150.png')
 
-before(function (done) {
-    this.timeout(60000)
-    const user = {
-        username: "tigor123",
-        email: "tigor123@email.com",
-        password: "12345"
-    }
 
-    const adminData = {
-        username: "adminTigor2",
-        email: "adminTigor2@email.com",
-        password: "12345",
-        SECRET_KEY: process.env.SECRET_KEY
-    }
-
-    function createAdmin() {
-        return new Promise((resolve, reject) => {
-            chai.request(app)
-                .post('/users/register/admin')
-                .send(adminData)
-                .end(function (err, res) {
-                    if (err) return reject(err)
-                    adminToken = res.body.token
-                    resolve()
-                })
-        })
-    }
-
-    function getUsertoken() {
-        return new Promise((resolve, reject) => {
-            chai.request(app)
-                .post('/users/register')
-                .send(user)
-                .end(function (err, res) {
-                    if (err) return reject(err)
-                    userToken = res.body.token
-                    resolve()
-                })
-        })
-    }
-
-    function getFirstProduct() {
-        return new Promise((resolve, reject) => {
-            chai.request(app)
-                .post('/products')
-                .type('form')
-                .set({ authorization: adminToken })
-                .field('name', 'Mi Home Kit')
-                .field('price', '4500000')
-                .field('stock', '30')
-                .attach('image', image, 'placeholder.png')
-                .end(function (err, res) {
-                    if (err) return reject(err)
-
-                    productId1 = res.body._id
-                    image1 = res.body.image
-                    resolve()
-                })
-        })
-    }
-    function getSecondProduct() {
-        return new Promise((resolve, reject) => {
-            chai.request(app)
-                .post('/products')
-                .type('form')
-                .set({ authorization: adminToken })
-                .field('name', 'Mi Home Kit')
-                .field('price', '4500000')
-                .field('stock', '30')
-                .attach('image', image, 'placeholder.png')
-                .end(function (err, res) {
-                    if (err) return reject(err)
-                    productId2 = res.body._id
-                    image2 = res.body.image
-                    resolve()
-                })
-        })
-    }
-    function getThirdProduct() {
-        return new Promise((resolve, reject) => {
-            chai.request(app)
-                .post('/products')
-                .type('form')
-                .set({ authorization: adminToken })
-                .field('name', 'Mi Home Kit')
-                .field('price', '4500000')
-                .field('stock', '0')
-                .attach('image', image, 'placeholder.png')
-                .end(function (err, res) {
-                    if (err) return reject(err)
-                    productId3 = res.body._id
-                    image3 = res.body.image
-                    resolve()
-                })
-        })
-    }
-
-    // const data2 = {
-    //     id: productId2,
-    //     quantity: 10
-    // }
-
-    // chai.request(app)
-    //     .post('/cart')
-    //     .send(data)
-    //     .set({ Authorization: userToken })
-
-    // async function fillCart() {
-    //     await 
-    // }
-
-
-    Promise.all([getUsertoken(), createAdmin()])
-        .then(() => Promise.all([getFirstProduct(), getSecondProduct(), getThirdProduct()])
-        )
-        .then(() => {
-
-            done()
-        })
-        .catch(err => { throw err })
-})
-
-after(function (done) {
-    this.timeout(60000)
-    gcsdelete(image1)
-    gcsdelete(image2)
-    gcsdelete(image3)
-    Promise.all([Product.deleteMany({}), User.deleteMany({})])
-        .then(() => done())
-})
 
 describe('Cart Route', function () {
+    before(function (done) {
+        this.timeout(60000)
+        const user = {
+            username: "tigor123",
+            email: "tigor123@email.com",
+            password: "12345"
+        }
+
+        const adminData = {
+            username: "adminTigor2",
+            email: "adminTigor2@email.com",
+            password: "12345",
+            SECRET_KEY: process.env.SECRET_KEY
+        }
+
+        function createAdmin() {
+            return new Promise((resolve, reject) => {
+                chai.request(app)
+                    .post('/users/register/admin')
+                    .send(adminData)
+                    .end(function (err, res) {
+                        if (err) return reject(err)
+                        adminToken = res.body.token
+                        resolve()
+                    })
+            })
+        }
+
+        function getUsertoken() {
+            return new Promise((resolve, reject) => {
+                chai.request(app)
+                    .post('/users/register')
+                    .send(user)
+                    .end(function (err, res) {
+                        if (err) return reject(err)
+                        userToken = res.body.token
+                        resolve()
+                    })
+            })
+        }
+
+        function getFirstProduct() {
+            return new Promise((resolve, reject) => {
+                chai.request(app)
+                    .post('/products')
+                    .type('form')
+                    .set({ authorization: adminToken })
+                    .field('name', 'Mi Home Kit')
+                    .field('price', '4500000')
+                    .field('stock', '30')
+                    .attach('image', image, 'placeholder.png')
+                    .end(function (err, res) {
+                        if (err) return reject(err)
+
+                        productId1 = res.body._id
+                        image1 = res.body.image
+                        resolve()
+                    })
+            })
+        }
+        function getSecondProduct() {
+            return new Promise((resolve, reject) => {
+                chai.request(app)
+                    .post('/products')
+                    .type('form')
+                    .set({ authorization: adminToken })
+                    .field('name', 'Mi Home Kit')
+                    .field('price', '4500000')
+                    .field('stock', '30')
+                    .attach('image', image, 'placeholder.png')
+                    .end(function (err, res) {
+                        if (err) return reject(err)
+                        productId2 = res.body._id
+                        image2 = res.body.image
+                        resolve()
+                    })
+            })
+        }
+        function getThirdProduct() {
+            return new Promise((resolve, reject) => {
+                chai.request(app)
+                    .post('/products')
+                    .type('form')
+                    .set({ authorization: adminToken })
+                    .field('name', 'Mi Home Kit')
+                    .field('price', '4500000')
+                    .field('stock', '0')
+                    .attach('image', image, 'placeholder.png')
+                    .end(function (err, res) {
+                        if (err) return reject(err)
+                        productId3 = res.body._id
+                        image3 = res.body.image
+                        resolve()
+                    })
+            })
+        }
+
+        Promise.all([getUsertoken(), createAdmin()])
+            .then(() => Promise.all([getFirstProduct(), getSecondProduct(), getThirdProduct()])
+            )
+            .then(() => done())
+            .catch(err => {
+                console.error(err)
+                return Promise.all([Product.deleteMany({}), User.deleteMany({})])
+            })
+            .then(() => { })
+            .catch(console.error)
+    })
+
+    after(function (done) {
+        this.timeout(60000)
+        gcsdelete(image1)
+        gcsdelete(image2)
+        gcsdelete(image3)
+        Promise.all([Product.deleteMany({}), User.deleteMany({})])
+            .then(() => done())
+            .catch(console.error)
+    })
+
     describe('Get User Cart', function () {
         it('Success Get User Cart', function (done) {
             chai.request(app)

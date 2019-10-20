@@ -9,18 +9,19 @@ const SECRET_KEY = process.env.SECRET_KEY
 
 chai.use(chaiHTTP)
 
-before(function () {
-    this.timeout(60000)
-    const seed = JSON.parse(fs.readFileSync('./test/seed/users.json'))
-    return User.insertMany(seed)
-})
-
-after(function () {
-    this.timeout(60000)
-    return User.deleteMany({})
-})
 
 describe('User Route', function () {
+    before(function () {
+        this.timeout(60000)
+        const seed = JSON.parse(fs.readFileSync('./test/seed/users.json'))
+        return User.insertMany(seed)
+    })
+
+    after(function () {
+        this.timeout(60000)
+        return User.deleteMany({})
+    })
+
     describe('Register User', function () {
         it('Sucess Register User', function (done) {
             const data = {
