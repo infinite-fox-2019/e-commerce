@@ -131,7 +131,6 @@ export default new Vuex.Store({
         data: { price: payload.price, items: this.state.cart }
       })
         .then(({ data }) => {
-          console.log(data)
           context.dispatch('getCart')
         })
         .catch(console.log)

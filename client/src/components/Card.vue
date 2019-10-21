@@ -1,5 +1,5 @@
 <template>
- <div class="card flex m-4 shadow items-between flex-wrap justify-center" style="height:500px;">
+ <div class="card flex m-4 shadow-lg border hover:border-gray-599 items-between flex-wrap justify-center" style="height:500px;">
    <div class="flex-column justify-center items-center">
     <div class="flex justify-center items-center p-4 h-1/2" >
       <img :src="product.image" :alt="product.image" style="width:300px; height:300px object-fit:fill;" class="rounded">
