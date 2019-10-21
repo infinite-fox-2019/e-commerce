@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-const host = `http://localhost:3000`
+// const host = `http://localhost:3000`
+const host = `https://e-commerce-api.sigitariprasetyo.xyz`
 
 Vue.use(Vuex)
 
@@ -60,7 +61,7 @@ export default new Vuex.Store({
     getProduct ({ commit }) {
       axios({
         method: 'get',
-        url: `http://localhost:3000/product`
+        url: `${host}/product`
       })
         .then(({ data }) => {
           let products = []
@@ -76,7 +77,7 @@ export default new Vuex.Store({
     findOne ({ commit }, payload) {
       axios({
         method: 'get',
-        url: `http://localhost:3000/product/${payload}`
+        url: `${host}/product/${payload}`
       })
         .then(({ data }) => {
           commit('DETAIL_PRODUCT', data)

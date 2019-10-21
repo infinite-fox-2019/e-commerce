@@ -30,7 +30,6 @@ describe('User', function () {
                     expect(res.body).to.have.all.keys(
                         'username',
                         'email',
-                        'role',
                         'token'
                     )
                     done()

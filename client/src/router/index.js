@@ -54,25 +54,11 @@ const routes = [
     children: [
       {
         path: 'detail',
-        component: FullDescription,
-        beforeEnter: (to, from, next) => {
-          if (from.name) {
-            next()
-          } else {
-            next('/')
-          }
-        }
+        component: FullDescription
       },
       {
         path: 'edit',
-        component: FormEdit,
-        beforeEnter: (to, from, next) => {
-          if (from.name) {
-            next()
-          } else {
-            next('/')
-          }
-        }
+        component: FormEdit
       }
     ]
   },

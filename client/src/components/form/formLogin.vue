@@ -30,6 +30,7 @@
 
 <script>
 import axios from 'axios'
+const host = `https://e-commerce-api.sigitariprasetyo.xyz`
 
 export default {
   name: 'FormLogin',
@@ -50,7 +51,7 @@ export default {
       })
       axios({
         method: 'post',
-        url: `http://localhost:3000/user/login`,
+        url: `${host}/user/login`,
         data: {
           identity: this.identity,
           password: this.password

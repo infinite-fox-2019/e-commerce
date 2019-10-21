@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios'
+const host = `https://e-commerce-api.sigitariprasetyo.xyz`
 
 export default {
   name: 'FormAddProduct',
@@ -78,7 +79,7 @@ export default {
 
       axios({
         method: 'post',
-        url: `http://localhost:3000/addProduct`,
+        url: `${host}/addProduct`,
         data: formData,
         headers: {
           token: localStorage.getItem('token'),
