@@ -1,9 +1,9 @@
 <template>
-    <div style="position: absolute;" class="flex justify-between items-center p-10 border border-black">
+    <div style="position: absolute;" class="flex justify-between items-center p-10 m-8 shadow-lg">
         <div class="p-10">
             <img :src="product.image" :alt="product.image" class="object-cover">
         </div>
-        <div class="flex-column justify-around text-left p-4 m-6 border border-black">
+        <div class="flex-column justify-around text-left p-4 m-6 border border-gray-300">
             <span class="m-2">
               <h3><strong>{{ product.name }}</strong></h3>
             </span>
@@ -41,13 +41,17 @@ export default {
   },
   methods: {
     addToCart () {
-      let qty = Number(this.qty)
-      if (qty >= 1) {
-        console.log(this.$route.params.id, qty)
-        this.$store.commit('ADD_TO_CART', { id: this.$route.params.id, qty })
-        this.$store.dispatch('updateCart')
+      if (this.$store.state.isLogin) {
+        let qty = Number(this.qty)
+        if (qty >= 1) {
+          console.log(this.$route.params.id, qty)
+          this.$store.commit('ADD_TO_CART', { id: this.$route.params.id, qty })
+          this.$store.dispatch('updateCart')
+        } else {
+          alert('quantity must be minimum of 1!')
+        }
       } else {
-        alert('quantity must be minimum of 1!')
+        this.$router.push('/')
       }
     }
   },

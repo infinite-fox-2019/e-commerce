@@ -32,8 +32,6 @@ describe('Product test', function() {
                     expect(res.body).to.have.own.property('price')
                     expect(res.body).to.have.own.property('stock')
                     done()
-
-
                 })
         })
 

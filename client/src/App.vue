@@ -1,16 +1,29 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/products">Products</router-link> |
-      <router-link to="/user/cart">Cart</router-link> |
-      <router-link to="/transactions">Transactions</router-link> |
+    <div id="nav" class="flex justify-between">
+      <div>
+        <router-link to="/products">Home</router-link> |
+        <router-link to="/transactions">Transactions</router-link> |
+      </div>
+      <div class="flex justify-between">
+        <div><router-link to="/user/cart"><i class="fas fa-shopping-cart text-white hover:text-blue-400 text-2xl px-4"></i></router-link></div>
+        <a href="" @click.prevent="logout"><i class="fas fa-sign-out-alt text-white hover:text-red-400 text-2xl px-4"></i></a>
+      </div>
 
     </div>
     <router-view/>
   </div>
 </template>
-
+<script>
+export default {
+  methods: {
+    logout () {
+      this.$store.dispatch('logout')
+      this.$router.push('/')
+    }
+  }
+}
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

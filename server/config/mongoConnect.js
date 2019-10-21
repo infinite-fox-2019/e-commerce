@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
-const uri = process.env.MONGO_URI
+let uri = process.env.MONGO_URI
+
+if(process.env.NODE_ENV === 'test'){
+    uri = 'mongodb://localhost:27017/test'
+}
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => { console.log('connected to the database') })
