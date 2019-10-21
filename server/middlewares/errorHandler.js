@@ -15,5 +15,6 @@ module.exports = (err, req, res, next) => {
         status = 400
         message = `Email already registered.`
     }
+    console.log(err)
     res.status(status).json({ message })
 }

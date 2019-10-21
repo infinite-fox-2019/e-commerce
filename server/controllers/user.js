@@ -19,11 +19,12 @@ class userController {
             .then(user => {
                 if (user && comparePassword(password, user.password)) {
                     let payload = {
-                        id: user._id
+                        id: user._id,
+                        role: user.role
                     }
 
                     let token = tokenGenerate(payload)
-                    res.status(200).json({ token })
+                    res.status(200).json({ token, role: user.role })
                 } else {
                     next({
                         status: 401,

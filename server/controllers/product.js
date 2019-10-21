@@ -1,4 +1,10 @@
 const Product = require('../models/product')
+const { Storage } = require('@google-cloud/storage')
+
+const storage = new Storage({
+    projectId: process.env.GOOGLE_CLOUD_PROJECT_ID,
+    keyFilename: process.env.GOOGLE_CLOUD_KEYFILE
+})
 
 class ProductController {
     static find(req, res, next) {
@@ -19,7 +25,12 @@ class ProductController {
     }
 
     static create(req, res, next) {
-        const { name, image, price, stock, brand } = req.body
+        const { name, price, stock, brand } = req.body
+        let image = null
+
+        if (req.file) {
+            image = req.file.cloudStoragePublicUrl
+        }
         Product.create({ name, image, price, stock, brand })
             .then(product => {
                 res.status(201).json(product)
@@ -32,8 +43,8 @@ class ProductController {
     }
 
     static update(req, res, next) {
-        const { name, price } = req.body
-        Product.findByIdAndUpdate(req.params.id, { name, price })
+        const { name, price, brand, stock } = req.body
+        Product.findByIdAndUpdate(req.params.id, { name, price, brand, stock })
             .then(product => {
                 return Product.findById(req.params.id)
             })
@@ -70,8 +81,8 @@ class ProductController {
 
     static remove(req, res, next) {
         Product.findByIdAndDelete(req.params.id)
-            .then(product => {
-                res.status(200).json(product)
+            .then(response => {
+                res.status(200).json(response)
             })
             .catch(next)
     }

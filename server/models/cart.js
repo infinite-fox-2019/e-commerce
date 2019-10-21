@@ -2,6 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const cartSchema = new Schema({
+    firstName: String,
+    lastName: String,
+    province: String,
+    zip: Number,
+    email: String,
+    phone: Number,
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -16,8 +22,7 @@ const cartSchema = new Schema({
         required: [true, `status required`]
     },
     address: {
-        type: String,
-        required: [true, `address must be filled`]
+        type: String
     }
 }, {
     timestamps: true,
