@@ -39,7 +39,6 @@ class UserController {
     static getCart (req, res, next) {
         User.findById(req.loggedUser.id).populate('cart.id')
             .then(user=>{
-                console.log(user);
                 res.status(200).json(user)
             })
             .catch(next)
@@ -71,7 +70,6 @@ class UserController {
         let productId
         User.findById(userId).populate('cart.id')
             .then(user=>{
-                console.log('user=============', user);
                 user.cart.forEach(cart=>{
                     if(cart._id.toString()==id){
                         qty = Number(cart.qty)

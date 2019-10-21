@@ -2,12 +2,12 @@
   <div id="app">
     <div id="nav" class="flex justify-between">
       <div>
-        <router-link to="/products">Home</router-link> |
-        <router-link to="/transactions">Transactions</router-link> |
+        <router-link to="/products" class="text-xl px-4">Home</router-link>
+        <router-link to="/transactions" class="text-xl px-4">Transactions</router-link>
       </div>
       <div class="flex justify-between">
-        <div><router-link to="/user/cart"><i class="fas fa-shopping-cart text-white hover:text-blue-400 text-2xl px-4"></i></router-link></div>
-        <a href="" @click.prevent="logout"><i class="fas fa-sign-out-alt text-white hover:text-red-400 text-2xl px-4"></i></a>
+        <div><router-link to="/user/cart"><i class="fas fa-shopping-cart text-white hover:text-blue-400 text-2xl mx-4 px-4"></i></router-link></div>
+        <a href="" @click.prevent="logout"><i class="fas fa-sign-out-alt text-white hover:text-red-400 text-2xl mx-4 px-4"></i></a>
       </div>
 
     </div>
@@ -35,7 +35,7 @@ export default {
 }
 
 #nav {
-  padding: 30px;
+  padding: 20px;
   background-color: rgba(0, 105, 128, 0.707);
 }
 

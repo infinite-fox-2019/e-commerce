@@ -73,9 +73,11 @@ export default {
     },
     login () {
       this.$store.dispatch('login', { email: this.user.email, password: this.user.password })
+      this.$router.push('/products')
     },
     register () {
       this.$store.dispatch('register', { name: this.user.name, password: this.user.password, email: this.user.email })
+      this.$router.push('/products')
     }
   }
 }

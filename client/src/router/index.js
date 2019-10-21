@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import store from '../store/index'
 // import productDetail from '../views/ProductDetail.vue'
 
 Vue.use(VueRouter)
@@ -30,12 +31,20 @@ const routes = [
   {
     path: '/user/cart',
     name: 'user',
-    component: () => import(/* webpackChunkName: "user" */ '../views/Cart.vue')
+    component: () => import(/* webpackChunkName: "user" */ '../views/Cart.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.isLogin) next('/')
+      else next()
+    }
   },
   {
     path: '/transactions',
     name: 'transactions',
-    component: () => import(/* webpackChunkName: "transactions" */ '../views/Transactions.vue')
+    component: () => import(/* webpackChunkName: "transactions" */ '../views/Transactions.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!store.state.isLogin) next('/')
+      else next()
+    }
   }
 ]
 

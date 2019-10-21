@@ -84,7 +84,7 @@ export default new Vuex.Store({
         })
         .catch(console.log)
     },
-    updateCart () {
+    updateCart (context) {
       axios({
         method: 'PATCH',
         url: `${server}/users/cart`,
@@ -93,6 +93,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data, 'abis update (user)')
+          context.dispatch('getCart')
         })
         .catch(({ response }) => {
           console.log(response.data)
@@ -117,6 +118,10 @@ export default new Vuex.Store({
         url: `${server}/users/cart/${payload.id}`,
         headers: { token }
       })
+        .then(() => {
+          context.dispatch('getCart')
+        })
+        .catch(console.log)
     },
     checkout (context, payload) {
       axios({
@@ -127,6 +132,7 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           console.log(data)
+          context.dispatch('getCart')
         })
         .catch(console.log)
     },

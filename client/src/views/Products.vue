@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 20px auto;">
-      <div class="container flex flex-wrap items-start justify-start" style="margin:0 auto;">
+      <div class="container flex flex-wrap items-start justify-center" style="margin:0 auto;">
         <Card v-for="product in products" :key="product._id" :product="product" class="w-1/3"/>
       </div>
   </div>
