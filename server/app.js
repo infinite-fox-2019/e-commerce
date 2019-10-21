@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(morgan('dev'))
 
-mongoose.connect('mongodb://localhost:27017/eCommerce', {useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(process.env.MONGOOSE_URL, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(_=>{
     console.log('db connected');
   })
