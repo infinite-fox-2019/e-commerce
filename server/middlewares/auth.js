@@ -4,7 +4,6 @@ const Cart = require('../models/Cart')
 
 
 function authentication(req, res, next){
-    
     try {
         let decodedToken = verifyToken(req.headers.token)
         req.loggedUser = decodedToken
@@ -15,27 +14,38 @@ function authentication(req, res, next){
     }
 }
 
-function authorization(req, res, next){
-    
-    
-    let {id} = req.params
-    Cart.findOne({_id:id})
-        .then(article => {
-        
-            console.log('ini logged',req.loggedUser);
-            
-            if(article.userId == req.loggedUser._id) {
-                next()
-            } else{
-                throw {
-                    status: 401,
-                    msg: "not authorized"
-                }
-            }
-        })
-        .catch(err => {
-            next(err)
-        })
+function adminAuthorization (req, res, next) {
+    try {
+        if(req.loggedUser.role !=='admin') {
+            throw {statusCode: 401, msg: 'This page is for admin only'}
+        } else {
+            next()
+        }
+    }
+    catch(err) {
+        next(err)
+    }
 }
 
-module.exports = {authentication, authorization} 
+function cartAuthorization (req ,res, next) {
+    let {id} = req.params
+    Cart.findById({_id:id})
+    .then(cart => {
+        try {
+            if(!cart) {
+                throw {statusCode:404,msg:'Data not found'}
+            } else {
+                if(String(cart.userId) !== String(req.loggedUser._id)) {
+                    throw {statusCode:401, msg:'you are not authorized'}
+                } else {
+                    next()
+                }
+            }
+        }
+        catch (err) {
+            next(err)
+        }
+    })
+}
+
+module.exports = {authentication, adminAuthorization, cartAuthorization} 

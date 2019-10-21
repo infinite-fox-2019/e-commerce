@@ -6,8 +6,8 @@ const {OAuth2Client} = require('google-auth-library')
 class UserController {
     static register (req,res,next) {
         
-        const {username,email,password,role} = req.body
-        User.create({username,email,password,role})
+        const {username,email,password} = req.body
+        User.create({username,email,password})
         .then(result => {
             let payload = {username:result.username,_id:result._id}
             let token = generateToken(payload)
@@ -21,10 +21,12 @@ class UserController {
         const {email,password} = req.body
         User.findOne({email})
         .then(user=>{
+            // console.log(user);
+            
             if(user && comparePassword(password,user.password)) {
-                let payload = {username:user.username,_id:user._id}
+                let payload = {username:user.username,_id:user._id,role:user.role}
                 let token = generateToken(payload)
-                res.status(200).json({token,username:user.username,email:user.email,id:user._id})
+                res.status(200).json({token,username:user.username,email:user.email,id:user._id,role:user.role})
             } else {
                 throw {
                     msg: 'invalid email/password',

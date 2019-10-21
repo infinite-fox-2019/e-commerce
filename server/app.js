@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV === 'test') {
+if(process.env.NODE_ENV === 'development') {
     require('dotenv').config()
 }
 
@@ -10,7 +10,7 @@ const routes = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
 
 const app = express()
-// const PORT = 3000
+const PORT = 3000
 
 app.use(cors())
 app.use(morgan('dev'))
@@ -26,7 +26,7 @@ mongoose.connect(process.env.URL_MONGOOSE,{useNewUrlParser: true,useUnifiedTopol
 .catch(console.log)
 
 app.use(errorHandler)
-// app.listen(PORT,_=>{console.log(`listening on port PORT`)})
+app.listen(PORT,_=>{console.log(`listening on port ${PORT}`)})
 
 
 module.exports = app
