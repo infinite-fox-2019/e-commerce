@@ -5,15 +5,15 @@
 </template>
 
 <script>
-import RegisterForm from "@/components/RegisterForm";
+import RegisterForm from '@/components/RegisterForm'
 export default {
-  data: function() {
-    return {};
+  data: function () {
+    return {}
   },
   components: {
     RegisterForm
   }
-};
+}
 </script>
 
 <style scoped>

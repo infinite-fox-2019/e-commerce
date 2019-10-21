@@ -58,7 +58,14 @@ class ProductController {
       // ,{ new: true }
     )
       .then((previousUpdatedProduct) => {
-        deleteFile(previousUpdatedProduct.imageUrl)
+        if (previousUpdatedProduct.imageUrl) {
+          return deleteFile(previousUpdatedProduct.imageUrl)
+            .then(() => previousUpdatedProduct)
+        } else {
+          return previousUpdatedProduct
+        }
+      })
+      .then(previousUpdatedProduct => {
         res.status(200).json({ message: 'Product successfully updated', previousUpdatedProduct })
       })
       .catch(next)
@@ -67,8 +74,15 @@ class ProductController {
   static remove (req, res, next) {
     const productId = req.params.id
     Product.findByIdAndDelete(productId)
+      .then((deletedProduct) => {
+        if (deletedProduct.imageUrl) {
+          return deleteFile(deletedProduct.imageUrl)
+            .then(() => deletedProduct)
+        } else {
+          return deletedProduct
+        }
+      })
       .then(deletedProduct => {
-        deleteFile(deletedProduct.imageUrl)
         res.status(200).json({ message: 'Product successfully deleted', deletedProduct })
       })
       .catch(next)

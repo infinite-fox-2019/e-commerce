@@ -6,36 +6,37 @@ const { checkPassword } = require('../helpers/bcryptjs')
 const { User, Product, Transaction } = require('../models')
 
 class UserController {
-  static findAll (req, res, next) {
+  static findAll(req, res, next) {
     User.find()
       .then((result) => {
         res.status(200).json(result)
       }).catch(next)
   }
 
-  static register (req, res, next) {
+  static register(req, res, next) {
     console.log(`Registering ${req.body.email}`)
-    const { name, email, password } = req.body
-    User.create({ name, email, password })
+    const { username, email, password } = req.body
+    User.create({ username, email, password })
       .then((user) => {
         // console.log(user) // -> balikannya Object User dengan password yang sudah di hash
         const payload = {
           id: user._id,
+          username: user.username,
           email: user.email,
           admin: user.admin
         }
         const token = generateToken(payload)
         res.status(201).json({
           message: 'Successfully registered',
-          token: token,
-          name: user.name,
+          token: `Bearer ${token}`,
+          username: user.username,
           email: user.email
         })
       })
       .catch(next)
   }
 
-  static login (req, res, next) {
+  static login(req, res, next) {
     console.log(`Logging in ${req.body.email}`)
     const { email, password } = req.body
     User.findOne({ email })
@@ -48,21 +49,21 @@ class UserController {
             const payload = {
               id: user._id,
               email: user.email,
-              name: user.name
+              username: user.username
             }
             const token = generateToken(payload)
-            console.log(token)
-            res.status(200).json({ message: 'User successfully signed in', user: payload, token })
+            // console.log(token)
+            res.status(200).json({ message: 'User successfully signed in', user: payload, token: `Bearer ${token}` })
           } else {
-            next({ status: 404, message: 'Invalid username/password!' })
+            next({ status: 404, message: 'Invalid email/password!' })
           }
         } else {
-          next({ status: 404, message: 'Invalid username/password!' })
+          next({ status: 404, message: 'Invalid email/password!' })
         }
       }).catch(next)
   }
 
-  static loginGoogle (req, res, next) {
+  static loginGoogle(req, res, next) {
     let payload = null
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
     client.verifyIdToken({
@@ -80,7 +81,7 @@ class UserController {
         } else {
           console.log('Create new user!')
           return User.create({
-            name: payload.name,
+            username: payload.username,
             email: payload.email,
             password: process.env.DEFAULT_PASSWORD
           })
@@ -92,7 +93,7 @@ class UserController {
         res.status(201).json({
           message: 'Successfully logged in',
           token,
-          name: user.name,
+          username: user.username,
           email: user.email,
           admin: user.admin
         })
@@ -100,7 +101,7 @@ class UserController {
       .catch(next)
   }
 
-  static getCart (req, res, next) {
+  static getCart(req, res, next) {
     const id = req.decoded.id
     User.findById(id).populate('cart.productId')
       .then((user) => {
@@ -108,7 +109,7 @@ class UserController {
       }).catch(next)
   }
 
-  static checkout (req, res, next) {
+  static checkout(req, res, next) {
     const id = req.decoded.id
     User.findById(id).populate('cart.productId')
       .then((user) => {

@@ -5,8 +5,11 @@ const { User } = require('../models')
 
 module.exports = {
   authentication: function (req, res, next) {
+    const authorization = req.headers.token
+    if (!authorization) return next({ status: 401, message: 'Token is required' })
+    const auth = authorization.replace('Bearer', '')
     try {
-      const decoded = verifyToken(req.headers.token)
+      const decoded = verifyToken(auth)
       User.find({ email: decoded.email })
         .then((user) => {
           if (user.length > 0) {

@@ -74,8 +74,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Nunito:400,700|Rubik:400,700&display=swap");
-
 #itemCard {
   width: 20rem;
   font-family: Nunito;

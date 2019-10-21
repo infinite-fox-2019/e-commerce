@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import ItemList from "@/components/ItemList";
+import ItemList from '@/components/ItemList'
 
 export default {
   components: {
     ItemList
   }
-};
+}
 </script>
 
 <style>

@@ -5,16 +5,16 @@
 </template>
 
 <script>
-import LoginForm from "@/components/LoginForm";
+import LoginForm from '@/components/LoginForm'
 
 export default {
-  data: function() {
-    return {};
+  data: function () {
+    return {}
   },
   components: {
     LoginForm
   }
-};
+}
 </script>
 
 <style scoped>

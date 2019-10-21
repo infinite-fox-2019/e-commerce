@@ -1,6 +1,31 @@
 # API Documentation for E-Commerce
 
-## Users API
+## Server Location
+
+Server is located on this URL
+
+```http
+https://gamestop-server.andreassosilo.co/
+```
+
+## `GET` Server Test
+
+```http
+https://gamestop-server.andreassosilo.co/
+```
+
+### Success Response
+
+**Response Code**: `200 OK`
+
+```json
+{
+    page: "Home",
+    message: "Connected to E-commerce Apps!"
+}
+```
+
+## Users Route
 
 |      ROUTE      | HTTP  | HEADERS | BODY | DESCRIPTION | ADDITIONAL |
 | :-------------: | :---: | :-----: | :--: | :---------: | :--------: |
@@ -12,32 +37,127 @@
 |   /users/cart   | PATCH |  token  |      | Update Cart |     -      |
 |    /checkout    | POST  |  token  |      |  Checkout   |     -      |
 
-### Login
+## `POST` Login User
 
-|    ROUTE     | HTTP | HEADERS | BODY | DESCRIPTION | ADDITIONAL |
-| :----------: | :--: | :-----: | :--: | :---------: | :--------: |
-| /users/login | GET  |    -    |  -   |    Login    |     -      |
+### Route
 
-Status code: 200 (OK)
-
-Response:
-
-```
-[
-  {
-	name: "Plants vs. Zombies: Battle for Neighborville",
-    quantity: 50,
-    price: 500000,
-    description: "Kick some grass in Plant vs. Zombies: Battle for Neighborville, the wackiest shooter yet! Unearth 20 fully customizable character classes at launch in one social region, three free-roam regions, one Ops mode, six online multiplayer modes, including Battle Arena, and more!",
-    image: "http://playstation4.com/games/plant-vs-zombies",
-    created_At: 2019-10-03
-  }
-]
+```http
+/users/login
 ```
 
+### Headers
 
+| Key          | Value            |
+| ------------ | ---------------- |
+| Content-Type | application/json |
 
-## Products API
+### Body
+
+| Key      | Value  | Remarks          |
+| -------- | ------ | ---------------- |
+| email    | String | registered email |
+| password | String |                  |
+
+### Example
+
+```json
+{
+    "email": "hana@mail.com",
+    "password": "12345"
+}
+```
+
+### Success Response
+
+**Response Code**: `200 OK`
+
+```json
+{
+    "username": "hana",
+    "email": "hanal@mail.com",
+    "token": "Bearer [token]"
+}
+```
+
+### Fail Response
+
+#### Wrong Username / Email / Password
+
+**Response Code**: `401 Unauthorized`
+
+```json
+{
+    "code": 401,
+    "message": "Wrong Username / Email / Password"
+}
+```
+
+## `POST` Register User
+
+### Route
+
+```http
+/users/register
+```
+
+### Headers
+
+| Key          | Value            |
+| ------------ | ---------------- |
+| Content-Type | application/json |
+
+### Body
+
+| Key      | Value  | Required |
+| -------- | ------ | -------- |
+| username | String | Yes      |
+| email    | String | Yes      |
+| password | String | Yes      |
+
+### Example
+
+```json
+{
+    "username": "hana",
+    "email": "hana@mail.com",
+    "password": "12345"
+}
+```
+
+### Success Response
+
+**Response Code**: `201 Created`
+
+```json
+{
+    "username": "Hana",
+    "email": "hana@mail.com",
+    "token": "[token]"
+}
+```
+
+### Fail Response
+
+#### Error Validation
+
+Message Error appears depending on the user's request body. This one denotes all possibilities.
+
+**Response Code**: `400 Bad Request`
+
+```json
+{
+    "code": 400,
+    "message": [
+        "Username is required",
+        "E-mail is required",
+        "Password is required",
+        "E-mail is already used & registered!",
+        "Please insert minimum 8 character for the password",
+    ]
+}
+```
+
+## Products Route
 
 |     ROUTE     |  HTTP  | HEADERS | BODY |   DESCRIPTION    | ADDITIONAL |
 | :-----------: | :----: | :-----: | :--: | :--------------: | :--------: |
