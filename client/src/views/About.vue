@@ -61,7 +61,7 @@ export default {
     const id = this.$route.params.id
     axios({
       method: 'get',
-      url: `http://localhost:3000/products/${id}`
+      url: `http://ecommerce-server.indraaditya.online/products/${id}`
     })
       .then(({data})=>{
         this.detail = data

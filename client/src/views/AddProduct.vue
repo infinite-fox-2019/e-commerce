@@ -55,7 +55,7 @@ export default {
       
       axios({
         method: 'post',
-        url: 'http://localhost:3000/products',
+        url: 'http://ecommerce-server.indraaditya.online/products',
         data: bodyFormData,
         files: {
             image: this.file

@@ -34,7 +34,7 @@ export default {
     login(){
       axios({
         method: 'post',
-        url: 'http://localhost:3000/users/login',
+        url: 'http://ecommerce-server.indraaditya.online/users/login',
         data: {
           email: this.email,
           password: this.password

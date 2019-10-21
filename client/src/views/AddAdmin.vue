@@ -43,7 +43,7 @@ export default {
     register(){
       axios({
         method: 'post',
-        url: 'http://localhost:3000/users/register',
+        url: 'http://ecommerce-server.indraaditya.online/users/register',
         data: {
           first_name: this.first_name,
           last_name: this.last_name,

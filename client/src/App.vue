@@ -61,7 +61,7 @@ export default {
     fetchData(){
       axios({
         method: 'get',
-        url: 'http://localhost:3000/products'
+        url: 'http://ecommerce-server.indraaditya.online/products'
       })
         .then(({data})=>{
           this.products = data
@@ -79,7 +79,7 @@ export default {
         axiosAll[i] = function(){
           return axios({
             method: 'post',
-            url: 'http://localhost:3000/users/cart',
+            url: 'http://ecommerce-server.indraaditya.online/users/cart',
             data: {
               productId: products[i]
             },
@@ -100,7 +100,7 @@ export default {
 
       axios({
         method: 'get',
-        url: `http://localhost:3000/users/${user.id}`
+        url: `http://ecommerce-server.indraaditya.online/users/${user.id}`
       })
         .then(({data})=>{
           console.log(data);
@@ -124,7 +124,7 @@ export default {
         if (willDelete) {
           return axios({
             method: 'patch',
-            url: `http://localhost:3000/users/cart/${user.id}`,
+            url: `http://ecommerce-server.indraaditya.online/users/cart/${user.id}`,
             data: {
               cart : this.cart
             }
@@ -150,7 +150,7 @@ export default {
         if (willDelete) {
           return axios({
             method: 'patch',
-            url: `http://localhost:3000/users/cart/${user.id}`,
+            url: `http://ecommerce-server.indraaditya.online/users/cart/${user.id}`,
             data: {
               cart : this.cart
             }
@@ -165,7 +165,7 @@ export default {
       this.products = []
       axios({
         method: 'post',
-        url: `http://localhost:3000/products/search/`,
+        url: `http://ecommerce-server.indraaditya.online/products/search/`,
         data: {
           search: search
         }
@@ -202,7 +202,7 @@ export default {
       const user = jwt.verify(token, 'secret')
       axios({
         method: 'patch',
-        url: `http://localhost:3000/users/cart/${user.id}`,
+        url: `http://ecommerce-server.indraaditya.online/users/cart/${user.id}`,
         data: {
           cart : this.cart
         }
@@ -217,7 +217,7 @@ export default {
       
       axios({
         method: 'delete',
-        url: `http://localhost:3000/products/${id}`
+        url: `http://ecommerce-server.indraaditya.online/products/${id}`
       })
         .then(({data})=>{
           console.log(data)

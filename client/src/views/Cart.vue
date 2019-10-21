@@ -62,7 +62,7 @@ export default {
             axiosAll[i] = ()=>{
               return axios({
                 method: 'patch',
-                url: `http://localhost:3000/products/buy/${this.cart[i]._id}`
+                url: `http://ecommerce-server.indraaditya.online/products/buy/${this.cart[i]._id}`
               })
             }
           }

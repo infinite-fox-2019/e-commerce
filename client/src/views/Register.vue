@@ -46,7 +46,7 @@ export default {
 
       axios({
         method: 'post',
-        url: 'http://localhost:3000/users/register',
+        url: 'http://ecommerce-server.indraaditya.online/users/register',
         data: {
           first_name: this.first_name,
           last_name: this.last_name,
@@ -57,7 +57,7 @@ export default {
         .then(({data})=>{
           return axios({
             method: 'post',
-            url: 'http://localhost:3000/users/login',
+            url: 'http://ecommerce-server.indraaditya.online/users/login',
             data: {
               email: this.email,
               password: this.password
