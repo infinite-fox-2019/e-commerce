@@ -118,6 +118,7 @@ const routes = [
             path: '/shop'
           })
         } else if (role === 'admin') {
+          // console.log('heree?')
           next()
         }
       } else {

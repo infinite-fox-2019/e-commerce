@@ -120,6 +120,11 @@ export default {
           localStorage.setItem('token', data.token)
           localStorage.setItem('email', data.email)
           localStorage.setItem('role', data.role)
+          if (data.role === 'customer') {
+            this.$router.push('/shop')
+          } else {
+            this.$router.push({ path: '/admin' })
+          }
           console.log('islogin')
           let { _id, name, email, role, cart, history } = data
           let payload = {
@@ -133,15 +138,10 @@ export default {
           this.$store.commit('SET_USERINFO', payload)
           this.$store.commit('SET_ISLOGIN', true)
           this.$store.commit('SET_CART', cart)
-          this.$router.push('/shop')
         })
         .catch(err => {
           let errors = err.response.data.errMsg
-          Swal.fire(
-            `Can't Login`,
-            `${errors}`,
-            'warning'
-          )
+          Swal.fire(`Can't Login`, `${errors}`, 'warning')
           console.log(errors)
         })
         .finally(() => {

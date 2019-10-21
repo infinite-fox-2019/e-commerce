@@ -14,7 +14,6 @@
           {{user.email}}
         </div>
         <div class="r" v-else-if="role === 'admin'">
-          Hallo admin!
         </div>
         <div class="r" @click="logout">
           <h2>Logout</h2>
@@ -54,6 +53,13 @@ export default {
           this.$store.commit('SET_ISLOGIN', false)
         }
       })
+    }
+  },
+  watch: {
+    user () {
+      if (this.user) {
+        this.role = this.user.role
+      }
     }
   },
   created () {
