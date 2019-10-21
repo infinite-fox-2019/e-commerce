@@ -4,23 +4,23 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state:{
-        isLogin: '',
-        userRole: ''
+  state: {
+    isLogin: '',
+    userRole: ''
+  },
+  mutations: {
+    login (state) {
+      state.isLogin = true
     },
-    mutations:{
-        login(state){
-            state.isLogin = true
-        },
-        logout(state) {
-            state.isLogin = false
-            state.userRole = ''
-        },
-        setRole(state,payload) {
-            state.userRole = payload
-        }
+    logout (state) {
+      state.isLogin = false
+      state.userRole = ''
     },
-    actions:{
-
+    setRole (state, payload) {
+      state.userRole = payload
     }
+  },
+  actions: {
+
+  }
 })

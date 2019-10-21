@@ -11,19 +11,26 @@ class ProductController {
     static create(req,res,next) {
         let {name,desc,price,stock} = req.body
         let image = req.file
+        console.log(image);
         
         Product.create({name,desc,price,stock,image:image.cloudStoragePublicUrl})
         .then(product=>{
+            console.log('masuk');
+            
             res.status(201).json(product)
         })
-        .catch(next)
+        .catch(err=>{
+            console.log(err,'error nih');
+            next(err)
+            
+        })
     }
     static update(req,res,next) {
         let {name,desc,price,stock} = req.body
-        let image = req.file
+        // let image = req.file
         let {id} = req.params
         Product.updateOne({_id:id},{
-            name,desc,price,stock,image:image.cloudStoragePublicUrl
+            name,desc,price,stock
         })
         .then(product =>{
             res.status(200).json(product)

@@ -8,6 +8,8 @@ function authentication(req, res, next){
         let decodedToken = verifyToken(req.headers.token)
         req.loggedUser = decodedToken
         next()
+        console.log('masuk auth');
+        
     }
     catch(err) {
         next(err)
@@ -19,6 +21,8 @@ function adminAuthorization (req, res, next) {
         if(req.loggedUser.role !=='admin') {
             throw {statusCode: 401, msg: 'This page is for admin only'}
         } else {
+            console.log('masuk admin');
+            
             next()
         }
     }

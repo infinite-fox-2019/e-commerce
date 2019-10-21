@@ -1,22 +1,19 @@
 <template>
   <div id="app">
-    <div>
-      <navbar/>
-    </div>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-    </div> -->
     <router-view/>
 
   </div>
 </template>
 
 <script>
-import navbar from '../src/components/navbar'
+// import Home from '../src/views/Home'
+
 export default {
-  components: {
-    navbar
+  mounted () {
+    if (localStorage.getItem('token')) {
+      this.$store.commit('login')
+      this.$store.commit('setRole', localStorage.getItem('role'))
+    }
   }
 }
 </script>
@@ -28,6 +25,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  width: 100vw;
 }
 
 </style>

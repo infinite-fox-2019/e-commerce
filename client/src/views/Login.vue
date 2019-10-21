@@ -78,18 +78,18 @@ export default {
         .then(({ data }) => {
           Swal.fire('success', 'successfuly login', 'success')
           localStorage.setItem('token', data.token)
+          localStorage.setItem('role', data.role)
           this.$store.commit('login')
-          this.$store.commit('setRole',data.role)
-          this.$store.commit('userRole',data.role)
+          this.$store.commit('setRole', data.role)
+          this.$store.commit('userRole', data.role)
           this.$router.push('/')
         })
         .catch(err => {
-            console.log(err);
-            
+          console.log(err)
+
           Swal.fire('error', `${err.message}`, 'error')
         })
-    }
-    ,
+    },
     register () {
       axios({
         method: 'post',
@@ -99,9 +99,9 @@ export default {
         .then(({ data }) => {
           Swal.fire('success', 'successfully register', 'success')
           localStorage.setItem('token', data.token)
-        //   localStorage.setItem('role', data.role)
+          localStorage.setItem('role', data.role)
           this.$store.commit('login')
-          this.$store.commit('setRole',data.role)
+          this.$store.commit('setRole', data.role)
           this.$router.push('/')
         })
         .catch(err => {
