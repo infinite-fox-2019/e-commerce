@@ -2,7 +2,7 @@ const Cart = require('../models/cart')
 
 class CartController {
     static unpaid(req, res, next) {
-        Cart.findOne({ status: 'unpaid', user: req.decode.id })
+        Cart.findOne({ status: 'unpaid', user: req.decode.id }).populate('products')
             .then(cart => {
                 res.status(200).json(cart)
             })
@@ -34,15 +34,19 @@ class CartController {
     }
 
     static create(req, res, next) {
-        const { firstName, lastName, email, phone, product, province, zip } = req.body
+        const { products } = req.body
         Cart.findOne({ user: req.decode.id })
             .then(cart => {
-                if (cart.status == 'unpaid') {
-                    Cart.updateOne({ _id: cart._id }, {})
-                } else {
-                    Cart.create({ firstName, lastName, email, phone, product, province, zip })
+                if (!cart) {
+                    return Cart.create({ products, status: 'unpaid', user: req.decode.id })
+                } else if (cart.status == 'unpaid') {
+                    return Cart.findByIdAndUpdate(cart._id, { $push: { products } }, { new: true })
                 }
             })
+            .then(result => {
+                res.status(201).json(result)
+            })
+            .catch(next)
     }
 
     static update(req, res, next) {
