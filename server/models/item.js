@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const itemSchema = mongoose.Schema({
   name : {
     type : String,
-    required : [true, 'Title is required']
+    required : [true, 'Name is required']
   },
   featured_image:{
     type : String,
@@ -21,7 +21,7 @@ const itemSchema = mongoose.Schema({
   price : {
       type : Number,
       require : [true , 'Stock is required'],
-      min : [1000, 'minium item to sell is 5']
+      min : [1000, 'minium item price to sell is 1000']
   },
   tags : [{
     type: String
