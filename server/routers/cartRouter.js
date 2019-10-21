@@ -8,5 +8,6 @@ router.get('/', cartController.cartList)
 router.post('/', cartController.addToCart) //cart pertama
 router.get('/addItem', cartController.addOneItemToCart) //cart kedua
 router.get('/addAmount', cartController.addAmountToSameItem) //cart ketiga
+router.patch('/:productId', cartController.deleteItemFromCart)
 
 module.exports = router

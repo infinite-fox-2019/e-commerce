@@ -35,7 +35,7 @@ export default {
           sortable: true
         },
         {
-          key: 'stock',
+          key: 'amount',
           sortable: true
         },
         {
@@ -60,13 +60,19 @@ export default {
           Authorization: localStorage.getItem('token')
         }
       })
-        .then(({ data }) => {
-          // console.log(data)
+        .then(({ data }) => { 
           this.items = []
-          data.forEach(element => {
-            // this.items.push(element)
-            console.log(element.cart)
+          data.cart.forEach(element => {
+            console.log(element)
+            let cartData = {
+              amount:element.amount,
+              name: element.product.name,
+              price: element.product.price,
+              id:element._id
+            }
+            this.items.push(cartData)
           })
+          console.log(this.items)
         })
         .catch(err => {
           console.log(err.response)
@@ -75,15 +81,19 @@ export default {
     deleteCartData (id) {
       console.log(id)
       axios({
-        method: 'delete',
-        url: `http://localhost:3000/carts/${id}`
+        method: 'patch',
+        url: `http://localhost:3000/carts/${id}`,
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
       })
         .then(({ data }) => {
+          console.log(data)
           console.log('delete berhasil')
           this.fetchCartData()
         })
         .catch(err => {
-          console.log(err)
+          console.log(err.response)
         })
     }
   },

@@ -1,8 +1,10 @@
+ObjectId = require('mongodb').ObjectID;
 const Cart = require('../models/cart')
+const Product = require('../models/product')
 
 class CartController {
   static cartList(req,res,next){
-    Cart.find({user:req.loggedUser._id})
+    Cart.findOne({user:req.loggedUser._id})
     .populate('cart.product')
       .then(data => {
         res.status(200).json(data)
@@ -63,8 +65,10 @@ class CartController {
   }
 
   static deleteItemFromCart(req,res,next){
-    const {_id,productId} = req.params
-    Cart.update({_id}, {$pull:{cart:{product:productId}}})
+    const {productId} = req.params
+    console.log(ObjectId(productId));
+    const {_id} = req.loggedUser
+    Cart.updateOne({user:_id},{$pull:{cart:{_id:ObjectId(productId)}}})
       .then(data => {
         res.status(200).json(data)
       })
