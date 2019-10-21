@@ -7,16 +7,18 @@ http://gamestop.andreassosilo.co/
 
 ### On server
 ```javascript
+$ cd server
 $ npm install
 $ npm run dev
 ```
 
 ### On client
 ```javascript
+$ cd client
 $ npm install
-$ parcel index.html
+$ npm run serve
 ```
-Access client via `http://localhost:1234`
+Access client via `http://localhost:8080`
 
 Access server via `http://localhost:3000`
 
