@@ -1,0 +1,94 @@
+<template>
+  <div id="cartItemTable">
+    <b-row id="cartItem">
+      <b-col id="itemCol" cols="4">The Witcher 3: Wild Hunt</b-col>
+      <b-col id="priceCol" cols="3">Rp100.000</b-col>
+      <b-col id="quantityCol" cols="3">
+        Qty
+        <b-form-select id="qty" style="max-width: 50%"></b-form-select>
+      </b-col>
+      <b-col id="deleteCol" cols="2">
+        <b-button id="deleteItemButton" @click.prevent="showDeleteModal">Delete</b-button>
+      </b-col>
+    </b-row>
+
+    <b-row id="cartItem">
+      <b-col id="itemCol" cols="4">Persona 5</b-col>
+      <b-col id="priceCol" cols="3">Rp200.000</b-col>
+      <b-col id="quantityCol" cols="3">
+        Qty
+        <b-form-select id="qty" style="max-width: 50%"></b-form-select>
+      </b-col>
+      <b-col id="deleteCol" cols="2">
+        <b-button id="deleteItemButton">Delete</b-button>
+      </b-col>
+    </b-row>
+
+    <p id="totalPrice">Total price: Rp500.000</p>
+
+    <b-button id="checkoutButton">Checkout</b-button>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    showDeleteModal() {
+      this.$swal
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        })
+        .then(result => {
+          if (result.value) {
+            this.$swal.fire(
+              "Deleted!",
+              "Your file has been deleted.",
+              "success"
+            );
+          }
+        });
+    }
+  }
+};
+</script>
+
+<style scoped>
+#cartItemTable {
+  color: #ffffff;
+  font-family: Nunito;
+  margin: 10px;
+}
+
+#cartItem {
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#totalPrice {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+#deleteItemButton {
+  display: inline-block;
+  background-image: linear-gradient(to bottom right, #ff0000, #990000);
+  border: none;
+  box-shadow: 0px 10px 5px -5px #111;
+}
+
+#checkoutButton {
+  display: inline-block;
+  background-image: linear-gradient(to bottom right, #74d680, #378b29);
+  border: none;
+  box-shadow: 0px 10px 5px -5px #111;
+  margin-bottom: 50px;
+}
+</style>
