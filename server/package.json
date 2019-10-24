@@ -1,19 +1,17 @@
 {
-  "name": "gamestop-server",
+  "name": "server",
   "version": "1.0.0",
-  "description": "E-commerce GameStop Playstation 4 Game Shop",
+  "description": "E-commerce",
   "main": "app.js",
   "scripts": {
     "test": "NODE_ENV=test mocha --exit",
     "dev": "NODE_ENV=development nodemon app.js",
-    "start": "node app.js"
+    "start": "NODE_ENV=test node app.js"
   },
   "keywords": [
     "e-commerce",
     "cart",
-    "shop",
-    "playstation",
-    "game"
+    "shop"
   ],
   "author": "Andreas Sosilo",
   "license": "ISC",
@@ -23,7 +21,6 @@
     "dotenv": "^8.1.0",
     "eslint": "^6.4.0",
     "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-chai-expect": "^2.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",

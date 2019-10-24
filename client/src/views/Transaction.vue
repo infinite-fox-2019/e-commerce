@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import TransactionTable from '@/components/TransactionTable'
+import TransactionTable from "@/components/TransactionTable";
 export default {
   components: {
     TransactionTable
   }
-}
+};
 </script>
 
 <style>

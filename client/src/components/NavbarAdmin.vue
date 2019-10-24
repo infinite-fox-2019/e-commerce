@@ -43,24 +43,24 @@
 
 <script>
 export default {
-  created: function () {},
+  created: function() {},
   methods: {
-    logout () {
-      this.$swal.fire('Good job!', 'You clicked the button!', 'success')
-      if (localStorage.getItem('token')) {
-        localStorage.removeItem('token')
-        this.$store.commit('changeIsAdmin', false)
-        this.$store.commit('changeIsLogin', false)
+    logout() {
+      this.$swal.fire("Good job!", "You clicked the button!", "success");
+      if (localStorage.getItem("token")) {
+        localStorage.removeItem("token");
+        this.$store.commit("changeIsAdmin", false);
+        this.$store.commit("changeIsLogin", false);
         this.$swal.fire(
-          'Successfully logged out',
-          'Please clicked the button to continue!',
-          'success'
-        )
-        this.$router.push('/')
+          "Successfully logged out",
+          "Please clicked the button to continue!",
+          "success"
+        );
+        this.$router.push("/");
       }
     }
   }
-}
+};
 </script>
 
 <style>

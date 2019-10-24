@@ -13,23 +13,6 @@ Vue.use(VueSweetalert2)
 
 Vue.config.productionTip = false
 
-Vue.mixin({
-  methods: {
-    next ({ response: { status, data } }) {
-      let message = data
-      if (Array.isArray(data)) {
-        message = data.join('<br/>')
-      }
-      this.$swal({
-        type: 'error',
-        title: `Error: ${status}`,
-        html: message,
-        footer: '<a href>Why do I have this issue?</a>'
-      })
-    }
-  }
-})
-
 new Vue({
   store,
   router,

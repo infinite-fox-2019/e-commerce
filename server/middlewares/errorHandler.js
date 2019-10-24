@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (err, req, res, next) => {
-  // console.log(err)
+  console.log(err)
   let status = null
   let message = null
 

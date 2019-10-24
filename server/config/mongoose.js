@@ -3,9 +3,7 @@
 const mongoose = require('mongoose')
 
 const NODE_ENV = process.env.NODE_ENV
-
 let DATABASE_URL = process.env.ATLAS_CONNECT
-
 if (NODE_ENV === 'test') {
   DATABASE_URL = process.env.DATABASE_URL_TEST
 }

@@ -6,7 +6,7 @@ import Transaction from './views/Transaction.vue'
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import AddItem from './views/AddItem.vue'
-// import guards from './helpers/guards'
+import guards from './helpers/guards'
 
 Vue.use(Router)
 

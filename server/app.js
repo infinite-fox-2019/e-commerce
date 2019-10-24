@@ -6,9 +6,9 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 
 // Modules
 const express = require('express')
-const cors = require('cors')
 const router = require('./routes')
 const errorHandler = require('./middlewares/errorHandler')
+const cors = require('cors')
 const mongooseConnection = require('./config/mongoose')
 
 const app = express()

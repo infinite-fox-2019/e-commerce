@@ -59,24 +59,24 @@
 
 <script>
 // const url = "http://35.246.229.159";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  data: function () {
+  data: function() {
     return {
-      name: '',
-      email: '',
-      password: '',
-      errorMessage: '',
-      errorShow: 'hidden',
+      name: "",
+      email: "",
+      password: "",
+      errorMessage: "",
+      errorShow: "hidden",
       loading: false
-    }
+    };
   },
   methods: {
-    register: function () {
-      this.loading = true
+    register: function() {
+      this.loading = true;
       axios({
-        method: 'POST',
+        method: "POST",
         url: `${this.$store.state.baseUrl}/users/register`,
         data: {
           name: this.name,
@@ -86,43 +86,43 @@ export default {
       })
         .then(({ data }) => {
           this.$swal.fire(
-            'New account successfully created',
-            'Please clicked the button to close!',
-            'success'
-          )
-          localStorage.setItem('token', data.token)
-          console.log('User successfully registered')
-          console.log(data.name)
-          if (data.name === 'admin') {
-            this.$store.commit('changeIsAdmin', true)
+            "New account successfully created",
+            "Please clicked the button to close!",
+            "success"
+          );
+          localStorage.setItem("token", data.token);
+          console.log("User successfully registered");
+          console.log(data.name);
+          if (data.name === "admin") {
+            this.$store.commit("changeIsAdmin", true);
           } else {
-            this.$store.commit('changeIsAdmin', false)
+            this.$store.commit("changeIsAdmin", false);
           }
-          this.$store.commit('changeIsLogin', true)
-          this.$router.push('/')
+          this.$store.commit("changeIsLogin", true);
+          this.$router.push("/");
         })
         .catch(err => {
           if (err.response) {
-            this.errorMessage = err.response.data
+            this.errorMessage = err.response.data;
           } else if (err.request) {
-            this.errorMessage = 'No response from server'
+            this.errorMessage = "No response from server";
           }
-          this.errorShow = 'visible'
+          this.errorShow = "visible";
         })
         .finally(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
-    resetRegisterForm () {
-      this.name = ''
-      this.email = ''
-      this.password = ''
-      this.errorMessage = ''
-      this.errorShow = 'hidden'
-      this.loading = false
+    resetRegisterForm() {
+      this.name = "";
+      this.email = "";
+      this.password = "";
+      this.errorMessage = "";
+      this.errorShow = "hidden";
+      this.loading = false;
     }
   }
-}
+};
 </script>
 
 <style scoped>

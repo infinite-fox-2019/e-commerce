@@ -30,8 +30,8 @@
 </template>
 
 <script>
-// import axios from 'axios'
-// import errorHandler from '@/helpers/errorHandler'
+import axios from "axios";
+import errorHandler from "@/helpers/errorHandler";
 export default {
   created: function() {
     this.isAdmin = this.$store.state.isAdmin;
@@ -74,8 +74,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Nunito:400,700|Rubik:400,700&display=swap");
-
 #itemCard {
   width: 20rem;
   font-family: Nunito;

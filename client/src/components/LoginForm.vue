@@ -47,24 +47,24 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 // const url = "http://35.246.229.159";
 
 export default {
-  data: function () {
+  data: function() {
     return {
-      email: '',
-      password: '',
-      errorMessage: '',
-      errorShow: 'hidden',
+      email: "",
+      password: "",
+      errorMessage: "",
+      errorShow: "hidden",
       loading: false
-    }
+    };
   },
   methods: {
-    login: function () {
-      this.loading = true
+    login: function() {
+      this.loading = true;
       axios({
-        method: 'POST',
+        method: "POST",
         url: `${this.$store.state.baseUrl}/users/login`,
         data: {
           email: this.email,
@@ -72,44 +72,44 @@ export default {
         }
       })
         .then(({ data }) => {
-          localStorage.setItem('token', data.token)
-          this.resetLoginForm()
+          localStorage.setItem("token", data.token);
+          this.resetLoginForm();
           this.$swal.fire(
-            'Successfully signed in',
-            'Please clicked the button to close!',
-            'success'
-          )
-          console.log('User successfully signed in')
-          console.log(data.user.name)
-          if (data.user.name === 'admin') {
-            this.$store.commit('changeIsAdmin', true)
+            "Successfully signed in",
+            "Please clicked the button to close!",
+            "success"
+          );
+          console.log("User successfully signed in");
+          console.log(data.user.name);
+          if (data.user.name === "admin") {
+            this.$store.commit("changeIsAdmin", true);
           } else {
-            this.$store.commit('changeIsAdmin', false)
+            this.$store.commit("changeIsAdmin", false);
           }
-          this.$store.commit('changeIsLogin', true)
-          this.$router.push('/')
+          this.$store.commit("changeIsLogin", true);
+          this.$router.push("/");
         })
         .catch(err => {
           if (err.response) {
-            this.errorMessage = err.response.data
+            this.errorMessage = err.response.data;
           } else if (err.request) {
-            this.errorMessage = 'No response from server side'
+            this.errorMessage = "No response from server side";
           }
-          this.errorShow = 'visible'
+          this.errorShow = "visible";
         })
         .finally(() => {
-          this.loading = false
-        })
+          this.loading = false;
+        });
     },
-    resetLoginForm () {
-      this.email = ''
-      this.password = ''
-      this.errorMessage = ''
-      this.errorShow = 'hidden'
-      this.loading = false
+    resetLoginForm() {
+      this.email = "";
+      this.password = "";
+      this.errorMessage = "";
+      this.errorShow = "hidden";
+      this.loading = false;
     }
   }
-}
+};
 </script>
 
 <style scoped>

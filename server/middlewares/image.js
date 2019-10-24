@@ -44,12 +44,12 @@ const deleteFile = (url) => {
   }
   const deleteFile = url
   const filename = deleteFile.replace(/(https:\/\/storage.googleapis.com\/playstation-e-commerce-image\/)/, '')
-  console.log('File successfully deleted')
 
-  return storage
+  storage
     .bucket(GOOGLE_CLOUD_BUCKET)
     .file(filename)
     .delete()
+  console.log('File successfully deleted')
 }
 const Multer = require('multer')
 const multer = Multer({

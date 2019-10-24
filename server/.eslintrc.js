@@ -6,11 +6,7 @@ module.exports = {
     node: true
   },
   extends: [
-    'standard',
-    ''
-  ],
-  plugins: [
-    "chai-expect"
+    'standard'
   ],
   globals: {
     Atomics: 'readonly',
@@ -20,7 +16,5 @@ module.exports = {
     ecmaVersion: 2018
   },
   rules: {
-    "chai-expect/missing-assertion": 2,
-    "chai-expect/terminating-properties": 1
   }
 }

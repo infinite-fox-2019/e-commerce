@@ -2,7 +2,7 @@
   <div id="app">
     <NavbarUser v-if="this.$store.state.isAdmin === false" />
     <NavbarAdmin v-else-if="this.$store.state.isAdmin === true" />
-    <Carousel />
+    <Jumbotron />
     <router-view />
   </div>
 </template>
@@ -10,7 +10,7 @@
 <script>
 import NavbarUser from "@/components/NavbarUser";
 import NavbarAdmin from "@/components/NavbarAdmin";
-import Carousel from "@/components/Carousel";
+import Jumbotron from "@/components/Jumbotron";
 
 export default {
   data: function() {
@@ -19,7 +19,7 @@ export default {
   components: {
     NavbarUser,
     NavbarAdmin,
-    Carousel
+    Jumbotron
   }
 };
 </script>
