@@ -15,7 +15,10 @@
             <tbody>
               <tr v-for="(transaction, index) in transactions" :key="index">
                 <th scope="row">{{ index + 1 }}</th>
-                <td>{{ new Date(transaction.createdAt).toDateString() }}</td>
+                <td>
+                  {{ new Date(transaction.createdAt).toDateString() }} /
+                  {{ transaction._id }}
+                </td>
                 <td class="text-warning">{{ transaction.status }}</td>
               </tr>
             </tbody>

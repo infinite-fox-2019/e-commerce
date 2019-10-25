@@ -4,7 +4,10 @@
       <navbar />
       <div class="row pt-5">
         <div class="col-md-12">
-          <h4>Transaction : {{ new Date(transaction.createdAt) }}</h4>
+          <h4>
+            Transaction : {{ new Date(transaction.createdAt).toDateString() }} /
+            {{ transaction._id }}
+          </h4>
           <table class="table">
             <thead class="bg-primary text-white">
               <tr>

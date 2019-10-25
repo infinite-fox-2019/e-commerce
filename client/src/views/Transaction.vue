@@ -20,8 +20,10 @@
                   <a
                     @click.prevent="transactionDetail(transaction._id)"
                     href="#"
-                    >{{ new Date(transaction.createdAt) }}</a
                   >
+                    {{ new Date(transaction.createdAt).toDateString() }} /
+                    {{ transaction._id }}
+                  </a>
                 </td>
                 <td class="text-warning">{{ transaction.status }}</td>
                 <td>
