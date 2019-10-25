@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const host = process.env.VUE_APP_HOST_URL
+const host = "https://visual-novel-api.crowfx.xyz"
 
 
 export default axios.create({
