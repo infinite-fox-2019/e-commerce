@@ -48,7 +48,7 @@ class ProductController {
             description: req.body.description,
             stock: req.body.stock,
             price: req.body.price,
-            createdAt: new Date()
+            image: req.body.image
         }
 
         Product.findByIdAndUpdate(id, updatedData)

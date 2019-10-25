@@ -1,27 +1,5 @@
 <template>
-  <div id="card-product">
 
-    <b-card
-        :title="productfromhome.name"
-        :img-src="productfromhome.image"
-        img-alt="Image"
-        img-top
-        tag="article"
-        style="max-width: 20rem;"
-        class="mb-2 product-card"
-    >
-
-    <b-card-text>
-        <strong>Condition: </strong>{{productfromhome.description}} <br>
-        <strong>Price: </strong>{{'$' + productfromhome.price}} <br>
-        <strong>Stock: </strong>{{productfromhome.stock}}
-    </b-card-text>
-
-    <b-button @click="updateCart(productfromhome.name, productfromhome.price, productfromhome.image)" v-if="!isAdmin" class="b" href="#" variant="success">Buy</b-button>
-    <b-button @click="deleteProduct(productfromhome._id)" v-if=" isAdmin" class="b" href="#" variant="danger">Delete</b-button>
-    </b-card>
-
-  </div>
 </template>
 
 <script>
@@ -43,7 +21,7 @@ export default {
       }
     }
   },
-  props: ['productfromhome', 'getProducts', 'deleteProduct'],
+  props: ['productfromhome', 'getProducts', 'deleteProduct', 'editProduct'],
   methods: {
     updateCart(productName, productPrice, productImage) {
       axios({

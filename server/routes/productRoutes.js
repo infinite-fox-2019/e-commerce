@@ -8,7 +8,7 @@ router.post('/', isLogin, isAdmin, productController.create)
 router.get('/', productController.displayAll)
 router.get('/:id', productController.displayForCategory)
 router.get('/search/:keyword', productController.searchProduct)
-router.put('/', productController.update)
+router.put('/:id', productController.update)
 router.delete('/:id', isLogin, isAdmin, productController.delete)
 
 module.exports = router

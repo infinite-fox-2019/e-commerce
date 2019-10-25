@@ -58,7 +58,7 @@ class UserController {
                     const token = generateToken(data)
                     res.status(200).json({token, data})
                 } else {
-                    throw {
+                    throw { 
                         message: 'Wrong username or password',
                         statusCode: 401
                     }

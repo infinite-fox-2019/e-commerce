@@ -1,11 +1,31 @@
 <template>
   <div id="app">
-       <router-view />
+       <router-view :checktoken="checktoken" />
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 export default {
+computed: {
+  ...mapState([
+      'isLogin',
+  ])
+},
+methods: {
+  checktoken () {
+    let token = localStorage.getItem('token');
+    if (token) {
+        this.changeIsLogin(true);
+    } else {
+        this.changeIsLogin(false);
+    }
+  },
+    ...mapActions([
+      'changeIsLogin'
+    ])
+  }
 }
 </script>
 

@@ -39,12 +39,50 @@
             </div>
           </center>
 
-          <div id="products">
+          <div v-if="!onEditProduct && !onAddProduct && !onCart" id="products">
             <div id="product" v-for="(product, index) in fetchData" :key="index">
-              <Product :deleteProduct="deleteProduct" :getProducts="getProducts" v-if="!onCart && !onAddProduct && !onEditProduct && !checkout" :checkAdmin="checkAdmin" :productfromhome="product"/>
-            </div>
-          </div>
+                <div id="card-product">
+                  <b-card
+                      :title="product.name"
+                      :img-src="product.image"
+                      img-alt="Image"
+                      img-top
+                      tag="article"
+                      style="max-width: 20rem;"
+                      class="mb-2 product-card"
+                  >
 
+                  <b-card-text>
+                      <strong>Condition: </strong>{{product.description}} <br>
+                      <strong>Price: </strong>{{'$' + product.price}} <br>
+                      <strong>Stock: </strong>{{product.stock}}
+                  </b-card-text>
+
+                  <b-button @click="updateCart(product.name, product.price, product.image)" v-if="!isAdmin" class="b" href="#" variant="success">Buy</b-button>
+                  <b-button @click="editProduct(product)" v-if=" isAdmin" class="b" href="#" variant="primary">Edit</b-button>
+                  <b-button @click="deleteProduct(product._id)" v-if=" isAdmin" class="b" href="#" variant="danger">Delete</b-button>
+                  </b-card>
+                </div>
+            </div>
+            </div>
+            
+          <center>
+            <div v-if="onEditProduct" id="addProduct">
+                  <h6> Name:</h6>
+                  <input v-model="editProducts.name" type="textarea"><br><br>
+                  <h6> Description:</h6>
+                  <input v-model="editProducts.description" type="textarea"><br><br>
+                  <h6> Stock:</h6>
+                  <input v-model="editProducts.stock" type="textarea"><br><br>
+                  <h6> Price:</h6>
+                  <input v-model="editProducts.price" type="textarea"><br><br>
+                  <h6> Image:</h6>
+                  <b-form-group label="" label-for="file-default" label-cols-sm="2">
+                      <b-form-file v-on:change="getImageForProduct($event)" v-model="editProducts.image" id="file-default"></b-form-file>
+                  </b-form-group>
+                  <b-button @click="updateProduct(editProducts.id)" variant="success">Submit</b-button>
+            </div>
+          </center>
           <div id="carts">
             <div id="cart" v-for="(cartProduct, index) in cartData" :key="index">
               <center><Cart v-if="onCart && !checkout" :getCart="getCart" :cartfromhome="cartProduct" /></center>
@@ -70,7 +108,10 @@ import Category from '../components/Category.vue'
 import Product from '../components/Product.vue'
 import Cart from '../components/Cart.vue'
 import Transaction from '../components/Transaction.vue'
+import editModal from '../components/editModal.vue'
 import Swal from 'sweetalert2'
+import { mapState, mapActions } from 'vuex';
+
 export default {
   name: 'home',
   components: {
@@ -78,7 +119,8 @@ export default {
     Category,
     Product,
     Cart,
-    Transaction
+    Transaction,
+    editModal
   },
   data () {
     return {
@@ -89,6 +131,13 @@ export default {
           price: '',
           image: ''
       },
+      editProducts: {
+          id: '',
+          name: '',
+          description: '',
+          stock: '',
+          price: ''
+      },
       cartData: [],
       file: null,
       fetchData: [],
@@ -96,6 +145,7 @@ export default {
       isAdmin: false,
       onCart: false,
       onAddProduct: false,
+      onEditProduct: false,
       checkout: false,
       userEmail: localStorage.getItem('email'),
       totalprice: 0,
@@ -106,7 +156,23 @@ export default {
       finished: false
     }
   },
+  props: ['checktoken'],
+  computed: {
+    ...mapState([
+        'isLogin'
+    ])
+  },
   methods: {
+    editProduct(product) {
+      this.editProducts.id = product._id
+      this.editProducts.name = product.name
+      this.editProducts.description = product.description
+      this.editProducts.stock = product.stock
+      this.editProducts.price = product.price
+      this.onEditProduct = true
+      this.onCart = false
+      this.onAddProduct = false
+    },
     displayTransaction() {
       this.checkout = true
     },
@@ -141,6 +207,9 @@ export default {
         this.isAdmin = true
       }
     },
+    ...mapActions([
+      'changeIsLogin'
+    ]),
     deleteProduct(id) {
       const token = localStorage.getItem('token')
       axios({
@@ -182,17 +251,23 @@ export default {
           this.checkout = false
         })
         .catch(err => {
-          console.log(err)
+          Swal.fire({
+            type: 'error',
+            title: 'Oops...',
+            text: 'You have to login first!'
+          })
         })
     },
     displayAddProduct () {
         this.onCart = false
         this.onAddProduct = true
+        this.onEditProduct = false
     },
     addProduct () {
       const token = localStorage.getItem('token')
       let formData = new FormData();
       formData.append('image', this.product.image);
+
       axios.post(`http://localhost:3000/img/upload`, formData, {})
         .then((image) => {
           axios({
@@ -218,6 +293,39 @@ export default {
                   this.product.stock = ''
                   this.product.price = ''
                   this.product.image = ''
+                  this.getProducts()
+              })
+              .catch(err => {
+                console.log(err)
+              })
+            
+        })
+    },
+    updateProduct(id) {
+      const token = localStorage.getItem('token')
+      let formData = new FormData();
+      formData.append('image', this.product.image);
+
+      axios.post(`http://localhost:3000/img/upload`, formData, {})
+        .then((image) => {
+          axios({
+              method: 'put',
+              url: `http://localhost:3000/products/${id}`,
+              data: {
+                  name: this.editProducts.name,
+                  description: this.editProducts.description,
+                  stock: this.editProducts.stock,
+                  price: this.editProducts.price,
+                  image: image.data.link
+              },
+              headers: {token}
+          })
+              .then(({data}) => {
+                  Swal.fire(
+                    'Product Updated',
+                    `Success`,
+                    'success'
+                  )
                   this.getProducts()
               })
               .catch(err => {
@@ -286,6 +394,7 @@ export default {
     }
   },
   created () {
+    this.checktoken()
     this.getProducts()
     this.getCategories()
     this.checkAdmin()
@@ -341,7 +450,7 @@ export default {
 .color-block {
   background-color: #ffa500;
   height: 30px;
-  width: 86px;
+  width: 41px;
   margin-left: 10px;
   border-radius: 2px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -364,8 +473,10 @@ h5 {
 h4 {
   color:#ffa500;
 }
+
 .card-title {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 17px !important;
+  color: black !important;
 }
 </style>

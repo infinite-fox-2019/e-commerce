@@ -17,8 +17,8 @@
             <b-nav-form @submit.prevent="getProperProducts()">
             <b-form-input size="sm" class="mr-sm-2" v-model="searchInput" placeholder="Search"></b-form-input>
             <b-button size="sm" class="my-2 my-sm-0 buttons" type="submit">Search</b-button>
-            <b-button @click="getCart()" v-if="!isAdmin" class="buttons" variant="info"><strong>Cart</strong></b-button>
-            <b-button @click="displayTransaction" v-if="!isAdmin && transNav" class="buttons" variant="primary"><strong>Transaction</strong></b-button>
+            <b-button @click="getCart()" v-if="!isAdmin" class="buttons" variant="info"><i class="fas fa-shopping-cart"></i> <strong>Cart</strong></b-button>
+            <b-button @click="displayTransaction" v-if="!isAdmin && isLogin && transNav" class="buttons" variant="primary"><strong>Transaction</strong></b-button>
             <b-button @click="logout()" v-if="isLogin" class="buttons" variant="warning"><strong>Logout</strong></b-button>
             </b-nav-form>
 
@@ -32,24 +32,24 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'navbar',
-  props: ['search', 'getProducts', 'getCart', 'onCart', 'checkAdmin', 'isAdmin', 'updateTransaction', 'checkout', 'displayTransaction', 'transNav'],
+  props: ['checktoken', 'search', 'getProducts', 'getCart', 'onCart', 'checkAdmin', 'isAdmin', 'updateTransaction', 'checkout', 'displayTransaction', 'transNav'],
   data () {
     return {
       searchInput: '',
-      searchedData: [],
-      isLogin: false
+      searchedData: []
     }
   },
+  computed: {
+  ...mapState([
+      'isLogin',
+  ])
+  },
+  
   methods: {
-    checkToken () {
-      let token = localStorage.getItem('token');
-      if (token) {
-        this.isLogin = true;
-      } 
-    },
     logout () {
       this.$router.push('/login')
       localStorage.removeItem('token')
@@ -70,7 +70,7 @@ export default {
     }
   },
   created () {
-    this.checkToken()
+    this.checktoken()
   }
 
 }
