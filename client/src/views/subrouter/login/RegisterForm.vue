@@ -69,7 +69,7 @@ export default {
             this.$awn.asyncBlock(
                 this.$store.dispatch("user/register", payload),
                 () => {
-                    this.$router.push("home");
+                    this.$router.push("/");
                     this.$awn.success("User Registered");
                 },
                 this.next,

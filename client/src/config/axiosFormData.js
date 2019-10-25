@@ -1,7 +1,9 @@
 import axios from 'axios'
 
-const host = 'http://192.168.0.100:3000'
+// const host = 'http://192.168.0.100:3000'
 // const host = 'http://localhost:3000'
+const host = 'http://visual-novel-api.crowfx.xyz'
+
 
 export default axios.create({
     baseURL: host,
