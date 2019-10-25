@@ -1,4 +1,5 @@
 const Transaction = require('../models/transaction');
+const Product = require('../models/product');
 
 class TransactionController {
     static find (req, res, next){
@@ -22,6 +23,11 @@ class TransactionController {
     }
     static create (req, res, next){
         const {price, items} = req.body
+        let ids = []
+        items.forEach(item => {
+            ids.push({id: item.id._id, qty: item.qty})
+        });
+        console.log(ids);
         const user = req.loggedUser.id
         Transaction.create({
             price, 
@@ -30,7 +36,24 @@ class TransactionController {
         })
             .then(transaction=>{
                 // console.log(transaction);
-                res.status(201).json(transaction)
+                let promises = []
+
+                ids.forEach(id=>{
+                    promises.push(Product.findById(id.id))
+                })
+                return Promise.all(promises)
+            })
+            .then(products =>{
+                console.log(products);
+                let promises = []
+                products.forEach((product, index) => {
+                    product.stock -= ids[index].qty 
+                    promises.push( product.save() )
+                })
+                return Promise.all(promises)
+            })
+            .then(response=>{
+                res.status(201).json({message: 'success create transaction'})
                 next()
             })
             .catch(next)

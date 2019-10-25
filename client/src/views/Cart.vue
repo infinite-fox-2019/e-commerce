@@ -41,7 +41,6 @@
 export default {
   created () {
     this.$store.dispatch('getCart')
-    console.log(this.$store.state.cart)
   },
   computed: {
     totalPrice () {
@@ -58,10 +57,10 @@ export default {
   },
   methods: {
     checkout () {
-      return this.$store.dispatch('checkout', { price: this.totalPrice })
+      this.$store.dispatch('checkout', { price: this.totalPrice })
     },
     deleteFromCart (id) {
-      return this.$store.dispatch('deleteFromCart', { id })
+      this.$store.dispatch('deleteFromCart', { id })
     }
   }
 }

@@ -76,7 +76,7 @@ export default {
           next = 'finished'
       }
       this.$store.dispatch('updateTransaction', { id: obj.id, status: next })
-      this.$store.dispatch('getTransaction')
+      // this.$store.dispatch('getTransaction')
     }
   }
 }

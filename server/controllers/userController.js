@@ -59,7 +59,7 @@ class UserController {
     }
     static checkout(req, res, next) {
         const cart = []
-        User.Update({ _id: req.loggedUser.id }, { $set: { cart } })
+        User.update({ _id: req.loggedUser.id }, { $set: { cart } })
             .then(reponse=> {
                 res.status(200).json({ message: 'Successfully checkout from cart' })
             })

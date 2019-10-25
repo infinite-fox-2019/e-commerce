@@ -47,6 +47,7 @@ export default {
           console.log(this.$route.params.id, qty)
           this.$store.commit('ADD_TO_CART', { id: this.$route.params.id, qty })
           this.$store.dispatch('updateCart')
+          this.$router.push('/user/cart')
         } else {
           alert('quantity must be minimum of 1!')
         }

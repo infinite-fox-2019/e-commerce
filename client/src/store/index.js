@@ -175,6 +175,7 @@ export default new Vuex.Store({
         data: { status: payload.status }
       })
         .then(({ data }) => {
+          context.dispatch('getTransaction')
           console.log(data)
         })
         .catch(({ response }) => {
