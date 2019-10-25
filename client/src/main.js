@@ -18,10 +18,10 @@ Vue.prototype.Swal = Swal;
 Vue.prototype.axios = axios;
 
 // development
-Vue.prototype.baseURL = "http://localhost:3000";
+// Vue.prototype.baseURL = "http://localhost:3000";
 
 // production
-// Vue.prototype.baseURL = "http://34.87.112.227";
+Vue.prototype.baseURL = "http://34.87.112.227";
 
 Vue.config.productionTip = false;
 

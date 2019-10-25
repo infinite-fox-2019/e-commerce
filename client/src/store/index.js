@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 // import router from "./router";
 import axios from "axios";
-const server = "http://localhost:3000";
+const server = "http://34.87.112.227";
 
 Vue.use(Vuex);
 

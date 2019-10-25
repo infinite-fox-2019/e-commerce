@@ -16,6 +16,13 @@
         >
           <i class="fa fa-money" style="width: 20px"></i>
         </button>
+        <button
+          v-if="isAdmin"
+          @click="$router.push('/transaction/all')"
+          class="btn btn-primary btn-sm ml-2"
+        >
+          <i class="fa fa-money" style="width: 20px"></i>
+        </button>
       </div>
       <a @click.prevent="$router.push('/home/list')" href="/home">
         <img class="img-logo-home" src="@/assets/logo.png" alt />

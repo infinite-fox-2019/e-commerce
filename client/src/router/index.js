@@ -6,6 +6,7 @@ import Landing from "@/views/Landing.vue";
 import Home from "@/views/Home.vue";
 import Cart from "@/views/Cart.vue";
 import Transaction from "@/views/Transaction.vue";
+import TransactionAll from "@/views/TransactionAll.vue";
 import TransactionDetail from "@/views/TransactionDetail.vue";
 import Register from "@/views/Register.vue";
 import Login from "@/views/Login.vue";
@@ -56,6 +57,15 @@ export default new Router({
       component: Cart,
       beforeEnter: (to, from, next) => {
         if (store.state.token === null) next("/login");
+        else next();
+      }
+    },
+    {
+      path: "/transaction/all",
+      name: "transaction-all",
+      component: TransactionAll,
+      beforeEnter: (to, from, next) => {
+        if (store.state.isAdmin === false) next("/");
         else next();
       }
     },
