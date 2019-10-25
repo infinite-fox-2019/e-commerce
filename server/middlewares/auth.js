@@ -9,7 +9,7 @@ module.exports = {
             req.loggedUser = decode
             next()
         } catch (err) {
-            next(err)
+            next(err)   
         }
     },
     isAdmin(req, res, next) {
@@ -20,10 +20,14 @@ module.exports = {
         }
     },
     authorize(req,res,next){
-        const {id} = req.params
-        Transaction.findById(id)
-        .then(transaction=>{
-            console.log(transaction.user._id, '==', req.loggedUser.id );
+        if(req.loggedUser.role === 'admin') {
+            next()
+        } else {
+
+            const {id} = req.params
+            Transaction.findById(id)
+            .then(transaction=>{
+                console.log(transaction.user._id, '==', req.loggedUser.id );
                 if(transaction.user._id.toString() === req.loggedUser.id){
                     next()
                 } else {
@@ -31,5 +35,6 @@ module.exports = {
                 }
             })
             .catch(next)
+        }
     }
 }

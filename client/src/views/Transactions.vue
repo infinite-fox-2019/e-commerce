@@ -13,9 +13,11 @@
           </div>
         </div>
         <div>Price: $ {{ transaction.price }}</div>
+        <div>{{new Date(transaction.createdAt).toDateString() }}</div>
         <div>Status: {{ transaction.status }}</div>
         <div>
-           <button class="bg-black hover:bg-gray-800 text-white hover:text-gray-100 border hover:border-white p-2" @click.prevent="updateTransaction({ status: transaction.status, id: transaction._id })">{{ update(transaction.status) }}</button>
+           <button v-if="role==='user'" class="text-blue-500 hover:text-gray-900" @click.prevent="updateTransaction({ status: transaction.status, id: transaction._id })">{{ updateUser(transaction.status) }}</button>
+           <button v-if="role==='admin'" class="text-blue-500 hover:text-gray-900" @click.prevent="updateTransaction({ status: transaction.status, id: transaction._id })">{{ updateAdmin(transaction.status) }}</button>
         </div>
       </div>
     </div>
@@ -23,24 +25,36 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
+  data () {
+    return {
+      action: ''
+    }
+  },
   created () {
     this.$store.dispatch('getTransaction')
   },
   computed: {
-    transactions () {
-      return this.$store.state.transactions
-    }
+    ...mapState(['transactions', 'role'])
   },
   methods: {
-    update (status) {
+    updateAdmin (status) {
+      switch (status) {
+        case 'paid':
+          return 'Send'
+        case 'confirmed':
+          return 'Finish'
+        case 'finished':
+          return 'Finished'
+      }
+    },
+    updateUser (status) {
       switch (status) {
         case 'pending':
           return 'Pay'
-        case 'paid':
-          return 'Confirm Payment'
-        case 'confirmed':
-          return 'Finish'
+        case 'sent':
+          return 'Confirm'
       }
     },
     updateTransaction (obj) {
@@ -50,13 +64,19 @@ export default {
           next = 'paid'
           break
         case 'paid':
+          next = 'sent'
+          break
+        case 'sent':
           next = 'confirmed'
           break
         case 'confirmed':
           next = 'finished'
           break
+        case 'finished':
+          next = 'finished'
       }
       this.$store.dispatch('updateTransaction', { id: obj.id, status: next })
+      this.$store.dispatch('getTransaction')
     }
   }
 }

@@ -21,6 +21,30 @@ export default {
       this.$store.dispatch('logout')
       this.$router.push('/')
     }
+  },
+  created () {
+    this.$store.dispatch('verifyToken')
+      .then(({ data }) => {
+        this.$store.commit('UPDATE_LOGIN', true)
+        let role = localStorage.getItem('role')
+        console.log('role==================', role)
+        this.$store.commit('UPDATE_ROLE', role)
+        this.$router.push('/products')
+      })
+      .catch(({ response }) => {
+        console.log(response.data)
+        this.$store.dispatch('logout')
+      })
+  },
+  computed: {
+    role () {
+      return this.$store.state.role
+    }
+  },
+  watch: {
+    role () {
+      console.log(this.role, 'kepanggil')
+    }
   }
 }
 </script>

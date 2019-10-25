@@ -15,12 +15,14 @@ class UserController {
             .catch(next)
     }
     static login(req, res, next) {
-        const { email, password } = req.body;
+        const { email, password } = req.body
+        console.log(email, password, 'CONTROLLER');
         User.findOne({ email })
             .then(user => {
+                console.log(user);
                 if (user && compare(password, user.password)) {
                     const token = generateToken({ id: user._id, role: user.role })
-                    res.status(200).json({ token })
+                    res.status(200).json({ token, role: user.role })
                 } else {
                     res.status(400).json({ message: 'Wrong email/password' })
                 }
@@ -57,8 +59,8 @@ class UserController {
     }
     static checkout(req, res, next) {
         const cart = []
-        User.update({ _id: req.loggedUser.id }, { $set: { cart } })
-            .then(response => {
+        User.Update({ _id: req.loggedUser.id }, { $set: { cart } })
+            .then(reponse=> {
                 res.status(200).json({ message: 'Successfully checkout from cart' })
             })
             .catch(next)
@@ -66,27 +68,11 @@ class UserController {
     static deleteFromCart (req, res, next) {
         const { id } = req.params
         const userId = req.loggedUser.id
-        let qty
-        let productId
-        User.findById(userId).populate('cart.id')
-            .then(user=>{
-                user.cart.forEach(cart=>{
-                    if(cart._id.toString()==id){
-                        qty = Number(cart.qty)
-                        productId = cart.id
-                    }
-                })
-                return Product.findById(productId)
-            })
-            .then(product=>{
-                product.stock += qty
-                product.save()
-                return User.findByIdAndUpdate(userId, { $pull: { cart: { _id: id } } })
-            })
-            .then(response=>{
-                res.status(200).json({ message:'Successfully deleted item from cart'})
-            })
-            .catch(next)
+        User.findByIdAndUpdate(userId, { $pull: { cart: { _id: id } } })
+        .then(response=>{
+            res.status(200).json({ message:'Successfully deleted item from cart'})
+        })
+        .catch(next)
     }
 }
 

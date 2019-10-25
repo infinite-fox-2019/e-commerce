@@ -2,11 +2,12 @@ const Transaction = require('../models/transaction');
 
 class TransactionController {
     static find (req, res, next){
-        let objParams = { user: req.loggedUser.id }
-        console.log(objParams);
-        Transaction.find(objParams).populate(['user', 'items.id'])
+        let objParams
+        if(req.loggedUser.role === 'user') objParams = { user: req.loggedUser.id }
+        // console.log(objParams);
+        Transaction.find(objParams).populate('user').populate('items.id').sort({createdAt: -1})
             .then(transactions=>{
-                console.log(transactions);
+                // console.log(transactions);
                 res.status(200).json(transactions)
             })
             .catch(next)
@@ -28,7 +29,7 @@ class TransactionController {
             user
         })
             .then(transaction=>{
-                console.log(transaction);
+                // console.log(transaction);
                 res.status(201).json(transaction)
                 next()
             })

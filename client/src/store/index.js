@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router/index'
 const server = 'http://localhost:3000'
-let token = localStorage.getItem('token')
 
 Vue.use(Vuex)
 
@@ -12,12 +12,14 @@ export default new Vuex.Store({
     product: {},
     cart: [],
     transactions: [],
-    user: { role: '' },
+    role: '',
     isLogin: false
   },
   mutations: {
     GET_PRODUCTS (state, products) {
+      console.log(state.role, '<<', products)
       state.products = products
+      console.log(state.role, 'terbaru')
     },
     GET_PRODUCT_DETAIL (state, product) {
       state.product = product
@@ -33,6 +35,10 @@ export default new Vuex.Store({
     },
     UPDATE_LOGIN (state, payload) {
       state.isLogin = payload
+    },
+    UPDATE_ROLE (state, payload) {
+      console.log(payload, typeof payload, 'masuk mutation')
+      state.role = payload
     }
   },
   actions: {
@@ -44,9 +50,15 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           localStorage.setItem('token', data.token)
+          localStorage.setItem('role', data.role)
           context.commit('UPDATE_LOGIN', true)
+          context.commit('UPDATE_ROLE', data.role)
+          router.push('/products')
         })
-        .catch(console.log)
+        .catch(({ response }) => {
+          console.log(response.data)
+          router.push('/')
+        })
     },
     register (context, payload) {
       axios({
@@ -60,15 +72,24 @@ export default new Vuex.Store({
     },
     logout (context) {
       localStorage.removeItem('token')
+      localStorage.removeItem('role')
       context.commit('UPDATE_LOGIN', false)
+    },
+    verifyToken (context) {
+      return axios({
+        method: 'GET',
+        url: `${server}/users/verify`,
+        headers: { token: localStorage.getItem('token') }
+      })
     },
     fetchProducts (context) {
       axios({
         method: 'GET',
         url: `${server}/products`,
-        headers: { token }
+        headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
+          console.log('dispatch prducts')
           context.commit('GET_PRODUCTS', data)
         })
         .catch(console.log)
@@ -77,7 +98,7 @@ export default new Vuex.Store({
       axios({
         method: 'GET',
         url: `${server}/products/${payload.id}`,
-        headers: { token }
+        headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
           context.commit('GET_PRODUCT_DETAIL', data)
@@ -89,7 +110,7 @@ export default new Vuex.Store({
         method: 'PATCH',
         url: `${server}/users/cart`,
         data: { cart: this.state.cart },
-        headers: { token }
+        headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
           console.log(data, 'abis update (user)')
@@ -103,7 +124,7 @@ export default new Vuex.Store({
       axios({
         method: 'GET',
         url: `${server}/users/cart`,
-        headers: { token }
+        headers: { token: localStorage.getItem('token') }
       })
         .then(({ data }) => {
           context.commit('GET_CART', data.cart)
@@ -116,7 +137,7 @@ export default new Vuex.Store({
       axios({
         method: 'DELETE',
         url: `${server}/users/cart/${payload.id}`,
-        headers: { token }
+        headers: { token: localStorage.getItem('token') }
       })
         .then(() => {
           context.dispatch('getCart')
@@ -127,7 +148,7 @@ export default new Vuex.Store({
       axios({
         url: `${server}/transactions`,
         method: 'POST',
-        headers: { token },
+        headers: { token: localStorage.getItem('token') },
         data: { price: payload.price, items: this.state.cart }
       })
         .then(({ data }) => {
@@ -139,7 +160,7 @@ export default new Vuex.Store({
       axios({
         url: `${server}/transactions`,
         method: 'GET',
-        headers: { token }
+        headers: { token: localStorage.getItem('token'), role: localStorage.getItem('role') }
       })
         .then(({ data }) => {
           context.commit('UPDATE_TRANSACTION', data)
@@ -150,13 +171,15 @@ export default new Vuex.Store({
       axios({
         url: `${server}/transactions/${payload.id}`,
         method: 'PATCH',
-        headers: { token },
+        headers: { token: localStorage.getItem('token') },
         data: { status: payload.status }
       })
         .then(({ data }) => {
           console.log(data)
         })
-        .catch(console.log)
+        .catch(({ response }) => {
+          console.log(response.data)
+        })
     }
   }
 })
