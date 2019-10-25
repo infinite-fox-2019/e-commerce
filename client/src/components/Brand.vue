@@ -1,9 +1,10 @@
 <template>
+<div>
     <b-carousel-slide
       :img-src="getBrand.image"
       >
-    <span 
-      pill variant="outline-success" 
+    <span
+      pill variant="outline-success"
       @click='getBrandName(getBrand.name)'
        class="btn btn-two"
       >
@@ -11,26 +12,27 @@
       </span>
 
     </b-carousel-slide>
+</div>
 </template>
 
 <script>
 import swal from 'sweetalert2'
 
 export default {
-    data(){
-        return{
-            getBrand : ''
-        }
-    },
-    props: ['importProduct'],
-    methods:{
-      getBrandName(name){
-        this.$router.push({name: 'product',params:{name : name}})
-      }
-    },
-    created(){
-      this.getBrand = this.importProduct
+  data () {
+    return {
+      getBrand: ''
     }
+  },
+  props: ['importProduct'],
+  methods: {
+    getBrandName (name) {
+      this.$router.push({ name: 'product', params: { name: name } })
+    }
+  },
+  created () {
+    this.getBrand = this.importProduct
+  }
 }
 </script>
 
@@ -60,7 +62,7 @@ export default {
   animation-duration: 2s;
 }
 .btn-two:hover::before {
-  animation-name: rotateccw; 
+  animation-name: rotateccw;
   animation-duration: 2s;
 }
 .btn-two:hover::after, .btn-two:hover::before {

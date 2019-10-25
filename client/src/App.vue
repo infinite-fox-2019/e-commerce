@@ -1,62 +1,37 @@
 <template>
 <div>
     <Nav
-      :login-status='loginStatus'
-      :login-role='loginRole'
-      @changeloginstatus='changeStatus'
-      @changeloginrole='changeRole'
       >
     </Nav>
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <router-view
-      @islogin='gotStatus'
-      :login-role='loginRole'
     />
 </div>
 </template>
 
 <script>
 import Nav from './components/Nav'
+import { mapState } from 'vuex'
 
 export default {
-  data(){
-    return{
-      loginStatus: false,
-      loginRole: ''
+  data () {
+    return {
+      getData: ''
     }
   },
   components: {
     Nav
   },
-  methods:{
-    gotStatus(status,role){
-      this.loginStatus = status
-      this.loginRole = role
-    },
-    changeStatus(status){
-      this.loginStatus = status
-    },
-    changeRole(role){
-      this.loginRole = role
+  methods: {
+    fetchingData () {
+      this.getData = this.$store.dispatch('fetchData')
     }
   },
-  created(){
-    if(localStorage.getItem('token')){
-      this.loginStatus=true;
-    }
-    const role = localStorage.getItem('pos');
-    if(role === 'Admin'){
-      this.loginRole = role;
-    }else {
-      this.loginRole = 'Customer'
-    }
-  },
-  watch:{
-    loginRole(val){
-      this.loginRole = val
+  created () {
+    if (localStorage.getItem('token')) {
+      this.fetchingData()
+      this.$store.commit('LOGIN_TRUE', true)
+    } else {
+      this.$router.push('/login')
     }
   }
 }

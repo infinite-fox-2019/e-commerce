@@ -32,6 +32,7 @@ class ProductController {
     static create(req,res,next){
         let url = req.file.cloudStoragePublicUrl
         const {name,category,price,description,brand} = req.body;
+        console.log(req.body);
 
         Product.create(
             {
@@ -53,6 +54,7 @@ class ProductController {
                 res.status(201).json({msg:'sukses created'});
             })
             .catch(err=>{
+                console.log(err)
                 if(err.errmsg == `E11000 duplicate key error collection: e-commerce-test.products index: name_1 dup key: { : "${name}" }`){
                     next({status:403,msg:'nameUsed'})
                 }else{
@@ -82,7 +84,10 @@ class ProductController {
             _id : id
         })
             .then(product=>{
-                res.status(200).json({msg: "Success Delete"});
+                return Brand.deleteMany({ ProductId: id })
+            })
+            .then(success => {
+              res.status(200).json({ msg: 'Success Delete' })
             })
             .catch(err=>{
                 next(err)

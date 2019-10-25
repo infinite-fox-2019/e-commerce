@@ -2,7 +2,7 @@
 <div class='spacee'>
   <div class="contaiiner">
     <div class="card33"  v-for='(product, i) in theProducts' :key='i'>
-      <SetComponent :get-product='product'/>
+      <SetComponent :get-product='product' @fetchPage='okeyFetch'/>
     </div>
   </div>
 </div>
@@ -14,40 +14,43 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 
 export default {
-    data() {
-      return {
-        theProducts: ''
-      }
-    },
-    components: {
-        SetComponent
-    },
-    methods: {
-      goProduct(){
-        this.$awn.info('loading...')
-          axios({
-              method : 'get',
-              url: 'http://dreamcarserver.dreamcarofficial.com/products',
-              headers: {
-                  token: localStorage.getItem('token')
-              }
-          })
-              .then(({data})=>{
-                this.theProducts = data
-                this.$awn.success('Donee..')
-              })
-              .catch(err=>{
-                  swal.fire({
-                      type: 'error',
-                      title: 'Don\'t have access!',
-                      text: err.response.data.msg
-                  })
-              })
-      }
-    },
-    created() {
-      this.goProduct()
+  data () {
+    return {
+      theProducts: ''
     }
+  },
+  components: {
+    SetComponent
+  },
+  methods: {
+    okeyFetch () {
+      this.goPorduct();
+    },
+    goProduct () {
+      this.$awn.info('loading...')
+      axios({
+        method: 'get',
+        url: 'http://dreamcarserver.dreamcarofficial.com/products',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.theProducts = data
+          this.$awn.success('Donee..')
+        })
+        .catch(err => {
+          swal.fire({
+            type: 'error',
+            title: 'Don\'t have access!',
+            text: err.response.data.msg
+          })
+        })
+    }
+  },
+  created () {
+    this.goProduct()
+  }
 }
 </script>
 
@@ -70,7 +73,6 @@ img {
   flex-wrap: wrap;
   height: 46.5vw;
 }
-
 
 @keyframes LineFadeIn {
   0% { opacity: 0; d: path("M 0 300 Q 0 300 0 300 Q 0 300 0 300 C 0 300 0 300 0 300 Q 0 300 0 300 "); stroke: #fff; }

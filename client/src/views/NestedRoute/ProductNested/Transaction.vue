@@ -10,7 +10,7 @@
           <span class="subtitle">
             <ul>
               <li>
-                 Transaction ID 
+                 Transaction ID
               </li>
               <li>
                 <span>{{ idTransaction }}</span>
@@ -75,7 +75,7 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 
 export default {
-  data() {
+  data () {
     return {
       inputCode: '',
       getData: '',
@@ -88,18 +88,18 @@ export default {
   },
   props: ['sendId'],
   methods: {
-    buyNow(){
-      if(this.getCode == this.inputCode){
-        let transactionId = this.idTransaction;
-        let brand = this.getData.brand;
-        let name = this.getData.name;
-        let dp = this.dp;
-        let date = this.date;
+    buyNow () {
+      if (this.getCode == this.inputCode) {
+        let transactionId = this.idTransaction
+        let brand = this.getData.brand
+        let name = this.getData.name
+        let dp = this.dp
+        let date = this.date
         let minus = this.getData.price - dp
         axios({
           method: 'post',
           url: 'http://dreamcarserver.dreamcarofficial.com/transactions',
-          data : {
+          data: {
             transactionId,
             brand,
             name,
@@ -111,21 +111,22 @@ export default {
             token: localStorage.getItem('token')
           }
         })
-          .then(({data})=>{
+          .then(({ data }) => {
             swal.fire({
               type: 'success',
               title: 'Yeahh',
               text: data.msg
             })
+            this.$router.push(`/product/${brand}`)
           })
-          .catch(err=>{
+          .catch(err => {
             swal.fire({
               type: 'warning',
               title: 'Oooops!',
               text: err.msg
             })
           })
-      }else{
+      } else {
         swal.fire({
           type: 'error',
           title: 'oops',
@@ -133,72 +134,71 @@ export default {
         })
       }
     },
-    getRandomId(){
-        for( let i=0; i<15; i++ ) {
-            let alpa = 'fjakfndopqierpqwiofhqwpfnkdsnc3841074832519çƒ∂å∂∑œ∂ø∑ç˚∂ß˜µç˚¬ß∂∆¬√µ∂ßåçπœ–¬π≥®…≥ç…®≥π£º•£™¢¡ºˆ¡¢¡π¢øç√≠¡353284734123438478356';
-            let random = Math.floor(Math.random() * alpa.length);
-            this.idTransaction += alpa[random];
-        }
+    getRandomId () {
+      for (let i = 0; i < 15; i++) {
+        let alpa = 'fjakfndopqierpqwiofhqwpfnkdsnc3841074832519çƒ∂å∂∑œ∂ø∑ç˚∂ß˜µç˚¬ß∂∆¬√µ∂ßåçπœ–¬π≥®…≥ç…®≥π£º•£™¢¡ºˆ¡¢¡π¢øç√≠¡353284734123438478356'
+        let random = Math.floor(Math.random() * alpa.length)
+        this.idTransaction += alpa[random]
+      }
     },
-    fetchProduct(){
+    fetchProduct () {
       this.getRandomId()
       axios({
-          method: 'get',
-          url: `http://dreamcarserver.dreamcarofficial.com/products/sc/${this.$route.params.id}`,
-          headers: {
-              token: localStorage.getItem('token')
+        method: 'get',
+        url: `http://dreamcarserver.dreamcarofficial.com/products/sc/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          let price = data.price
+          let min
+          if (data.brand == 'Lamborghini') {
+            min = 45
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 420
+          } else if (data.brand == 'Honda') {
+            min = 15
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 450
+          } else if (data.brand == 'Ferrari') {
+            min = 40
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 225
+          } else if (data.brand == 'Audi') {
+            min = 35
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 500
+          } else if (data.brand == 'Toyota') {
+            min = 15
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 190
+          } else if (data.brand == 'BMW') {
+            min = 35
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 775
+          } else if (data.brand == 'Mercedes-Benz') {
+            min = 40
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 772
+          } else {
+            min = 30
+            this.dp = price - ((min * data.price) / 100)
+            this.getCode = 335
           }
+          this.minimal = min
+          this.getData = data
         })
-          .then(({data})=>{
-            let price = data.price
-            let min
-              if(data.brand == 'Lamborghini'){
-                min = 45
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 420
-              }else if(data.brand == 'Honda') {
-                min = 15
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 450
-              }else if(data.brand == 'Ferrari') {
-                min = 40
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 225
-              }else if(data.brand == 'Audi') {
-                min = 35
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 500
-              }else if(data.brand == 'Toyota') {
-                min = 15
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 190
-              }else if(data.brand == 'BMW') {
-                min = 35
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 775
-              }else if(data.brand == 'Mercedes-Benz') {
-                min = 40
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 772
-              }else {
-                min = 30
-                this.dp = price - ((min*data.price)/100);
-                this.getCode = 335
-              }
-              this.minimal = min
-              this.getData = data
-          })
-          .catch(err=>{
-              console.log(err)
-          })
+        .catch(err => {
+          console.log(err)
+        })
     }
   },
-  created(){
-    this.$awn.info('Waiting Create Transaction',setTimeout(() => {
+  created () {
+    this.$awn.info('Waiting Create Transaction', setTimeout(() => {
       this.fetchProduct()
       this.$awn.success('Success create transaction')
     }, 2000))
-    ;
   }
 }
 </script>
@@ -241,7 +241,7 @@ span{
   position: relative;
 
   background: #0f0f0f;
-  
+
   transform-style: preserve-3d;
   transition: all ease 1000ms;
 }
@@ -257,12 +257,12 @@ span{
 
   content: "";
   background: linear-gradient(
-    115deg, 
+    115deg,
     #ffffff00,
     #f5f9ff23,
     #ffffff00
   );
-  
+
   top: 0;
   left: 0;
 

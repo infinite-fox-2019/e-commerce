@@ -4,11 +4,11 @@ import Home from './views/Home.vue'
 import Product from './views/Product.vue'
 import Admin from './views/Admin.vue'
 
-//nested route Product
+// nested route Product
 import Book from './views/NestedRoute/ProductNested/Book.vue'
 import Transaction from './views/NestedRoute/ProductNested/Transaction.vue'
 
-//nested route Admin
+// nested route Admin
 import Video from './views/NestedRoute/AdminNestedRoute/Video.vue'
 import User from './views/NestedRoute/AdminNestedRoute/User.vue'
 import Setting from './views/NestedRoute/AdminNestedRoute/Setting.vue'
@@ -21,22 +21,22 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
-    { 
-        path: '/product/:name',
-        name: 'product',
-        component: Product,
-        children: [
-          {
-            path: 'book/:id',
-            name: 'book',
-            component: Book
-          },
-          {
-            path: 'transaction/:id',
-            name: 'transaction',
-            component: Transaction
-          }
-        ]
+    {
+      path: '/product/:name',
+      name: 'product',
+      component: Product,
+      children: [
+        {
+          path: 'book/:id',
+          name: 'book',
+          component: Book
+        },
+        {
+          path: 'transaction/:id',
+          name: 'transaction',
+          component: Transaction
+        }
+      ]
     },
     {
       path: '/profile',
@@ -47,15 +47,15 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
-    },{
+    }, {
       path: '/login',
       name: 'login',
       component: () => import(/**/'./views/Login.vue')
-    },{
+    }, {
       path: '/register',
       name: 'register',
       component: () => import(/**/'./views/Register.vue')
-    },{
+    }, {
       path: '/admin',
       name: 'admin',
       component: Admin,
@@ -93,7 +93,7 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Contact.vue') //memanggil component ketika di click
+      component: () => import(/* webpackChunkName: "about" */ './views/Contact.vue') // memanggil component ketika di click
     }
   ]
 })

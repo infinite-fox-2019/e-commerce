@@ -8,7 +8,7 @@
         indicators
       >
     <div v-for="(brand, _id) in fetchData" :key='_id'>
-      <Brand 
+      <Brand
         :import-product='brand'
         />
     </div>
@@ -18,32 +18,37 @@
 
 <script>
 // @ is an alias to /src
-import Brand from '../components/Brand';
+import Brand from '../components/Brand'
 import axios from 'axios'
 
 export default {
   name: 'home',
-  data(){
-      return{
-        fetchData: '',
-        getIdtoProduct: ''
-      }
+  data () {
+    return {
+      fetchData: '',
+      getIdtoProduct: ''
+    }
   },
   components: {
     Brand
   },
   methods: {
+    fetchdata () {
+      this.$store.dispatch('fetchData')
+        .then(data => {
+          this.fetchData = data
+          this.$awn.success('fetching data')
+        })
+        .catch(err => {
+          this.$awn.warning(err.response.data.msg)
+        })
+    }
   },
-  created(){
-      axios({
-          method : 'get',
-          url: 'http://dreamcarserver.dreamcarofficial.com/brands'
-      })
-      .then(({data})=>{
-        this.$awn.success('Fetching Data')
-        this.fetchData = data
-      })
-      .catch(console.log)
+  computed: {
+  },
+  created () {
+    console.log(this.fetchData)
+    this.fetchdata()
   }
 }
 </script>

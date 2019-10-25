@@ -34,37 +34,37 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 
 export default {
-    data(){
-        return{
-            fetchUser: ''
-        }
-    },
-	methods: {
-		coomingSoon(){
-			swal.fire({
-				type: 'info',
-				title: 'Comming Soon'
-			})
-		},
-        goProfile(){
-          axios({
-            method: 'get',
-            url: 'http://dreamcarserver.dreamcarofficial.com/findprofile',
-            headers: {
-              token: localStorage.getItem('token')
-            }
-          })
-            .then(({data})=>{
-              this.fetchUser = data
-			})
-			.catch(err=>{
-				this.$awn.warning('something Wrong')
-			})
-        }
-    },
-    created(){
-        this.goProfile()
+  data () {
+    return {
+      fetchUser: ''
     }
+  },
+  methods: {
+    coomingSoon () {
+      swal.fire({
+        type: 'info',
+        title: 'Comming Soon'
+      })
+    },
+    goProfile () {
+      axios({
+        method: 'get',
+        url: 'http://dreamcarserver.dreamcarofficial.com/findprofile',
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.fetchUser = data
+        })
+        .catch(err => {
+          this.$awn.warning('something Wrong')
+        })
+    }
+  },
+  created () {
+    this.goProfile()
+  }
 }
 </script>
 

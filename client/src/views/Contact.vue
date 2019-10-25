@@ -3,12 +3,12 @@
     <div class="box-one">
       <h1>
         Hi,<br />
-        I’m 
+        I’m
         <span class="color-secondary">Eric Sudhartio
         </span>
         <br />
-        I'm a <span class="color-secondary">Web Developer</span>, at 
-        <a class="color-secondary" href="#">Hacktiv8</a> 
+        I'm a <span class="color-secondary">Web Developer</span>, at
+        <a class="color-secondary" href="#">Hacktiv8</a>
       </h1>
       <div style="margin-top:50px;" class=''>
       <a class="contact-link glow-on-hover" target="_blank" href="https://www.instagram.com/ericsudhartio/"> Contact Me</a> </div>

@@ -1,46 +1,46 @@
 <template>
 <div>
-    <form 
-        class="box" 
-        action="index.html" 
+    <form
+        class="box"
+        action="index.html"
         method="post"
         @submit.prevent='register()'
         style="width:500px"
         >
     <h1>Register</h1>
-    <input 
-      type="text" 
-      name="" 
+    <input
+      type="text"
+      name=""
       placeholder="Username"
       v-model='form.username'
       >
-    <input 
-      type="password" 
-      name="" 
+    <input
+      type="password"
+      name=""
       placeholder="Password"
       v-model='form.password'
       >
-    <input 
-      type="text" 
-      name="" 
+    <input
+      type="text"
+      name=""
       placeholder="address"
       v-model='form.address'
     >
-    <input 
-      type="email" 
-      name="" 
+    <input
+      type="email"
+      name=""
       placeholder="username@example.id"
       v-model='form.email'
     >
       <div class='bbtn'>
-        <input 
-          type="submit" 
-          name="" 
+        <input
+          type="submit"
+          name=""
           value="Login"
           >
-        <input 
+        <input
           type='button'
-          name="register" 
+          name="register"
           @click='register()'
           value="Register"
           >
@@ -48,59 +48,59 @@
         <div class="spinner-grow text-secondary" v-if='isloading' role="status">
         <span class="sr-only">Loading...</span>
         </div>
-  </form>   
+  </form>
 </div>
 </template>
 
 <script>
-import axios from 'axios';
-import swal from 'sweetalert2';
+import axios from 'axios'
+import swal from 'sweetalert2'
 
 export default {
-    data(){
-        return{
-            form:{
-                username: '',
-                password: '',
-                email: '',
-                address: ''
-            },
-            isloading: false,
-        }
-    },
-    methods: {
-        register(){
-            const {username,password,email,address} = this.form;
-            this.isloading= true;
-            axios({
-                method: 'post',
-                url: 'http://dreamcarserver.dreamcarofficial.com/register',
-                data:{
-                    username,
-                    password,
-                    email,
-                    address
-                }
-            })
-                .then(({data})=>{
-                    swal.fire({
-                        type: 'success',
-                        title: 'Yeah created!',
-                        text: data.msg+ 'our team send you message, please check your email!'
-                    })
-                    this.$router.push('/')
-                    this.isloading= false;
-                })
-                .catch(err=>{
-                    swal.fire({
-                        type: 'error',
-                        title: 'Oooopss!',
-                        text: err.response.data.msg
-                    })
-                    this.isloading= false;
-                })
-        }
+  data () {
+    return {
+      form: {
+        username: '',
+        password: '',
+        email: '',
+        address: ''
+      },
+      isloading: false
     }
+  },
+  methods: {
+    register () {
+      const { username, password, email, address } = this.form
+      this.isloading = true
+      axios({
+        method: 'post',
+        url: 'http://dreamcarserver.dreamcarofficial.com/register',
+        data: {
+          username,
+          password,
+          email,
+          address
+        }
+      })
+        .then(({ data }) => {
+          swal.fire({
+            type: 'success',
+            title: 'Yeah created!',
+            text: data.msg + 'our team send you message, please check your email!'
+          })
+          this.$router.push('/')
+          this.isloading = false
+        })
+        .catch(err => {
+          swal.fire({
+            type: 'error',
+            title: 'Oooopss!',
+            text: err.response.data.msg
+          })
+          this.isloading = false
+        })
+    }
+  }
 }
 </script>
 

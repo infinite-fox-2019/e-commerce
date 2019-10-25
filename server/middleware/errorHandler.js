@@ -1,4 +1,5 @@
 module.exports = (err,req,res,next)=>{
+    console.log(err)
     if(err.name=='ValidationError'){
         res.status(403).json({msg: 'Validation Error'})
     }else if(err.code == 11000){

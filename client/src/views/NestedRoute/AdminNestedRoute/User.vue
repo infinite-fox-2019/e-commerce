@@ -19,88 +19,88 @@
 </template>
 
 <script>
-import axios from "axios";
-import swal from 'sweetalert2';
+import axios from 'axios'
+import swal from 'sweetalert2'
 
 export default {
-    data() {
-      return {
-        theUser: ''
-      }
-    },
-    methods: {
-      deleteee(id){
-        axios({
-          method: 'delete',
-          url: `http://dreamcarserver.dreamcarofficial.com/${id}`,
-          headers: {
-            token: localStorage.getItem('token')
-          }
-        })
-          .then(({data})=>{
-            this.$awn.success(data.msg)
-            this.fetchData()
-          })
-          .catch(err=>{
-            this.$awn.error('something Wrong')
-          })
-      },
-      fetchData(){
-        axios({
-              method: 'get',
-              url: 'http://dreamcarserver.dreamcarofficial.com/',
-              headers: {token: localStorage.getItem('token')
-                  
-              }
-          })
-              .then(({data})=>{
-                  this.theUser = data
-              })
-              .catch(err=>{
-                  if(err.response.data.msg == 'Authentication Error'){
-                      swal.fire({
-                          type: 'warning',
-                          title: 'Hmmmmm',
-                          text: "Please Login First!"
-                      })
-                  }else if(err.response.data.msg == 'Authorization Error'){
-                      swal.fire({
-                          type: 'error',
-                          title: 'DANGER!!',
-                          text: "You went too far, do not have access to enter here"
-                      })
-                  }else{
-                      swal.fire({
-                          type: 'warning',
-                          title: 'oops!!',
-                          text: err.response.data.msg
-                      })
-                  }
-                  this.$router.push('/');
-              })
-      },
-      eEditRole(id,role){
-        console.log(id)
-        axios({
-          method: 'patch',
-          url: `http://dreamcarserver.dreamcarofficial.com/${id}`,
-          data: {
-            role
-          },
-          headers: {
-            token: localStorage.getItem('token')
-          }
-        })
-          .then(_=>{
-            this.$awn.success('Update Done');
-            this.fetchData()
-          })
-      }
-    },
-    created() {
-      this.fetchData()
-      this.$awn.success('Fetching Data')
+  data () {
+    return {
+      theUser: ''
     }
+  },
+  methods: {
+    deleteee (id) {
+      axios({
+        method: 'delete',
+        url: `http://dreamcarserver.dreamcarofficial.com/${id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.$awn.success(data.msg)
+          this.fetchData()
+        })
+        .catch(err => {
+          this.$awn.error('something Wrong')
+        })
+    },
+    fetchData () {
+      axios({
+        method: 'get',
+        url: 'http://dreamcarserver.dreamcarofficial.com/',
+        headers: { token: localStorage.getItem('token')
+
+        }
+      })
+        .then(({ data }) => {
+          this.theUser = data
+        })
+        .catch(err => {
+          if (err.response.data.msg == 'Authentication Error') {
+            swal.fire({
+              type: 'warning',
+              title: 'Hmmmmm',
+              text: 'Please Login First!'
+            })
+          } else if (err.response.data.msg == 'Authorization Error') {
+            swal.fire({
+              type: 'error',
+              title: 'DANGER!!',
+              text: 'You went too far, do not have access to enter here'
+            })
+          } else {
+            swal.fire({
+              type: 'warning',
+              title: 'oops!!',
+              text: err.response.data.msg
+            })
+          }
+          this.$router.push('/')
+        })
+    },
+    eEditRole (id, role) {
+      console.log(id)
+      axios({
+        method: 'patch',
+        url: `http://dreamcarserver.dreamcarofficial.com/${id}`,
+        data: {
+          role
+        },
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(_ => {
+          this.$awn.success('Update Done')
+          this.fetchData()
+        })
+    }
+  },
+  created () {
+    this.fetchData()
+    this.$awn.success('Fetching Data')
+  }
 }
 </script>
 

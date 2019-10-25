@@ -3,7 +3,7 @@
           <ul>
             <li>DreamCar Official</li>
               <li>
-                <router-link 
+                <router-link
                   to="/"
                   >
                   <div class="btn btn-one">
@@ -12,8 +12,8 @@
                 </router-link>
               </li>
               <li>
-                <router-link 
-                  to="/contact" 
+                <router-link
+                  to="/contact"
                   >
                   <div class="btn btn-one">
                       <span>Contact</span>
@@ -21,30 +21,30 @@
                 </router-link>
               </li>
               <li>
-                <b-badge 
-                  pill 
-                  variant="success" 
+                <b-badge
+                  pill
+                  variant="success"
                   v-if='loginStatus'
                   >Online
                 </b-badge>
               </li>
               <li>
-                  <b-form-input 
-                    size="sm" 
-                    class="mr-sm-2" 
+                  <b-form-input
+                    size="sm"
+                    class="mr-sm-2"
                     placeholder="Search"
                     >
                   </b-form-input>
-                <b-button 
-                  size="sm" 
-                  class="my-2 my-sm-0" 
+                <b-button
+                  size="sm"
+                  class="my-2 my-sm-0"
                   type="submit"
                   >Search
                 </b-button>
               </li>
               <li>
-                <router-link 
-                  to="/profile" 
+                <router-link
+                  to="/profile"
                   >
                   <div class="btn btn-one">
                     <span>Profile</span>
@@ -52,24 +52,24 @@
                 </router-link>
               </li>
               <li>
-                <a v-if='loginRole=="Admin"'>
-                <router-link 
-                  to="/admin" 
+                <a v-if='isRole=="Admin"'>
+                <router-link
+                  to="/admin"
                   >
                   <div class="btn btn-one">
                     <span>Admin</span>
                   </div>
                 </router-link>
                 </a>
-                <a v-if='!loginStatus'>
-                <router-link 
-                  to="/login" 
+                <a v-if='!islogin'>
+                <router-link
+                  to="/login"
                   >
                   <div class="btn btn-one">
                       <span>Login</span>
                   </div>
                 </router-link>
-                </a>  
+                </a>
                 <a v-else @click='logout()' class="btn btn-one" style='color:gold'>
                       <span>LogOut</span>
                   </a>
@@ -82,33 +82,30 @@
 </template>
 
 <script>
-import swal from 'sweetalert2';
-export default {
-    data(){
-        return {
+import swal from 'sweetalert2'
+import { mapState } from 'vuex'
 
-        }
-    },
-    props: ['loginStatus','loginRole'],
-    methods :{
-        logout(){
-            localStorage.removeItem('token');
-            localStorage.removeItem('pos')
-            swal.fire({
-                type: 'info',
-                title: 'See you again!'
-            })
-            this.$emit('changeloginstatus',false);
-            this.$emit('changeloginrole', null)
-            this.$router.push('/');
-        }
-    },
-    watch:{
-        status(){
-            this.loginStatus;
-            this.loginRole
-        }
+export default {
+  data () {
+    return {
+
     }
+  },
+  props: ['loginStatus', 'loginRole'],
+  methods: {
+    logout () {
+      localStorage.removeItem('token')
+      localStorage.removeItem('pos')
+      swal.fire({
+        type: 'info',
+        title: 'See you again!'
+      })
+      this.$store.dispatch('logout')
+    }
+  },
+  computed: {
+    ...mapState(['islogin', 'isRole'])
+  }
 }
 </script>
 
@@ -147,8 +144,8 @@ export default {
   color: red;
 }
 .btn-one:hover::before {
-	opacity: 1;	
-	transform: scale(1, 1);	
+	opacity: 1;
+	transform: scale(1, 1);
 }
 .btn-one::after {
 	content: '';
@@ -159,7 +156,7 @@ export default {
 	background-color: rgba(255,255,255,0.1);
 }
 .btn-one:hover::after {
-	opacity: 0;	
+	opacity: 0;
 	transform: scale(0.1, 1);
 }
 
@@ -169,15 +166,14 @@ div{
     text-align: center;
     margin-left: 5%;
     margin-top: 2%;
-   
-   
+
 }
 ul{
     height: 90px;
     width: 1500px;
     list-style-type: none;
     font-family: 'levoto', sans-serif;
-      
+
     animation: animate 20s linear;
    box-shadow: 2px 2px 15px 0px rgba(12,32,56);;
     border-style: none;
@@ -197,7 +193,7 @@ li{
     float: left;
     padding: 30px;
     font-size: 18px;
-     
+
 }
 li:hover{
     color:darkred;
@@ -267,7 +263,7 @@ li:hover{
        100%{
        box-shadow: 2px 2px 12px 3px DarkSlateBlue	;
 }
-    
+
 }
 
 </style>

@@ -1,33 +1,33 @@
 <template>
-    <form 
-        class="box" 
-        action="index.html" 
+    <form
+        class="box"
+        action="index.html"
         method="post"
         @submit.prevent='login()'
         style="width:500px"
         >
     <h1>Login</h1>
-    <input 
-      type="email" 
-      name="" 
+    <input
+      type="email"
+      name=""
       placeholder="username@example.id"
       v-model='form.email'
       >
-    <input 
-      type="password" 
-      name="" 
+    <input
+      type="password"
+      name=""
       placeholder="Password"
       v-model='form.password'
       >
       <div class='bbtn'>
-        <input 
-          type="submit" 
-          name="" 
+        <input
+          type="submit"
+          name=""
           value="Login"
           >
-        <input 
+        <input
           type='button'
-          name="register" 
+          name="register"
           @click='register()'
           value="Register"
           >
@@ -40,54 +40,71 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 
 export default {
-    data(){
-        return {
-            form: {
-                email: '',
-                password: ''
-            },
-            isloading: false
-        }
-    },
-    methods: {
-      register(){
-        this.$router.push('/register')
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
       },
-      login(){
-          const email = this.form.email;
-          const password = this.form.password;
-          this.isloading= true;
-          axios({
-              method : 'post',
-              url: 'http://dreamcarserver.dreamcarofficial.com/login',
-              data: {
-                  email,
-                  password
-              }
-          })
-              .then(({data})=>{
-                  swal.fire({
-                      type: 'success',
-                      title: 'You\'re Online now',
-                      text: data.msg
-                  })
-                  localStorage.setItem('token',data.token)
-                  localStorage.setItem('pos',data.role);
-                  this.$router.push('/');
-                  this.$emit('islogin',true, data.role);
-                  this.$emit('isrole',data.role)
-                  this.isloading= false;
-              })
-              .catch(err=>{
-                  swal.fire({
-                      type: 'error',
-                      title: 'Ooooops!',
-                      text: err.response.data.msg
-                  })
-                  this.isloading= false;
-              })
-      }
+      isloading: false
     }
+  },
+  methods: {
+    register () {
+      this.$router.push('/register')
+    },
+    login () {
+      const email = this.form.email
+      const password = this.form.password
+      this.$store.dispatch('login', { email, password })
+        .then(data => {
+          swal.fire({
+            type: 'success',
+            title: 'You\'re Online now!',
+            text: data.msg
+          })
+          localStorage.setItem('token', data.token)
+          localStorage.setItem('pos', data.role)
+          this.$router.push('/')
+          console.log(data)
+        })
+        .catch(err => {
+          swal.fire({
+            type: 'error',
+            title: 'Ooooops!',
+            text: err.response.data.msg
+          })
+        })
+      // axios({
+      //     method : 'post',
+      //     url: 'http://dreamcarserver.dreamcarofficial.com/login',
+      //     data: {
+      //         email,
+      //         password
+      //     }
+      // })
+      //     .then(({data})=>{
+      //         swal.fire({
+      //             type: 'success',
+      //             title: 'You\'re Online now',
+      //             text: data.msg
+      //         })
+      //         localStorage.setItem('token',data.token)
+      //         localStorage.setItem('pos',data.role);
+      //         this.$store.commit('CHECK_LOGIN', { islogin: true, data});
+      //         this.$router.push('/');
+      //         this.isloading= false;
+      //     })
+      //     .catch(err=>{
+      //         swal.fire({
+      //             type: 'error',
+      //             title: 'Ooooops!',
+      //             text: err.response.data.msg
+      //         })
+      //         this.isloading= false;
+      //     })
+    }
+  }
 }
 </script>
 

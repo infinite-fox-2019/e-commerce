@@ -2,7 +2,6 @@
 <div class="bodyyy">
     <div class="shadow">BOOK NOW!</div>
 
-
 <div class="card">
   <div class="card__front card__part">
     <img class="card__front-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png">
@@ -16,7 +15,7 @@
             <p class="card__info">10/25</p>
     </div>
   </div>
-  
+
   <div class="card__back card__part">
     <div class="card__black-line"></div>
     <div class="card__back-content">
@@ -26,10 +25,10 @@
         <a class ='a2'><span class='span2'></span><router-link :to="{ name: 'transaction', params: {id:this.$route.params.id} }">Ready?{{time}}</router-link></a>
       <img class="card__back-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png">
       <img class="card__back-logo card__logo" src="https://www.fireeye.com/partners/strategic-technology-partners/visa-fireeye-cyber-watch-program/_jcr_content/content-par/grid_20_80_full/grid-20-left/image.img.png/1505254557388.png">
-      
+
     </div>
   </div>
-  
+
 </div>
 </div>
 </template>
@@ -38,52 +37,52 @@
 import axios from 'axios'
 
 export default {
-    name: 'book',
-    data () {
-        return {
-            oneProduct: '',
-            getCode: 0,
-            idTransaction: '',
-            time: '5s'
-        }
-    },
-    methods: {
-        fetchData(){
-            axios({
-                method: 'get',
-                url: `http://dreamcarserver.dreamcarofficial.com/products/sc/${this.$route.params.id}`,
-                headers: {
-                    token: localStorage.getItem('token')
-                }
-            })
-                .then(({data})=>{
-                    if(data.brand == 'Lamborghini'){
-                        this.getCode = 420
-                    }else if(data.brand == 'Honda') {
-                        this.getCode = 450
-                    }else if(data.brand == 'Ferrari') {
-                        this.getCode = 225
-                    }else if(data.brand == 'Audi') {
-                        this.getCode = 500
-                    }else if(data.brand == 'Toyota') {
-                        this.getCode = 190
-                    }else if(data.brand == 'BMW') {
-                        this.getCode = 775
-                    }else if(data.brand == 'Mercedes-Benz') {
-                        this.getCode = 772
-                    }else {
-                        this.getCode = 335
-                    }
-                    this.oneProduct = data
-                })
-                .catch(err=>{
-                    this.$awn.warning('Something Wrong')
-                })
-        }
-    },
-    created() {
-        this.fetchData();
+  name: 'book',
+  data () {
+    return {
+      oneProduct: '',
+      getCode: 0,
+      idTransaction: '',
+      time: '5s'
     }
+  },
+  methods: {
+    fetchData () {
+      axios({
+        method: 'get',
+        url: `http://dreamcarserver.dreamcarofficial.com/products/sc/${this.$route.params.id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          if (data.brand == 'Lamborghini') {
+            this.getCode = 420
+          } else if (data.brand == 'Honda') {
+            this.getCode = 450
+          } else if (data.brand == 'Ferrari') {
+            this.getCode = 225
+          } else if (data.brand == 'Audi') {
+            this.getCode = 500
+          } else if (data.brand == 'Toyota') {
+            this.getCode = 190
+          } else if (data.brand == 'BMW') {
+            this.getCode = 775
+          } else if (data.brand == 'Mercedes-Benz') {
+            this.getCode = 772
+          } else {
+            this.getCode = 335
+          }
+          this.oneProduct = data
+        })
+        .catch(err => {
+          this.$awn.warning('Something Wrong')
+        })
+    }
+  },
+  created () {
+    this.fetchData()
+  }
 }
 </script>
 
@@ -155,12 +154,10 @@ export default {
 
 @import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
 
-
 .title {
     margin-bottom: 30px;
     color: #162969;
 }
-
 
 .card{
 width: 320px;
@@ -169,7 +166,7 @@ margin-top: 50px;
   -webkit-perspective: 600px;
   -moz-perspective: 600px;
   perspective:600px;
-  
+
 }
 
 .card__part{
@@ -185,7 +182,7 @@ margin-top: 50px;
     background-position: center;
     background-size: cover;
     border-radius: 8px;
-   
+
     -webkit-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     -moz-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     -ms-transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -317,8 +314,6 @@ border-radius: 4px;
     -webkit-transform: rotateY(0deg);
     -moz-transform: rotateY(0deg);
 }
-
-
 
 .a2
 {

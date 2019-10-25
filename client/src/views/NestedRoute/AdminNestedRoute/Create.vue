@@ -1,15 +1,15 @@
 <template>
-<div class="container">  
+<div class="container">
   <form id='myForm' class="contact" @submit.prevent='createProduct()' enctype="multipart/form-data">
     <h3>Create New Product</h3>
     <h4>Contact us today, and get reply with in 24 hours!</h4>
     <fieldset>
-      <input 
+      <input
         v-model='form.name'
-        placeholder="Name Product" 
-        type="text" 
-        tabindex="1" 
-        required 
+        placeholder="Name Product"
+        type="text"
+        tabindex="1"
+        required
         autofocus
         >
     </fieldset>
@@ -41,11 +41,11 @@
                     Price
                 </td>
                 <td>
-                    <input 
+                    <input
                         v-model='form.price'
-                        type='number' 
-                        placeholder="Price" 
-                        tabindex="2" 
+                        type='number'
+                        placeholder="Price"
+                        tabindex="2"
                         required
                         >
                 </td>
@@ -59,10 +59,10 @@
                     Stock
                 </td>
                 <td>
-                    <input 
+                    <input
                         v-model='form.stock'
-                        placeholder="Stock" 
-                        type="number" 
+                        placeholder="Stock"
+                        type="number"
                         tabindex="3"
                         >
                 </td>
@@ -73,7 +73,7 @@
       <input
         @change="takeFile()"
         ref="file"
-        type="file" 
+        type="file"
         name='file'
         tabindex="4"
         class="form-control-file"
@@ -81,24 +81,23 @@
         >
     </fieldset>
     <fieldset>
-      <textarea 
+      <textarea
         v-model='form.description'
-        placeholder="Description" 
-        tabindex="5" 
+        placeholder="Description"
+        tabindex="5"
         required
         ></textarea>
     </fieldset>
     <fieldset>
-      <button 
-        id="contact-submit" 
+      <button
+        id="contact-submit"
         data-submit="...Sending"
         >Save
 
       </button>
     </fieldset>
   </form>
- 
-  
+
 </div>
 
 </template>
@@ -108,86 +107,74 @@ import axios from 'axios'
 import swal from 'sweetalert2'
 
 export default {
-    data(){
-        return {
-            form:{
-                name: '',
-                brand: '',
-                price: 0,
-                description: '',
-                stock: 0,
-                url: ''
-            },
-            isloading: false,
-            file: ""
-        }
-    },
-    methods: {
-        takeFile(){
-            const file = this.$refs.file.files[0]
-            console.log(file)
-            this.file = file
-        },
-        createProduct(){
-            console.log(this.file)
-            let myForm = document.getElementById('myForm');
-
-            //2 jm bermasalah lagi tidak bisa mendapatkan new FormData() udh search mngkn blum ketemu tidak bisa append.. udah di coba masukin object bisa tapi tidak kebaca juga oleh gcs
-            //dari server aman krna dicoba tembak di postman bisa
-
-            let formData = new FormData(myForm);
-            formData.append('image', this.file)
-            console.log(formData)
-            const name = this.form.name
-            const brand = this.form.brand
-            const price = this.form.price
-            const description = this.form.description
-            const stock = this.form.stock
-            this.isloading = true
-            // axios({
-            //     method: 'post',
-            //     url: 'http://dreamcarserver.dreamcarofficial.com/upload',
-            //     data: formData,
-            //     config: {headers : {"Content-Type" : "multipart/form-data"}}
-            // })
-            //     .then(({data})=>{
-                    // console.log(data)
-                    // this.form.url = data.link
-                    // console.log(this.form.url)
-                    // const image = this.form.url
-                    axios({
-                        method: "post",
-                        url: 'http://dreamcarserver.dreamcarofficial.com/products',
-                        headers:{
-                            token: localStorage.getItem('token')
-                        },
-                        data:{
-                            formData: this.file,
-                            name,
-                            brand,
-                            price,
-                            stock,
-                            description
-                        },
-                        config: {headers : {"Content-Type" : "multipart/form-data"}}
-                    })
-                // })
-                .then(({data})=>{
-                    swal.fire({
-                        type: 'success',
-                        title: 'yess',
-                        text: data.msg
-                    })
-                    this.isloading= false
-                })
-                .catch(err=>{
-                    this.isloading= false
-                })
-
-
-            
-        }
+  data () {
+    return {
+      form: {
+        name: '',
+        brand: '',
+        price: 0,
+        description: '',
+        stock: 0,
+        url: ''
+      },
+      isloading: false,
+      file: ''
     }
+  },
+  methods: {
+    takeFile () {
+      const file = this.$refs.file.files[0]
+      console.log(file)
+      this.file = file
+    },
+    createProduct () {
+      console.log(this.file)
+      let myForm = document.getElementById('myForm')
+
+      const name = this.form.name
+      const brand = this.form.brand
+      const price = this.form.price
+      const description = this.form.description
+      const stock = this.form.stock
+      // 2 jm bermasalah lagi tidak bisa mendapatkan new FormData() udh search mngkn blum ketemu tidak bisa append.. udah di coba masukin object bisa tapi tidak kebaca juga oleh gcs
+      // dari server aman krna dicoba tembak di postman bisa
+
+      let formData = new FormData()
+      formData.append('image', this.file) 
+      formData.append('name', name) 
+      formData.append('brand', brand) 
+      formData.append('price', price) 
+      formData.append('description', description) 
+      formData.append('stock', stock) 
+
+
+      // formData = this.file
+      console.log(formData)
+      this.isloading = true
+      axios({
+        method: 'post',
+        url: 'http://dreamcarserver.dreamcarofficial.com/products',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data: formData,
+        config: { headers: { 'Content-Type': 'multipart/form-data' } }
+      })
+        .then(({ data }) => {
+          swal.fire({
+            type: 'success',
+            title: 'yess',
+            text: data.msg
+          })
+          this.isloading = false
+          this.$router.push('/admin/setting')
+        })
+        .catch(err => {
+          console.log(err)
+          this.isloading = false
+        })
+    }
+  }
 }
 </script>
 
