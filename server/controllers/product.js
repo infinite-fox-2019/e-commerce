@@ -17,8 +17,8 @@ class ProductController {
         .catch(next)
     }
     static create (req, res, next) {
-        const { name, description, stock, price, file } = req.body
-        Product.create({ name, description, stock, price })
+        const { name, description, price, stock, file } = req.body
+        Product.create({ name, description, stock, price, file })
         .then(product => {
             if (product) {
                 res.status(201).json({ response: "Product Created Successfully" })

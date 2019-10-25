@@ -2,7 +2,7 @@
   <div class="home">
     <b-card-group deck>
       <Product
-        v-for="product in products"
+        v-for="product in $store.state.products"
         :key="product._id"
         :product="product"
         :customer="customer"
@@ -28,21 +28,9 @@ export default {
   props: {
     customer: Object
   },
-  data() {
-    return {
-      products: []
-    };
-  },
   methods: {
     fetchProducts() {
-      Axios({
-        method: "get",
-        url: "http://shopify-server.ricky-works.online/product"
-      })
-        .then(({ data }) => {
-          this.products = data;
-        })
-        .catch(console.log);
+      this.$store.dispatch("fetchProducts");
     },
     addSuccess(msg) {
       Swal.fire("Congratulations!", msg, "success");

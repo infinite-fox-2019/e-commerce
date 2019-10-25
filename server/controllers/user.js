@@ -37,9 +37,16 @@ class UserController {
                 const token = encodeToken(payload)
                 res.status(200).json({ username, email, role, token })
             } else {
-                next({ msg: "Incorrect Email / Password" })
+                if (email === "") {
+                    next({ msg: 'Email Is Required' })
+                } else if (password === "") {
+                    next({ msg: "Password Is Required" })
+                } else {
+                    next({ msg: 'Incorrect Email / Password' })
+                }
             }
         })
+        .catch(next)
     }
     static reLog(req, res, next) {
         const { token } = req.headers

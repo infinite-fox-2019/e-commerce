@@ -16,7 +16,7 @@ const productSchema = new Schema({
         type: Number,
         required: [true, "Price Must Be Greater Than 0"]
     },
-    image: {
+    file: {
         type: String,
         default: null
     }

@@ -15,22 +15,22 @@ const userSchema = new Schema({
     username: {
         type: String,
         required: [true, 'Username Is Required'],
-        unique: [true, "Username Is Already Taken"]
+        unique: "Username Is Already Taken"
     },
     email: {
         type: String,
         required: [true, 'Email Is Required'],
-        unique: [true, "Email Is Already Taken"],
+        unique: "Email Is Already Taken",
         validate: emailValidator
     },
     password: {
         type: String,
-        required: [true, 'Password Is Required']
+        required: 'Password Is Required'
     },
     role: String
 })
 
-userSchema.plugin(uniqueValidator, { message: '{PATH} is already taken.' });
+userSchema.plugin(uniqueValidator);
 
 userSchema.pre('save', function(next) {
     if (!this.role) {

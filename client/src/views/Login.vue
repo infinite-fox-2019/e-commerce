@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-form @submit="onSubmit">
+    <b-form @submit.prevent="onSubmit">
       <b-form-group label="Email address:">
         <b-form-input
           v-model="email"
@@ -17,8 +17,10 @@
       </b-form-group>
       <b-button type="submit" variant="primary">Log In</b-button>
     </b-form>
+    <div style="margin-left: 25vw;">
     <p class="h-4">New User?</p>
     <b-button @click="redirectToRegister" variant="primary">Register</b-button>
+    </div>
   </div>
 </template>
 
@@ -39,12 +41,12 @@ export default {
       const info = { email: this.email, password: this.password };
       Axios({
         method: "post",
-        url: "http://shopify-server.ricky-works.online/user/login",
+        url: "http://localhost:3000/user/login",
         data: info
       })
         .then(({ data }) => {
           localStorage.setItem("token", data.token);
-          this.$emit("login", data);
+          this.$store.commit("LOGIN", data);
           this.$router.push("/");
         })
         .catch(({ response }) => {

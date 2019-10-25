@@ -2,14 +2,14 @@
   <div>
     <b-breadcrumb>
       <b-breadcrumb-item to="/">Home</b-breadcrumb-item>
-      <b-breadcrumb-item to="/cart" v-if="user">Cart</b-breadcrumb-item>
-      <b-breadcrumb-item to="/register" v-else>Sign Up</b-breadcrumb-item>
+      <b-breadcrumb-item to="/cart" v-if="this.$store.state.user && this.$store.state.user.role === 'customer'">Cart</b-breadcrumb-item>
+      <b-breadcrumb-item to="/register" v-if="!this.$store.state.user">Sign Up</b-breadcrumb-item>
       <b-breadcrumb-item
         v-b-modal="'create'"
-        v-if="user && (user.role === 'admin' || user.role === 'owner')"
+        v-if="this.$store.state.user && (this.$store.state.user.role === 'admin' || this.$store.state.user.role === 'owner')"
         >Add New</b-breadcrumb-item
       >
-      <b-breadcrumb-item @click="logout" v-if="user">Logout</b-breadcrumb-item>
+      <b-breadcrumb-item @click="logout" v-if="this.$store.state.user">Logout</b-breadcrumb-item>
       <b-breadcrumb-item to="/login" v-else>Login</b-breadcrumb-item>
       <b-breadcrumb-item></b-breadcrumb-item>
     </b-breadcrumb>
@@ -71,25 +71,33 @@ export default {
   },
   methods: {
     logout() {
-      this.$emit("logout");
+      this.$store.commit("LOGOUT");
+      if (this.$route.path !== "/") {
+        this.$router.push("/");
+      }
     },
     create() {
-      const data = {
-        name: this.name,
-        description: this.description,
-        stock: this.stock,
-        price: this.price,
-        file: this.file
-      };
+      const formdata = new FormData();
+      formdata.append("name", this.name);
+      formdata.append("description", this.description);
+      formdata.append("stock", this.stock);
+      formdata.append("price", this.price);
+      formdata.append("file", this.file);
       Axios({
         method: "post",
-        url: "http://shopify-server.ricky-works.online/product",
+        url: "http://localhost:3000/product",
         headers: { token: localStorage.getItem("token") },
-        data
+        data: formdata
       })
         .then(({ data }) => {
           const { response } = data;
           Swal.fire("Congratulations!", response, "success");
+          this.$store.dispatch("fetchProducts");
+          if (this.$route.path !== "/") {
+            this.$router.push("/");
+          } else {
+            this.$bvModal.hide("create");
+          }
         })
         .catch(console.log);
     }

@@ -3,15 +3,15 @@
     <b-card
       bg-variant="light"
       :title="product.name"
-      style="max-width: 20rem;"
+      :img-src="product.file"
+      style="width: 20rem;"
       class="mb-2"
     >
       <b-card-text>{{ product.description }}</b-card-text>
       <b-card-text>Price : Rp. {{ product.price }}</b-card-text>
       <b-card-text>Available : {{ product.stock }}</b-card-text>
-      <b-card-text v-if="product.url"><img :src="product.url"/></b-card-text>
       <b-button
-        v-if="customer && customer.role === 'customer'"
+        v-if="this.$store.state.user && this.$store.state.user.role === 'customer'"
         @click="addToCart(product._id)"
         variant="outline-dark"
         >Add To Cart</b-button
@@ -63,8 +63,7 @@ import Swal from "sweetalert2";
 export default {
   name: "Product",
   props: {
-    product: Object,
-    customer: Object
+    product: Object
   },
   data() {
     return {
@@ -76,12 +75,12 @@ export default {
   },
   methods: {
     addToCart(product_id) {
-      if (!this.customer) {
+      if (!this.$store.state.user) {
         this.$router.push("/login");
       } else {
         Axios({
           method: "post",
-          url: "http://shopify-server.ricky-works.online/cart",
+          url: "http://localhost:3000/cart",
           headers: { token: localStorage.getItem("token") },
           data: { product_id }
         })
@@ -93,8 +92,8 @@ export default {
       }
     },
     checkAuthorized() {
-      return this.customer
-        ? this.customer.role === "admin" || this.customer.role === "owner"
+      return this.$store.state.user
+        ? this.$store.state.user.role === "admin" || this.$store.state.user.role === "owner"
           ? true
           : false
         : false;
@@ -111,7 +110,6 @@ export default {
       };
       let data = {};
       for (let prop in defaultData) {
-        console.log(typeof defaultData[prop]);
         if (
           defaultData[prop].length > 0 ||
           defaultData[prop] === Number(defaultData[prop])
@@ -121,21 +119,22 @@ export default {
       }
       Axios({
         method: "patch",
-        url: `http://shopify-server.ricky-works.online/product/${this.product._id}`,
+        url: `http://localhost:3000/product/${this.product._id}`,
         headers: { token: localStorage.getItem("token") },
         data
       })
         .then(({ data }) => {
           const { response } = data;
-          Swal.fire("Congratulations!", response, "success");
           this.$emit("updated");
+          this.$bvModal.hide(this.product._id);
+          Swal.fire("Congratulations!", response, "success");
         })
         .catch(console.log);
     },
     destroy(id) {
       Axios({
         method: "delete",
-        url: `http://shopify-server.ricky-works.online/product/${id}`,
+        url: `http://localhost:3000/product/${id}`,
         headers: { token: localStorage.getItem("token") }
       })
       .then(({ data }) => {

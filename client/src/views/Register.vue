@@ -1,15 +1,15 @@
 <template>
   <div>
     <b-form @submit="onSubmit">
+      <b-form-group label="Username:">
+        <b-form-input v-model="username" placeholder="Username"></b-form-input>
+      </b-form-group>
       <b-form-group label="Email address:">
         <b-form-input
           v-model="email"
           type="text"
           placeholder="Email"
         ></b-form-input>
-      </b-form-group>
-      <b-form-group label="Username:">
-        <b-form-input v-model="username" placeholder="Username"></b-form-input>
       </b-form-group>
       <b-form-group label="Password:">
         <b-form-input
@@ -20,8 +20,10 @@
       </b-form-group>
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
+    <div style="margin-left: 25vw;">
     <p class="h-4">Old User?</p>
     <b-button @click="redirectToLogin" variant="primary">Login</b-button>
+    </div>
   </div>
 </template>
 
@@ -45,20 +47,19 @@ export default {
         email: this.email,
         password: this.password
       };
-      console.log(data);
       Axios({
         method: "post",
-        url: "http://shopify-server.ricky-works.online/user/register",
+        url: "http://localhost:3000/user/register",
         data
       })
         .then(data => {
-          this.$emit("login", data);
+          this.$store.commit("LOGIN", data);
           localStorage.setItem("token", data.token);
           this.$router.push("/");
         })
         .catch(({ response }) => {
-          const { msg } = response.data;
-          Swal.fire("Oops", msg, "error");
+          const { errors } = response.data;
+          Swal.fire("Oops", errors[0], "error");
         });
     },
     redirectToLogin() {

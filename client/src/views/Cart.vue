@@ -28,9 +28,9 @@ export default {
     fetchCart() {
       Axios({
         method: "get",
-        url: "http://shopify-server.ricky-works.online/cart",
+        url: "http://localhost:3000/cart",
         headers: {
-          token: this.$attrs.customer.token
+          token: localStorage.getItem("token")
         }
       }).then(({ data }) => {
         this.cart = data;
@@ -38,7 +38,7 @@ export default {
     }
   },
   created() {
-    if (!this.$attrs.customer) {
+    if (!this.$store.state.user) {
       this.$router.push("/login");
     } else {
       this.fetchCart();
