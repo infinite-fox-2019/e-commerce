@@ -1,0 +1,29 @@
+[
+    {
+        "_id": "5daaef362fc0e073f45c2ee8",
+        "name": "aiya",
+        "price": 30000000,
+        "stock": 2000,
+        "image": "https://storage.googleapis.com/smart-home-files/1571483430527_6ae1XRP.png",
+        "createdAt": "2019-10-19T11:10:46.623Z",
+        "updatedAt": "2019-10-19T11:10:46.623Z"
+    },
+    {
+        "_id": "5daaef5f2fc0e073f45c2ee9",
+        "name": "her",
+        "price": 20000000,
+        "stock": 9999,
+        "image": "https://storage.googleapis.com/smart-home-files/1571483479623_g5lzsF8.jpg",
+        "createdAt": "2019-10-19T11:11:27.911Z",
+        "updatedAt": "2019-10-19T11:11:37.044Z"
+    },
+    {
+        "_id": "5daaefab2fc0e073f45c2eea",
+        "name": "wkwkwk",
+        "price": 222200000,
+        "stock": 22323,
+        "image": "https://storage.googleapis.com/smart-home-files/1571483553832_AkEy7q1.jpg",
+        "createdAt": "2019-10-19T11:12:43.981Z",
+        "updatedAt": "2019-10-19T11:12:43.981Z"
+    }
+]

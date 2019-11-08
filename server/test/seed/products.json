@@ -1,0 +1,29 @@
+[
+    {
+        "_id": "5da6965e8e68ae10fa3c6125",
+        "name": "Mi Smart Home",
+        "price": 4500000,
+        "stock": 30,
+        "image": "https://storage.googleapis.com/smart-home-files/1571198557257_mi-kit.png",
+        "createdAt": "2019-10-16T04:02:38.483Z",
+        "updatedAt": "2019-10-16T04:02:38.483Z"
+    },
+    {
+        "_id": "5da6969e1be6ec129d832c6e",
+        "name": "Mi Smart Home - 2",
+        "price": 4500000,
+        "stock": 30,
+        "image": "https://storage.googleapis.com/smart-home-files/1571198621823_mi-kit.png",
+        "createdAt": "2019-10-16T04:03:42.810Z",
+        "updatedAt": "2019-10-16T04:03:42.810Z"
+    },
+    {
+        "_id": "5daa76574d936f294d89de91",
+        "name": "wololo",
+        "price": 30000000,
+        "stock": 0,
+        "image": "https://storage.googleapis.com/smart-home-files/1571452490153_BkuG5NQ.jpg",
+        "createdAt": "2019-10-19T02:35:03.325Z",
+        "updatedAt": "2019-10-19T02:35:03.325Z"
+    }
+]

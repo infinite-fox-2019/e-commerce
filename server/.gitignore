@@ -1,0 +1,8 @@
+node_modules
+keyfile.json
+dist
+.cache
+.DS_STORE
+.env
+sandbox.js
+.vscode
